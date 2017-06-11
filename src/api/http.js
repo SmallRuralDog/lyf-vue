@@ -14,5 +14,12 @@ export default {
         }).catch(err => {
             error(err)
         });
+    },
+    userPost(url,data, cb, error) {
+        http.post(url,data).then(res => {
+            cb(res)
+        }).catch(err => {
+            error(err)
+        });
     }
 }
