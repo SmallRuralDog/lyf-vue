@@ -1,0 +1,31 @@
+.tabbar{
+  box-shadow: none;
+  height: 1.31rem;
+}
+.tabbar:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    -webkit-transform: scale(1,.5);
+    transform: scale(1,.5);
+    -webkit-transform-origin: center top;
+    transform-origin: center top;
+}
+.page.has-nonav .page-content{
+  top: -1.07rem;
+}
+.page.has-tabbar .page-content{
+  margin-bottom: 1.31rem;
+}
+.clear:after, .clear:before {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
