@@ -7,7 +7,7 @@
                         <li ref="top_menu_item" class="top-menu-item" :class="index==0?'active':''" v-for="(item,index) in goods_class">{{item.gc_name}}</li>
                     </ul>
                 </div>
-                <a class="search-btn J_search-btn"><i class="ion-grid"></i></a>
+                <a class="search-btn J_search-btn"><i class="ion-gear-b"></i></a>
             </div>
             <scroll class="index-scroll page-content" style="top: 0;" :on-refresh="onRefresh" :on-infinite="onInfinite">
                 <!--:on-refresh="onRefresh"-->
