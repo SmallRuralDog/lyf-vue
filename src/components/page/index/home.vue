@@ -18,13 +18,34 @@
                         </swipe-item>
                     </swipe>
                 </div>
-                <div>
-                    <div class="g-nav">
-                        <div class="nav_item" v-for="item in grid_nav">
-                            <img v-lazy="item.pic" alt="" style="background-color:#ffffff; margin-bottom:.27rem;">
-                            <p class="font-s-14">{{item.name}}</p>
-                        </div>
-                    </div>
+                <!--<div>-->
+                    <!--<div class="g-nav">-->
+                        <!--<div class="nav_item" v-for="item in subclass">&lt;!&ndash;grid_nav&ndash;&gt;-->
+                            <!--<img v-lazy="item.logo" alt="" style="background-color:#ffffff; margin-bottom:.27rem;">-->
+                            <!--<p class="font-s-14">{{item.gc_name}}</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--二级分类列表-->
+                <div class="hm-content" v-show="subclass.length>0" style="margin-bottom: 0.1rem;">
+                    <ul class="category hm-flex" style="flex-wrap:wrap;">
+                        <li style="width: 25%;" v-for="item in subclass">
+                            <div @click="switchbtn0( $index )">
+                                <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
+                                <img :src="item.logo">
+                                <span>{{item.gc_name}}</span>
+                                <!-- </a> -->
+                            </div>
+                        </li>
+                        <li style="width: 25%;">
+                            <div @click="">
+                                <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
+                                <img src="../../../assets/images/more_cat.png">
+                                <span>查看全部</span>
+                                <!-- </a> -->
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="goods-list clear">
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
@@ -87,6 +108,7 @@ export default {
         // goods: state => state.home.goods,
 
         goods: state => state.home.list[state.home.active].goods,
+        subclass: state => state.home.list[state.home.active].subclass,
         page: state => state.home.page,
         is_load: state => state.home.is_load,
         load_more: state => state.home.load_more,
@@ -331,5 +353,10 @@ word-break: break-all;
 }
 .hm-margin-b, .hm-margin-b-m, .hm-margin-tb, .hm-margin-tb-m {
     margin-bottom: .6rem;
+}
+.category {
+    overflow:hidden;background:#fff;
+    li {padding:10px 0; box-sizing:border-box; text-align:center; font-size:10px;}
+    img {width:50%; min-width:38px; max-width:72px; display:block; margin:0 auto ;}
 }
 </style>
