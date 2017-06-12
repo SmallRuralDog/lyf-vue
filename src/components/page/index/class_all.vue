@@ -11,7 +11,7 @@
         <div class="page-content" style="top:1.2rem;">
           <div id="root-list" ref="root_list" class="turn-background-grey">
             <ul :style="'height:'+l_h+'px'">
-                <li ref="root_list_item" v-for="(item,index) in class_list" class="root-list-item " :class="{'root-active':currentIndex==index}"  @click="selectMenu(index,$event)" v-cloak>
+                <li ref="root_list_item" v-for="(item,index) in class_list" class="root-list-item " :class="{'root-active':currentIndex==index}"  @click="selectMenu(index)" v-cloak>
                     <div class="root-box">
                         <span>{{item.gc_name}}</span>
                         <i class="icon icon-category-bag url-icon">
@@ -80,6 +80,7 @@ export default {
           return i;
         }
       }
+
       return 0;
     }
   },
@@ -117,10 +118,19 @@ export default {
           probeType: 3,
         })
       }
+      var items = this.$refs.root_list_item;
       //设置监听滚动位置
+
       this.detail_list_scroll.on('scroll', (pos) => {
         //scrollY接收变量
         this.scrollY = Math.abs(Math.round(pos.y));
+        if (this.currentIndex == 5) {
+          let el = items[this.currentIndex];
+          this.root_list_scroll.scrollToElement(el, 700);
+        } else if (this.currentIndex < 5) {
+          let el = items[0];
+          this.root_list_scroll.scrollToElement(el, 700);
+        }
       })
     },
     _setListH() {
@@ -144,15 +154,11 @@ export default {
         this._initScroll()
       })
     },
-    selectMenu(index, event) {
-      // 自己默认派发事件时候(BScroll),_constructed被置为true,但是浏览器原生并没有这个属性
-      if (!event._constructed) {
-        return;
-      }
+    selectMenu(index) {
       //运用BScroll接口，滚动到相应位置
-      let foodList = this.$refs.detail_list_item
+      let rList = this.$refs.detail_list_item
       //获取对应元素的列表
-      let el = foodList[index];
+      let el = rList[index];
       //设置滚动时间
       this.detail_list_scroll.scrollToElement(el, 300);
     },
