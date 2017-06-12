@@ -79,5 +79,5 @@ Vonic.app.setConfig('afterEach', afterEach)
 import store from './store'
 Vue.use(Vonic.app, {
     store: store,
-    routes: routes
+    routes: routes,
 })
