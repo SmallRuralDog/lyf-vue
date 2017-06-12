@@ -18,14 +18,7 @@
                         </swipe-item>
                     </swipe>
                 </div>
-                <!--<div>-->
-                    <!--<div class="g-nav">-->
-                        <!--<div class="nav_item" v-for="item in subclass">&lt;!&ndash;grid_nav&ndash;&gt;-->
-                            <!--<img v-lazy="item.logo" alt="" style="background-color:#ffffff; margin-bottom:.27rem;">-->
-                            <!--<p class="font-s-14">{{item.gc_name}}</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+
                 <!--二级分类列表-->
                 <div class="hm-content" v-show="subclass.length>0" style="margin-bottom: 0.1rem;">
                     <ul class="category hm-flex" style="flex-wrap:wrap;">
@@ -104,15 +97,17 @@ export default {
     computed: mapState({
         goods_class: state => state.home.goods_class,
         swiper_data: state => state.home.swiper_data,
-        grid_nav: state => state.home.grid_nav,
+        list:state => state.home.list,
+//        grid_nav: state => state.home.grid_nav,
         // goods: state => state.home.goods,
 
         goods: state => state.home.list[state.home.active].goods,
         subclass: state => state.home.list[state.home.active].subclass,
-        page: state => state.home.page,
-        is_load: state => state.home.is_load,
+        page: state => state.home.list[state.home.active].page,
+        is_load: state => state.home.list[state.home.active].is_load,
         load_more: state => state.home.load_more,
-        more_data: state => state.home.more_data,
+        more_data: state => state.home.list[state.home.active].more_data,
+
     }),
     mounted() {
         if (this.goods.length <= 0) {
@@ -168,9 +163,10 @@ export default {
                 this.scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
                 console.log(index,-this.step_width* (index - 2));
             }
-            // console.log('oid='+this.active+',index='+index);
-            this.$store.dispatch('getData',res=>{})
 
+            if(this.list[this.active].init==false){
+                this.$store.dispatch('getData',res=>{})
+            }
 
         },
         newsClick() {
@@ -228,19 +224,19 @@ export default {
     display: flex;
     color: #333;
 }
-.topbar:after {
-    position: absolute;
-    content: "";
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    height: 1px;
-    background-color: #e0e0e0;
-    -webkit-transform: scale(1, .5);
-    transform: scale(1, .5);
-    -webkit-transform-origin: center bottom;
-    transform-origin: center bottom;
-}
+/*.topbar:after {*/
+    /*position: absolute;*/
+    /*content: "";*/
+    /*width: 100%;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*height: 1px;*/
+    /*background-color: #e0e0e0;*/
+    /*-webkit-transform: scale(1, .5);*/
+    /*transform: scale(1, .5);*/
+    /*-webkit-transform-origin: center bottom;*/
+    /*transform-origin: center bottom;*/
+/*}*/
 
 .top-menu {
     overflow: hidden;
