@@ -17,6 +17,7 @@ const Index = resolve => require(['./components/Index'], resolve)
 const Home = resolve => require(['./components/page/index/home.vue'], resolve)
 const Cart = resolve => require(['./components/page/index/cart.vue'], resolve)
 const User = resolve => require(['./components/page/index/user.vue'], resolve)
+const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -25,6 +26,10 @@ const routes = [{
     children: [{
             path: 'home',
             component: Home
+        },
+        {
+            path: 'class_all',
+            component: ClassAll
         },
         {
             path: 'cart',

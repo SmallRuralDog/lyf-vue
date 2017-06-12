@@ -3,13 +3,15 @@ import Vuex from 'vuex'
 
 
 import home from './modules/home'
+import class_index from './modules/class_index'
 
 
 Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   modules: {
-    home
+    home,
+    class_index
   },
   strict: debug
 })

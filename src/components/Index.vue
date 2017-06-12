@@ -20,6 +20,12 @@ export default {
                 {
                     iconOn: 'ion-ios-camera',
                     iconOff: 'ion-ios-camera-outline',
+                    text: '分类',
+                    path: '/class_all'
+                },
+                {
+                    iconOn: 'ion-ios-camera',
+                    iconOff: 'ion-ios-camera-outline',
                     text: '购物车',
                     path: '/cart'
                 },
