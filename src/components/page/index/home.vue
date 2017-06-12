@@ -98,14 +98,12 @@ export default {
         goods_class: state => state.home.goods_class,
         swiper_data: state => state.home.swiper_data,
         list:state => state.home.list,
-//        grid_nav: state => state.home.grid_nav,
-        // goods: state => state.home.goods,
 
         goods: state => state.home.list[state.home.active].goods,
         subclass: state => state.home.list[state.home.active].subclass,
         page: state => state.home.list[state.home.active].page,
         is_load: state => state.home.list[state.home.active].is_load,
-        load_more: state => state.home.load_more,
+        load_more: state => state.home.list[state.home.active].load_more,
         more_data: state => state.home.list[state.home.active].more_data,
 
     }),
@@ -181,7 +179,7 @@ export default {
         goLoad() {
             if (this.is_load) return;
             $loading.show('拼命加载中..')
-            this.$store.commit('UPDATE', {
+            this.$store.commit('UPDATE_LIST', {
                 more_data: "没有更多数据",
                 load_more: true
             })
@@ -191,7 +189,7 @@ export default {
         },
         onRefresh(done) {
             if (this.is_load) return;
-            this.$store.commit('UPDATE', {
+            this.$store.commit('UPDATE_LIST', {
                 page: 1,
                 load_more: true
             })
@@ -201,7 +199,7 @@ export default {
         },
         onInfinite(done) {
             if (this.is_load || !this.load_more) return;
-            this.$store.commit('UPDATE', {
+            this.$store.commit('UPDATE_LIST', {
                 page: this.page + 1
             })
             this.$store.dispatch('getData', res => {
