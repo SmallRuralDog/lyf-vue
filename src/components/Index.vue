@@ -18,14 +18,14 @@ export default {
                     path: '/home'
                 },
                 {
-                    iconOn: 'ion-ios-camera',
-                    iconOff: 'ion-ios-camera-outline',
+                    iconOn: 'ion-ios-list',
+                    iconOff: 'ion-ios-list-outline',
                     text: '分类',
                     path: '/class_all'
                 },
                 {
-                    iconOn: 'ion-ios-camera',
-                    iconOff: 'ion-ios-camera-outline',
+                    iconOn: 'ion-ios-cart',
+                    iconOff: 'ion-ios-cart-outline',
                     text: '购物车',
                     path: '/cart'
                 },
@@ -47,5 +47,15 @@ export default {
 }
 </script>
 <style>
+.tabbar .tabbar-item .icon-wrapper{
+  height: .93rem;
+  line-height: .93rem;
+  font-weight: bold;
+  font-size: .75rem;
+}
+.tabbar .tabbar-item .text-wrapper{
 
+  font-size: .59rem;
+  line-height: .59rem;
+}
 </style>
