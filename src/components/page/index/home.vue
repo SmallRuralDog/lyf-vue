@@ -175,7 +175,7 @@ export default {
             $router.push({
                 name: 'goods_detail',
                 params: {
-                    goods_id: id,
+                    id: id,
                 }
             });
         },
