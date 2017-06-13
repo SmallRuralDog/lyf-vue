@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="page has-tabbar">
-        <div id="search-bar">
-            <div class="search-container">
+        <div id="search-bar" @click="search_click()">
+            <div class="search-container" >
                 <div class="search-icon-container">
                     <div class="search-icon-class"></div>
                     <span class="search-box">搜索商品</span>
@@ -47,6 +47,66 @@
                 </ul>
             </div>
         </div>
+        <div class="search-view-container" v-show="show_search">
+    <div class="search-view-box">
+        <div class="search-view-top">
+            <div class="view-top-container">
+                <div id="search-module-submit">
+                    <input v-model="search_key" id="view-input" type="search" class="search-box-view-main" placeholder="输入商品名称/关键字">
+                </div>
+                <div class="search-view-icon"></div>
+                <div class="search-content-clear" @click="clear_search()" v-show="search_key != ''"></div>
+            </div>
+            <div class="cancel-container-view" v-show="search_key == ''">
+                <div class="cancel-button-view" style="line-height:.8rem;" @click="search_click()" >取消</div>
+            </div>
+            <div class="submit-container-view" v-show="search_key != ''">
+                <div class="submit-button-view" style="line-height:.8rem;">搜索</div>
+            </div>
+        </div>
+        <div id="search-suggestion-box" v-show="search_key != ''">
+          <ul class="search-suggestion-container" avalonctrl="suggestion">
+            <li>
+                <span data-index="0">123沙发垫</span>
+            </li><li>
+                <span data-index="1">123组合沙发垫</span>
+            </li><li>
+                <span data-index="2">123沙发套</span>
+            </li><li>
+                <span data-index="3">123沙发巾</span>
+            </li><li>
+                <span data-index="4">123组合沙发套</span>
+            </li><li>
+                <span data-index="5">123童装</span>
+            </li>
+        </ul>
+        </div>
+        <div class="search-main-view" v-show="false">
+            <div class="search-recent-title-view">历史搜索</div>
+            <div class="search-recent-delete-view">
+                <div class="delete-recent-search"></div>
+            </div>
+            <div class="search-recent-list-view">
+            </div>
+        </div>
+        <div class="search-main-view" v-show="search_key == ''">
+            <div class="search-recent-title-view">热门搜索</div>
+            <div class="search-recent-list-view search-hotquery-list-view">
+                <span class="recent-history-list">厨房收纳架</span>
+                <span class="recent-history-list">男士套装</span>
+                <span class="recent-history-list">小孩睡衣</span>
+                <span class="recent-history-list">外搭女</span>
+                <span class="recent-history-list">皮带男</span>
+                <span class="recent-history-list">手机指环</span>
+                <span class="recent-history-list">音响低音炮</span>
+                <span class="recent-history-list">吊带睡衣</span>
+                <span class="recent-history-list">手表男</span>
+                <span class="recent-history-list">斜挎包女</span><
+            </div>
+        </div>
+    </div>
+</div>
+
         <lyf-tab-bar :index="2"></lyf-tab-bar>
     </div>
 </template>
@@ -68,6 +128,8 @@ export default {
       r_h: 0,
       listHeight: [],
       scrollY: 0,
+      show_search:false,
+      search_key:''
     }
   },
   computed: {
@@ -169,6 +231,13 @@ export default {
       //设置滚动时间
       this.detail_list_scroll.scrollToElement(el, 300);
     },
+    search_click(){
+      console.log("132132");
+      this.show_search = !this.show_search
+    },
+    clear_search(){
+      this.search_key = ''
+    }
   }
 }
 </script>
@@ -380,4 +449,191 @@ export default {
         font-size: .32rem;
         text-align: center;
     }
+    .search-view-container {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:200%;
+	background-color:#f8f8f8;
+	overflow:hidden;
+	z-index:999999998;
+}
+.search-content-clear,.search-view-icon {
+	background-size:contain;
+	position:absolute;
+	background-repeat:no-repeat
+}
+.search-box-view-main,.search-recent-list-view span {
+	font-family:PingFangSC-Regular,Helvetica,STHeiti STXihei,Microsoft JhengHei,Microsoft YaHei,Arial
+}
+.search-view-box {
+	height:50%;
+	overflow-y:auto
+}
+.search-view-top {
+	width:100%;
+	padding:.16rem 0 .16rem .32rem;
+	height:1.2rem;
+	border-bottom:.01rem solid #EDEDED
+}
+.search-box-view-main,.view-top-container {
+	height:.85rem;
+	float:left;
+	border-radius:.13rem
+}
+.view-top-container {
+	width:8.08rem;
+	background-color:#fff
+}
+.search-box-view-main {
+	width:6.4rem!important;
+	margin-left:.8rem;
+	font-size:.4rem;
+	display:inline-block;
+	color:#151516;
+	-webkit-border-radius:.13rem;
+	background-color:#FFF
+}
+#view-input {
+	background:none;
+  padding-top: 0;
+}
+.search-view-icon {
+	width:.37rem;
+	height:.37rem;
+	top:.4rem;
+	left:.53rem;
+	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAM1BMVEUAAACenp6dnZ2lpaWdnZ2dnZ2enp6dnZ2dnZ2enp6fn5+cnJydnZ2enp6dnZ2dnZ2cnJwuBT3hAAAAEHRSTlMAL/AR2OVFlopkVcR7Hqa0bCS5IQAAANNJREFUKM91kdm6xRAMRiUSQ4v+7/+0Z2s5bHbXjWHJ8IXpOC8MlhKtWYmKDodvnU8AEuIRU92pmxwpcFE7WA/gGHEKPpa3/7EnmMyMFXBuvfQsA2KUZ6e4zEoC7mSurhuKUBcPWc24FYRFtHx1FIz4Q9JTrPa6Yz/yNTI/UpDeaxacP2SCtgHZXQr8XZrhN3f00Yd9RFZ6LavQJfE13jtAaI77uDBX4DROAsw/7BhQ78hml6oKPNtcMDjJULMNCnIb8fWy24ElorvtYTeGVfNutfwBiJYKBbU3umQAAAAASUVORK5CYII=")
+}
+.search-icon-container-view {
+	display:inline-block;
+	width:.4rem;
+	height:.4rem
+}
+.search-icon-container-view img {
+	height:.4rem;
+	width:.4rem
+}
+.search-box-container-view {
+	background-color:#eceded;
+	color:#333;
+	display:inline-block;
+	height:.8rem
+}
+.search-box-view {
+	width:100%;
+	height:100%;
+	font-size:.43rem
+}
+.cancel-container-view,.submit-container-view {
+	margin-right:0;
+	width:1.25rem;
+	height:.93rem;
+	font-size:.43rem;
+	float:right;
+	display:inline-block
+}
+.cancel-container-view {
+	color:#9C9C9C
+}
+.submit-container-view {
+	color:#151516
+}
+.search-content-clear {
+	background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiBAMAAADIaRbxAAAAJFBMVEWxsbGdnZ2dnZ2cnJyenp6dnZ2cnJycnJyfn5+dnZ2cnJycnJwQ7JGfAAAAC3RSTlMBsKP0IHS92VJJMYswFMoAAADTSURBVCjPZVIrDgJBDO2wQAKKBNwagiIZAwFDMBAkBs8BEHgMDosh4QJ7hV2+SS9HZ9pJ2fSJZub1daY/YFwOs9MYFN0+BkyLRDQ9MqqVMHdMWDDRQsUuMntUvALRwX/ciNnUmDkxvsZUlEuIXsfbILxYgCP7hDy6t2R7kJEtoUF2GPkJXDE6PEkcEr50ZJFIyHFEFo1Ygm84I4tAfB9YoojafHgo4xKjUblE2Zfld6e/S4a5ZpiJRKvQSkuu1HbDdsx21XbeTsdO0E7ZboLdFrtRPzHeFgrIg1bIAAAAAElFTkSuQmCC");
+	height:.45rem;
+	width:.45rem;
+	top:.37rem;
+	right:1.87rem
+}
+.search-main-view {
+	padding-top:.61rem;
+	height:auto;
+	width:100%
+}
+.search-recent-title-view {
+	line-height:.43rem;
+	font-size:.4rem;
+	color:#151516;
+	margin-left:.32rem;
+	width:2.67rem;
+	display:inline-block
+}
+.search-recent-delete-view {
+	padding-top:.05rem;
+	float:right;
+	margin-right:.53rem;
+	width:.43rem;
+	height:.43rem;
+	background-image:url("http://cdn.yangkeduo.com/assets/img/sprite_search-d13f06ef49.png");
+	background-repeat:no-repeat;
+	background-size:1.87rem .93rem;
+	background-position:0 0
+}
+.search-recent-list-view {
+	margin:.13rem .32rem 0 .05rem
+}
+.search-recent-list-view span {
+	display:inline-block;
+	padding:0 .4rem;
+	margin:.21rem 0 0 .27rem;
+	border:.025rem solid #d2d2d2;
+	border-radius:.11rem;
+	color:#151516;
+	cursor:pointer;
+	min-width:.16rem;
+	max-width:.8rem;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	height:.85rem;
+	line-height:.8rem;
+	font-size:.37rem;
+	text-align:center;
+	vertical-align:top
+}
+@media only screen and (-webkit-min-device-pixel-ratio:2) {
+	.search-recent-list-view span {
+	max-width:4rem
+}
+}@media only screen and (-webkit-min-device-pixel-ratio:3) {
+	.search-recent-list-view span {
+	max-width:4rem
+}
+}.search-hotquery-list-view {
+	height:2.13rem;
+	overflow:hidden
+}
+.search-suggestion-container {
+	width:100%;
+	height:100%;
+	background-color:#F2F2F2
+}
+.search-suggestion-container li {
+	width:100%;
+	height:1.23rem;
+	padding-left:.32rem;
+	background-color:#FFF
+}
+.search-suggestion-container li span {
+	width:100%;
+	height:100%;
+	color:#58595B;
+	overflow:hidden;
+	font-size:.4rem;
+	white-space:nowrap;
+	line-height:1.23rem;
+	padding-left:.08rem;
+	display:inline-block;
+	text-overflow:ellipsis;
+	border-bottom:0.025rem solid #EDEDED;
+	font-family:PingFangSC-Regular,Helvetica,STHeiti STXihei,Microsoft JhengHei,Microsoft YaHei,Arial
+}
+.search-suggestion-container li:last-child span {
+	border:none
+}
+.search-suggestion-container .modify-background {
+	background-color:#EDEDED
+}
 </style>

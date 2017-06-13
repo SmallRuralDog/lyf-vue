@@ -34,10 +34,11 @@ export default {
 	transform: translate3d(-50%,0,0);
 	-webkit-transform: translate3d(-50%,0,0);
 	background-color: #fff;
-	z-index: 10000!important
+	z-index: 10000!important;
+  border-top: .025rem solid #e0e0e0;
 }
 
-.footer:before {
+/*.footer:before {
 	position: absolute;
 	content: "";
 	width: 100%;
@@ -49,7 +50,7 @@ export default {
 	transform: scale(1,.5);
 	-webkit-transform-origin: center bottom;
 	transform-origin: center bottom
-}
+}*/
 
 .footer .chat-popup,.footer .unread-sign {
 	background-color: #E02E24;
