@@ -47,7 +47,7 @@
                             <div class="hm-list-inner" style="padding:0">
                                     <img v-lazy="item.goods_image" style="width: 100%;">
                                     <div  style="padding:.13rem .08rem .13rem .08rem;">
-                                        <div class="hm-list-title-2 goods-name" style=" height:1.17rem; line-height:1.5; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
+                                        <div class="hm-list-title-2 goods-name" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
                                         <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
                                             <div class="" style="color: #ee2e3a;font-weight: 700;">
                                                 <span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>
