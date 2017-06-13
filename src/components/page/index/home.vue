@@ -250,6 +250,7 @@ export default {
     background: #ffffff;
     z-index: 2000;
     position: fixed;
+    border-bottom: 0.025rem solid #e0e0e0;
     top: 0;
     left: 0;
     width: 100%;

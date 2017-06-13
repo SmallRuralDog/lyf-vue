@@ -252,7 +252,7 @@ export default {
         left: 0;
         z-index: 99;
     }
-    #search-bar:before {
+  #search-bar:before {
         position: absolute;
         width: 200%;
         height: 200%;
@@ -263,7 +263,7 @@ export default {
         -webkit-transform: scale(.5,.5);
         -webkit-box-sizing: border-box;
         content: '';
-        border-bottom: .01rem solid #EDEDED;
+        border-bottom: 0.025rem solid #dddddd;
     }
     #search-bar .search-container {
         background-color: #f2f2f2;

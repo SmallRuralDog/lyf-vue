@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="page">
+<div class="page has-tabbar">
   <div class="page-content">
 
   </div>
@@ -16,5 +16,6 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+
 </style>
