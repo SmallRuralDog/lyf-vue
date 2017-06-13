@@ -43,7 +43,7 @@
                 <div class="goods-list clear">
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
                     <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods">
-                      <div class="hm-list-item" style="padding:0">
+                      <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
                             <div class="hm-list-inner" style="padding:0">
                                     <img v-lazy="item.goods_image" style="width: 100%;">
                                     <div  style="padding:.13rem .08rem .13rem .08rem;">
@@ -161,18 +161,17 @@ export default {
                 this.scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
                 console.log(index,-this.step_width* (index - 2));
             }
-
+            //请求数据
             if(this.list[this.active].init==false){
                 this.$store.dispatch('getData',res=>{})
             }
 
         },
-        newsClick() {
+        goodsClick(id) {
             $router.push({
-                name: 'news-info',
+                name: 'goods_detail',
                 params: {
-                    id: item.id,
-                    news: item
+                    goods_id: id,
                 }
             });
         },
