@@ -91,8 +91,10 @@ export default {
   },
   mounted() {
     if (!this.class_list) {
+      $loading.show('拼命加载中..')
       this.$store.dispatch('getClassIndexData', res => {
         this.$nextTick(() => {
+          $loading.hide()
           this._setListH()
         });
       })

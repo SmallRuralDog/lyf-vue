@@ -2,7 +2,7 @@
 <div class="">
     <ul class="footer">
       <li @click="setTab('/home')" class="fb-move-bottom" ><a class="nav-controller" :class="{'active':index==0}"><i class="fb fb-home"></i>首页</a></li>
-      <li @click="setTab('/class_all')"><a class="nav-controller" :class="{'active':index==1}"><i class="fb fb-rank"></i>新品</a></li>
+      <li @click="setTab('/new_arrivals')"><a class="nav-controller" :class="{'active':index==1}"><i class="fb fb-rank"></i>新品</a></li>
       <li @click="setTab('/class_all')"><a class="nav-controller" :class="{'active':index==2}"><i class="fb fb-class"></i>搜索</a></li>
       <li @click="setTab('/cart')"><a class="nav-controller" :class="{'active':index==3}"><i class="fb fb-chat"></i>购物车</a></li>
       <li @click="setTab('/user')"><a class="nav-controller" :class="{'active':index==4}"><i class="fb fb-user"></i>个人中心</a></li>
@@ -18,7 +18,7 @@ export default {
   props:['index'],
   methods: {
     setTab(name){
-      $router.replace({path: name});
+      $router.forward({path: name});
     }
   }
 }

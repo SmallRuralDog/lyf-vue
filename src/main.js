@@ -15,6 +15,7 @@ Vue.use(VueLazyload, {
 // Page Components
 const Index = resolve => require(['./components/Index'], resolve)
 const Home = resolve => require(['./components/page/index/home.vue'], resolve)
+const new_arrivals = resolve => require(['./components/page/index/new_arrivals.vue'], resolve)
 const Cart = resolve => require(['./components/page/index/cart.vue'], resolve)
 const User = resolve => require(['./components/page/index/user.vue'], resolve)
 const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
@@ -24,9 +25,14 @@ const routes = [{
     path: '/',
     redirect: '/home',
     component: Index,
-    children: [{
+    children: [
+      {
         path: 'home',
         component: Home
+      },
+      {
+        path: 'new_arrivals',
+        component: new_arrivals
       },
       {
         path: 'class_all',

@@ -47,13 +47,12 @@
                             <div class="hm-list-inner" style="padding:0">
                                     <img v-lazy="item.goods_image" style="width: 100%;">
                                     <div  style="padding:.13rem .08rem .13rem .08rem;">
-                                        <div class="hm-list-title-2" style=" height:1.8rem; line-height:1.4em">{{item.goods_name}}
-                                        </div>
+                                        <div class="hm-list-title-2 goods-name" style=" height:1.17rem; line-height:1.5; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
                                         <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
-                                            <div class="">
-                                                <span>￥<b><big>{{item.goods_price}}</big></b></span>
+                                            <div class="" style="color: #ee2e3a;font-weight: 700;">
+                                                <span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>
                                             </div>
-                                            <div class="hm-color-gray">
+                                            <div class="hm-color-gray" style="color:#9c9c9c;">
                                                 <small>已售</small>{{item.goods_salenum}}<small>件</small>
                                             </div>
                                         </div>
@@ -315,15 +314,8 @@ export default {
     margin-left: .05rem;
     margin-top: .05rem;
 }
- .goods-item .goods-name {
-    padding: 0.1rem 0.09rem 0 0.1rem;
-    width: 100%;
-    word-wrap: break-word;
-    text-align: justify;
-    font-size: .37rem;
-    color: #333;
-    line-height: 1.5;
-    overflow: hidden;
+.goods-name {
+  overflow: hidden;
 word-break: break-all;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 2;
@@ -354,7 +346,7 @@ word-break: break-all;
 }
 .category {
     overflow:hidden;background:#fff;
-    li {padding:10px 0; box-sizing:border-box; text-align:center; font-size:10px;}
-    img {width:50%; min-width:38px; max-width:72px; display:block; margin:0 auto ;}
+    li {padding:.27rem 0; box-sizing:border-box; text-align:center; font-size:.27rem;}
+    img {width:50%; min-width:1.01rem; max-width:1.92rem; display:block; margin:0 auto ;}
 }
 </style>

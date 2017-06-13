@@ -1,6 +1,6 @@
 <template>
 <div class="" v-nav="{hideNavbar:true}">
-    <transition>
+    <transition name="fade">
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
