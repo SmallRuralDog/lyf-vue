@@ -11,14 +11,12 @@
             </div>
             <scroll class="index-scroll page-content" style="top: 0;" :on-refresh="onRefresh" :on-infinite="onInfinite">
                 <!--:on-refresh="onRefresh"-->
-                <div class="my-swipe" v-show="active==0">
-                    <swipe :speed="200" :auto="8000" :continuous="false" :prevent="true">
-                        <swipe-item v-for="item in swiper_data" :key="item.adv_title">
-                            <img v-lazy="item.adv_content" alt="" style="background-color:#ffffff; width:100%; height:3.73rem;">
-                        </swipe-item>
-                    </swipe>
-                </div>
-
+                <swiper :options="swiperOption"  v-show="active==0">
+                  <swiper-slide v-for="slide in swiper_data">
+                    <img v-lazy="slide.adv_content" alt="" style="background-color:#ffffff; width:100%; height:3.73rem;">
+                  </swiper-slide>
+                  <div class="swiper-pagination" slot="pagination"></div>
+                </swiper>
                 <!--二级分类列表-->
                 <div class="hm-content" v-show="subclass.length>0" style="margin-bottom: 0.1rem;">
                     <ul class="category hm-flex" style="flex-wrap:wrap;">
@@ -62,8 +60,10 @@
                       </div>
                     </div>
                 </div>
+
                 <div v-if="!load_more" slot="infinite" @click="goLoad" class="text-center">{{more_data}}</div>
             </scroll>
+            <div @click="goTop()" :class="{'top-button-show':page>1}" class="go-top"><span>顶部</span></div>
             <lyf-tab-bar :index="0"></lyf-tab-bar>
         </div>
     </div>
@@ -71,145 +71,151 @@
 
 <script>
 import LyfTabBar from '../../layout/lyf-tab-bar';
-require('vue-swipe/dist/vue-swipe.css');
-
 import {
-    mapState,
-    mapActions
+  mapState,
+  mapActions
 } from 'vuex'
-import {
-    Swipe,
-    SwipeItem
-} from 'vue-swipe';
 import BScroll from 'better-scroll'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
-    components: {
-        LyfTabBar,
-        'swipe': Swipe,
-        'swipe-item': SwipeItem,
-
-    },
-    data() {
-        return {
-            m_w: 0,
-            menu_item_width:0,
-            menu_len:0,
-            active:0,
-            step_width:0
+  components: {
+    LyfTabBar,
+    swiper,
+    swiperSlide
+  },
+  data() {
+    return {
+      m_w: 0,
+      menu_item_width: 0,
+      menu_len: 0,
+      active: 0,
+      step_width: 0,
+      swiperOption: {
+        autoplay: 5000,
+        initialSlide: 1,
+        loop: true,
+        pagination: '.swiper-pagination',
+        onSlideChangeEnd: swiper => {
+          console.log('onSlideChangeEnd', swiper.realIndex)
         }
-    },
-    computed: mapState({
-        goods_class: state => state.home.goods_class,
-        swiper_data: state => state.home.swiper_data,
-        list:state => state.home.list,
-
-        goods: state => state.home.list[state.home.active].goods,
-        subclass: state => state.home.list[state.home.active].subclass,
-        page: state => state.home.list[state.home.active].page,
-        is_load: state => state.home.list[state.home.active].is_load,
-        load_more: state => state.home.list[state.home.active].load_more,
-        more_data: state => state.home.list[state.home.active].more_data,
-
-    }),
-    mounted() {
-        if (this.goods.length <= 0) {
-            this.$store.dispatch('getData', res => {
-                this.$nextTick(() => {
-                    this.initScroll()
-                    this._setMenuW()
-                });
-            })
-        }
-    },
-    methods: {
-        initScroll() {
-            if (this.scroll) {
-                this.scroll.refresh()
-            } else {
-                this.scroll = new BScroll(this.$refs.top_menu, {
-                    startX: 0,
-                    startY: 0,
-                    scrollX: true,
-                    click: true
-                })
-            }
-            var top_menu=this.$refs.top_menu
-            var top_menu_w=top_menu.clientWidth
-            this.step_width=(this.m_w-top_menu_w) / (this.menu_len - 3) ;
-            console.log('top_menu_w=',top_menu_w,'step_width=',this.step_width)
-        },
-        _setMenuW() {
-            var items = this.$refs.top_menu_item;
-            var a = 0;
-            this.menu_item_width=items[0].clientWidth;
-            this.menu_len=items.length;
-
-            for (var index in items) {
-                a = a + items[index].clientWidth
-            }
-            this.m_w = a
-
-            this.$nextTick(() => {
-                this.initScroll()
-            })
-        },
-        changeMenu(index){
-            //移动menu
-            this.active=index;
-            this.$store.commit('UPDATE',{active:index})
-            if (index >= 1 && index < this.menu_len) {
-                this.scroll.scrollTo(-this.step_width * (index - 1), 0, 500);
-                console.log(index,-this.step_width* (index - 1));
-            }
-            if (index == this.menu_len) {
-                this.scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
-                console.log(index,-this.step_width* (index - 2));
-            }
-            //请求数据
-            if(this.list[this.active].init==false){
-                this.$store.dispatch('getData',res=>{})
-            }
-
-        },
-        goodsClick(id) {
-            $router.push({
-                name: 'goods_detail',
-                params: {
-                    id: id,
-                }
-            });
-        },
-        goLoad() {
-            if (this.is_load) return;
-            $loading.show('拼命加载中..')
-            this.$store.commit('UPDATE_LIST', {
-                more_data: "没有更多数据",
-                load_more: true
-            })
-            this.$store.dispatch('getData', res => {
-
-            })
-        },
-        onRefresh(done) {
-            if (this.is_load) return;
-            this.$store.commit('UPDATE_LIST', {
-                page: 1,
-                load_more: true
-            })
-            this.$store.dispatch('getData', res => {
-                done()
-            })
-        },
-        onInfinite(done) {
-            if (this.is_load || !this.load_more) return;
-            this.$store.commit('UPDATE_LIST', {
-                page: this.page + 1
-            })
-            this.$store.dispatch('getData', res => {
-                done()
-            })
-        },
+      }
     }
+  },
+  computed: mapState({
+    goods_class: state => state.home.goods_class,
+    swiper_data: state => state.home.swiper_data,
+    list: state => state.home.list,
+
+    goods: state => state.home.list[state.home.active].goods,
+    subclass: state => state.home.list[state.home.active].subclass,
+    page: state => state.home.list[state.home.active].page,
+    is_load: state => state.home.list[state.home.active].is_load,
+    load_more: state => state.home.list[state.home.active].load_more,
+    more_data: state => state.home.list[state.home.active].more_data,
+
+  }),
+  mounted() {
+    if (this.goods.length <= 0) {
+      this.$store.dispatch('getData', res => {
+        this.$nextTick(() => {
+          this.initScroll()
+          this._setMenuW()
+        });
+      })
+    }
+  },
+  methods: {
+    initScroll() {
+      if (this.scroll) {
+        this.scroll.refresh()
+      } else {
+        this.scroll = new BScroll(this.$refs.top_menu, {
+          startX: 0,
+          startY: 0,
+          scrollX: true,
+          click: true
+        })
+      }
+      var top_menu = this.$refs.top_menu
+      var top_menu_w = top_menu.clientWidth
+      this.step_width = (this.m_w - top_menu_w) / (this.menu_len - 3);
+      console.log('top_menu_w=', top_menu_w, 'step_width=', this.step_width)
+    },
+    _setMenuW() {
+      var items = this.$refs.top_menu_item;
+      var a = 0;
+      this.menu_item_width = items[0].clientWidth;
+      this.menu_len = items.length;
+
+      for (var index in items) {
+        a = a + items[index].clientWidth
+      }
+      this.m_w = a
+
+      this.$nextTick(() => {
+        this.initScroll()
+      })
+    },
+    changeMenu(index) {
+      //移动menu
+      this.active = index;
+      this.$store.commit('UPDATE', { active: index })
+      if (index >= 1 && index < this.menu_len) {
+        this.scroll.scrollTo(-this.step_width * (index - 1), 0, 500);
+        console.log(index, -this.step_width * (index - 1));
+      }
+      if (index == this.menu_len) {
+        this.scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
+        console.log(index, -this.step_width * (index - 2));
+      }
+      //请求数据
+      if (this.list[this.active].init == false) {
+        this.$store.dispatch('getData', res => {})
+      }
+
+    },
+    goodsClick(id) {
+      $router.push({
+        name: 'goods_detail',
+        params: {
+          id: id,
+        }
+      });
+    },
+    goLoad() {
+      if (this.is_load) return;
+      $loading.show('拼命加载中..')
+      this.$store.commit('UPDATE_LIST', {
+        more_data: "没有更多数据",
+        load_more: true
+      })
+      this.$store.dispatch('getData', res => {
+
+      })
+    },
+    onRefresh(done) {
+      if (this.is_load) return;
+      this.$store.commit('UPDATE_LIST', {
+        page: 1,
+        load_more: true
+      })
+      this.$store.dispatch('getData', res => {
+        done()
+      })
+    },
+    onInfinite(done) {
+      if (this.is_load || !this.load_more) return;
+      this.$store.commit('UPDATE_LIST', {
+        page: this.page + 1
+      })
+      this.$store.dispatch('getData', res => {
+        done()
+      })
+    },
+    goTop() {
+      document.querySelector(".scroll").scrollTop = 0
+    }
+  }
 }
 </script>
 
@@ -225,20 +231,6 @@ export default {
     display: flex;
     color: #333;
 }
-/*.topbar:after {*/
-    /*position: absolute;*/
-    /*content: "";*/
-    /*width: 100%;*/
-    /*left: 0;*/
-    /*bottom: 0;*/
-    /*height: 1px;*/
-    /*background-color: #e0e0e0;*/
-    /*-webkit-transform: scale(1, .5);*/
-    /*transform: scale(1, .5);*/
-    /*-webkit-transform-origin: center bottom;*/
-    /*transform-origin: center bottom;*/
-/*}*/
-
 .top-menu {
     overflow: hidden;
     // padding-left: 0.27rem;
@@ -303,22 +295,22 @@ export default {
 .goods-list .goods-item .goods-item-image img {
     width: 100%;
 }
-.goods-item-content{
-  background: #ffffff;
+.goods-item-content {
+    background: #ffffff;
 }
 .goods-item-l {
-    margin-right: .05rem;
-    margin-top: .05rem;
+    margin-right: 0.05rem;
+    margin-top: 0.05rem;
 }
 .goods-item-r {
-    margin-left: .05rem;
-    margin-top: .05rem;
+    margin-left: 0.05rem;
+    margin-top: 0.05rem;
 }
 .goods-name {
-  overflow: hidden;
-word-break: break-all;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .hm-flex {
@@ -326,7 +318,8 @@ word-break: break-all;
     display: -ms-flexbox;
     display: flex;
 }
-.hm-flex-1, .hm-flex-item {
+.hm-flex-1,
+.hm-flex-item {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
@@ -341,12 +334,65 @@ word-break: break-all;
     -ms-flex: 3;
     flex: 3;
 }
-.hm-margin-b, .hm-margin-b-m, .hm-margin-tb, .hm-margin-tb-m {
-    margin-bottom: .6rem;
+.hm-margin-b,
+.hm-margin-b-m,
+.hm-margin-tb,
+.hm-margin-tb-m {
+    margin-bottom: 0.6rem;
 }
 .category {
-    overflow:hidden;background:#fff;
-    li {padding:.27rem 0; box-sizing:border-box; text-align:center; font-size:.27rem;}
-    img {width:50%; min-width:1.01rem; max-width:1.92rem; display:block; margin:0 auto ;}
+    overflow: hidden;
+    background: #fff;
+    li {
+        padding: 0.27rem 0;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 0.27rem;
+    }
+    img {
+        width: 50%;
+        min-width: 1.01rem;
+        max-width: 1.92rem;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+#go-top,
+.go-top {
+    display: block;
+    width: 42px;
+    height: 42px;
+    position: fixed;
+    right: 0.53rem;
+    bottom: 1.71rem;
+    z-index: 999;
+    background-image: url("../../../assets/images/go_top-005163a986.png");
+    background-size: contain;
+    opacity: 0;
+    -webkit-transition: bottom 0.8s ease,opacity 0.6s ease;
+}
+#go-top span,
+.go-top span {
+    position: absolute;
+    bottom: 0.19rem;
+    width: 100%;
+    display: block;
+    height: 12px;
+    line-height: 0.32rem;
+    text-align: center;
+    font-size: 0.27rem;
+    color: #333;
+}
+.top-button-hide {
+    bottom: -64px;
+    opacity: 0;
+}
+.top-button-show {
+    bottom: 64px;
+    opacity: 1;
+}
+.swiper-pagination-bullet-active{
+  background:#e02e24;
 }
 </style>
