@@ -47,123 +47,128 @@
                 </ul>
             </div>
         </div>
+        <lyf-tab-bar :index="2"></lyf-tab-bar>
     </div>
 </template>
 
 <script>
-    import {
-            mapState,
-            mapActions
-    } from 'vuex'
-    import BScroll from 'better-scroll'
-    export default {
-        data() {
-            return {
-                l_h: 0,
-                r_h: 0,
-                listHeight: [],
-                scrollY: 0,
-            }
-        },
-        computed: {
-                ...mapState({
-                            class_list: state => state.class_index.class_list,
-                        is_load: state => state.class_index.is_load,
+import LyfTabBar from '../../layout/lyf-tab-bar';
+import {
+  mapState,
+  mapActions
+} from 'vuex'
+import BScroll from 'better-scroll'
+export default {
+  components: {
+    LyfTabBar
+  },
+  data() {
+    return {
+      l_h: 0,
+      r_h: 0,
+      listHeight: [],
+      scrollY: 0,
+    }
+  },
+  computed: {
+    ...mapState({
+      class_list: state => state.class_index.class_list,
+      is_load: state => state.class_index.is_load,
     }),
     currentIndex() {
-        for (let i = 0; i < this.listHeight.length; i++) {
-            //判断当currentIndex在height1和height2之间的时候显示
-            let height1 = this.listHeight[i];
-            let height2 = this.listHeight[i + 1];
-            //最后一个区间没有height2
-            if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-                return i;
-            }
+      for (let i = 0; i < this.listHeight.length; i++) {
+        //判断当currentIndex在height1和height2之间的时候显示
+        let height1 = this.listHeight[i];
+        let height2 = this.listHeight[i + 1];
+        //最后一个区间没有height2
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i;
         }
+      }
 
-        return 0;
+      return 0;
     }
-    },
-    mounted() {
-        if (!this.class_list) {
-            this.$store.dispatch('getClassIndexData', res => {
-                this.$nextTick(() => {
-                this._setListH()
+  },
+  mounted() {
+    if (!this.class_list) {
+      this.$store.dispatch('getClassIndexData', res => {
+        this.$nextTick(() => {
+          this._setListH()
         });
+      })
+    }
+  },
+  methods: {
+    _initScroll() {
+      if (this.root_list_scroll) {
+        this.root_list_scroll.refresh()
+      } else {
+        this.root_list_scroll = new BScroll(this.$refs.root_list, {
+          startX: 0,
+          startY: 0,
+          scrollY: true,
+          bounce: true,
+          click: true
         })
-        }
-    },
-    methods: {
-        _initScroll() {
-            if (this.root_list_scroll) {
-                this.root_list_scroll.refresh()
-            } else {
-                this.root_list_scroll = new BScroll(this.$refs.root_list, {
-                    startX: 0,
-                    startY: 0,
-                    scrollY: true,
-                    bounce: true,
-                    click: true
-                })
-            }
-            if (this.detail_list_scroll) {
-                this.detail_list_scroll.refresh()
-            } else {
-                this.detail_list_scroll = new BScroll(this.$refs.detail_list, {
-                    startX: 0,
-                    startY: 0,
-                    scrollY: true,
-                    bounce: true,
-                    click: true,
-                    probeType: 3,
-                })
-            }
-            var items = this.$refs.root_list_item;
-            //设置监听滚动位置
+      }
+      if (this.detail_list_scroll) {
+        this.detail_list_scroll.refresh()
+      } else {
+        this.detail_list_scroll = new BScroll(this.$refs.detail_list, {
+          startX: 0,
+          startY: 0,
+          scrollY: true,
+          bounce: true,
+          click: true,
+          probeType: 3,
+        })
+      }
+      var items = this.$refs.root_list_item;
+      //设置监听滚动位置
 
-            this.detail_list_scroll.on('scroll', (pos) => {
-                //scrollY接收变量
-                this.scrollY = Math.abs(Math.round(pos.y));
-            if (this.currentIndex == 5) {
-                let el = items[this.currentIndex];
-                this.root_list_scroll.scrollToElement(el, 700);
-            } else if (this.currentIndex < 5) {
-                let el = items[0];
-                this.root_list_scroll.scrollToElement(el, 700);
-            }
-        })
-        },
-        _setListH() {
-            var items = this.$refs.root_list_item;
-            var items_r = this.$refs.detail_list_item;
-            var a = 0;
-            var b = 0;
-            for (var index in items) {
-                a = a + items[index].clientHeight
-            }
-            this.l_h = a
-            //把第一个高度送入数组
-            this.listHeight.push(b);
-            for (var index in items_r) {
-                b = b + items_r[index].clientHeight
-                this.listHeight.push(b);
-            }
-            console.log(this.listHeight);
-            this.r_h = b
-            this.$nextTick(() => {
-                this._initScroll()
-        })
-        },
-        selectMenu(index) {
-            //运用BScroll接口，滚动到相应位置
-            let rList = this.$refs.detail_list_item
-            //获取对应元素的列表
-            let el = rList[index];
-            //设置滚动时间
-            this.detail_list_scroll.scrollToElement(el, 300);
-        },
-    }
-    }
+      this.detail_list_scroll.on('scroll', (pos) => {
+        //scrollY接收变量
+        this.scrollY = Math.abs(Math.round(pos.y));
+        if (this.currentIndex == 5) {
+          let el = items[this.currentIndex];
+          this.root_list_scroll.scrollToElement(el, 700);
+        } else if (this.currentIndex < 5) {
+          let el = items[0];
+          this.root_list_scroll.scrollToElement(el, 700);
+        }
+      })
+    },
+    _setListH() {
+      var items = this.$refs.root_list_item;
+      var items_r = this.$refs.detail_list_item;
+      var a = 0;
+      var b = 0;
+      for (var index in items) {
+        a = a + items[index].clientHeight
+      }
+      this.l_h = a
+      //把第一个高度送入数组
+      this.listHeight.push(b);
+      for (var index in items_r) {
+        b = b + items_r[index].clientHeight
+        this.listHeight.push(b);
+      }
+      console.log(this.listHeight);
+      this.r_h = b
+      this.$nextTick(() => {
+        this._initScroll()
+      })
+    },
+    selectMenu(index) {
+      //运用BScroll接口，滚动到相应位置
+      let rList = this.$refs.detail_list_item
+      //获取对应元素的列表
+      let el = rList[index];
+      //设置滚动时间
+      this.detail_list_scroll.scrollToElement(el, 300);
+    },
+  }
+}
 </script>
 
 <style lang="css">

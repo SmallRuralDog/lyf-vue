@@ -65,12 +65,15 @@
                 </div>
                 <div v-if="!load_more" slot="infinite" @click="goLoad" class="text-center">{{more_data}}</div>
             </scroll>
+            <lyf-tab-bar :index="0"></lyf-tab-bar>
         </div>
     </div>
 </template>
 
 <script>
+import LyfTabBar from '../../layout/lyf-tab-bar';
 require('vue-swipe/dist/vue-swipe.css');
+
 import {
     mapState,
     mapActions
@@ -82,8 +85,10 @@ import {
 import BScroll from 'better-scroll'
 export default {
     components: {
+        LyfTabBar,
         'swipe': Swipe,
-        'swipe-item': SwipeItem
+        'swipe-item': SwipeItem,
+
     },
     data() {
         return {

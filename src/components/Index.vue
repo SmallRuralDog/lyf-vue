@@ -1,5 +1,5 @@
 <template>
-<div class="" v-nav="{hideNavbar:true}" v-tabbar="{'menus': menus, menuColor: '#B5B5B5', activeMenuColor: '#EA5A49', onMenuClick: menuClicked}">
+<div class="" v-nav="{hideNavbar:true}">
     <transition>
         <keep-alive>
             <router-view></router-view>
