@@ -25,7 +25,7 @@
                         <li style="width: 25%;" v-for="item in subclass">
                             <div @click="switchbtn0( $index )">
                                 <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
-                                <img :src="item.logo">
+                                <img v-lazy="item.logo">
                                 <span>{{item.gc_name}}</span>
                                 <!-- </a> -->
                             </div>
