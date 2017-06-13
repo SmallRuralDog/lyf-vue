@@ -5,14 +5,17 @@ import Vonic from 'vonic'
 Vue.use(Vonic)
 
 //幻灯片插件
-import 'vue-swipe/dist/vue-swipe.css'
-import { Swipe, SwipeItem } from 'vue-swipe';
-Vue.component('swipe', Swipe);
-Vue.component('swipe-item', SwipeItem);
+//import 'vue-swipe/dist/vue-swipe.css'
+//import { Swipe, SwipeItem } from 'vue-swipe';
+//Vue.component('swipe', Swipe);
+//Vue.component('swipe-item', SwipeItem);
 
 
 import 'lib-flexible/flexible'
 import './assets/common.scss'
+//图标
+import './assets/icon/iconfont.css'
+
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   preLoad: 1.3,
@@ -34,7 +37,8 @@ const routes = [{
     component: Index,
     children: [
       {
-        path: 'home',
+        path: '/home',
+          name:'home',
         component: Home
       },
       {
@@ -95,6 +99,7 @@ const afterEach = (toRoute, fromRoute) => {
 Vonic.app.setConfig('beforeEach', beforeEach)
 Vonic.app.setConfig('afterEach', afterEach)
 
+//注册全局方法
 import api from './api/methods'
 Vue.prototype.$api = api;
 

@@ -12,9 +12,11 @@
             <scroll class="index-scroll page-content" style="top: 0;" :on-refresh="onRefresh" :on-infinite="onInfinite">
                 <!--:on-refresh="onRefresh"-->
                 <swiper :options="swiperOption"  v-show="active==0">
-                  <swiper-slide v-for="slide in swiper_data">
+                  <template v-for="slide in swiper_data">
+                  <swiper-slide>
                     <img v-lazy="slide.adv_content" alt="" style="background-color:#ffffff; width:100%; height:3.73rem;">
                   </swiper-slide>
+                  </template>
                   <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
                 <!--二级分类列表-->
@@ -392,6 +394,7 @@ export default {
     bottom: 64px;
     opacity: 1;
 }
+//幻灯片焦点颜色
 .swiper-pagination-bullet-active{
   background:#e02e24;
 }
