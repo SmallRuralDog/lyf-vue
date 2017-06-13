@@ -26,6 +26,7 @@ const state = {
     //more_data: '--- 到底了 ---',
     list,
     active:0,
+    init_load:false
 }
 // actions
 const actions = {
@@ -49,6 +50,7 @@ const actions = {
             context.commit("UPDATE_LIST", {
                 is_load: false,
                 load_more: false,
+                init_load:true,
                 more_data: '--- 加载失败，点击重新加载 ---',
             })
             $loading.hide();
@@ -62,7 +64,10 @@ const mutations = {
         if (state.list[state.active].page == 1) {
             if(state.active==0){
               state.goods_class = payload.data.data.goods_class
-                state.swiper_data = payload.data.data.slide.adv
+              state.swiper_data = payload.data.data.slide.adv
+
+
+
             }else {
               state.list[state.active].subclass = payload.data.data.goods_class
             }
@@ -77,6 +82,8 @@ const mutations = {
             state.list[state.active].load_more = false;
         }
         state.list[state.active].is_load = false;
+
+        state.init_load = true;
     },
     ['UPDATE'](state, payload) {
         for (var key in payload) {

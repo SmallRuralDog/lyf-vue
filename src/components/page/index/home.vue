@@ -25,7 +25,7 @@
                         <li style="width: 25%;" v-for="item in subclass">
                             <div @click="switchbtn0( $index )">
                                 <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
-                                <img v-lazy="item.logo">
+                                <img :src="item.logo">
                                 <span>{{item.gc_name}}</span>
                                 <!-- </a> -->
                             </div>
@@ -41,7 +41,7 @@
                     </ul>
                 </div>
 
-                <div class="haitao-middle-hint">
+                <div class="haitao-middle-hint" v-show="active==0">
                     <div class="haitao-middle-title">
                         <span><img v-lazy="tuijian_icon" style="width:2.67rem;"></span>
                     </div>
@@ -56,9 +56,9 @@
                     </div>
                 </div>
 
-                <div class="goods-list clear">
+                <div class="goods-list clear" v-for="(item,index) in goods_class" v-show="active == index">
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
-                    <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods">
+                    <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods[active].goods">
                       <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
                             <div class="hm-list-inner" style="padding:0">
                                     <img v-lazy="item.goods_image" style="width: 100%;">
@@ -119,8 +119,10 @@ export default {
     goods_class: state => state.home.goods_class,
     swiper_data: state => state.home.swiper_data,
     list: state => state.home.list,
+    init_load: state => state.home.init_load,
 
-    goods: state => state.home.list[state.home.active].goods,
+    //goods: state => state.home.list[state.home.active].goods,
+    goods: state => state.home.list,
     subclass: state => state.home.list[state.home.active].subclass,
     page: state => state.home.list[state.home.active].page,
     is_load: state => state.home.list[state.home.active].is_load,
@@ -129,7 +131,7 @@ export default {
 
   }),
   mounted() {
-    if (this.goods.length <= 0) {
+    if (!this.init_load) {
       this.$store.dispatch('getData', res => {
         this.$nextTick(() => {
           this.initScroll()
@@ -171,6 +173,7 @@ export default {
       })
     },
     changeMenu(index) {
+      //Vonic.app.pageContentScrollTop(h.scrollTop)
       //移动menu
       this.active = index;
       this.$store.commit('UPDATE', { active: index })
@@ -184,8 +187,16 @@ export default {
       }
       //请求数据
       if (this.list[this.active].init == false) {
-        this.$store.dispatch('getData', res => {})
+        this.$store.dispatch('getData', res => {
+          this.$nextTick(()=>{
+            document.querySelector(".scroll").scrollTop = 0
+          })
+        })
       }
+
+      this.$nextTick(()=>{
+        document.querySelector(".scroll").scrollTop = 0
+      })
 
     },
     goodsClick(id) {
@@ -361,7 +372,8 @@ export default {
         padding: 0.27rem 0;
         box-sizing: border-box;
         text-align: center;
-        font-size: 0.27rem;
+        font-size: .32rem;
+        color: #333333;
     }
     img {
         width: 50%;
