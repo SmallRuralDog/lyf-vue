@@ -9,7 +9,7 @@
                 </div>
                 <a class="search-btn J_search-btn"><i class="ion-gear-b"></i></a>
             </div>
-            <scroll class="index-scroll page-content" style="top: 0;" :on-refresh="onRefresh" :on-infinite="onInfinite">
+            <scroll class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite">
                 <!--:on-refresh="onRefresh"-->
                 <swiper :options="swiperOption"  v-show="active==0">
                   <template v-for="slide in swiper_data">
@@ -40,6 +40,22 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="haitao-middle-hint">
+                    <div class="haitao-middle-title">
+                        <span><img v-lazy="tuijian_icon" style="width:2.67rem;"></span>
+                    </div>
+                    <div class="haitao-service-list">
+                        <div class="haitao-service-item haitao-service-item-0">
+                            <span>正品保障</span>
+                        </div><div class="haitao-service-item haitao-service-item-1">
+                            <span>包税包邮</span>
+                        </div><div class="haitao-service-item haitao-service-item-2">
+                            <span>极速发货</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="goods-list clear">
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
                     <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods">
@@ -87,6 +103,7 @@ export default {
   },
   data() {
     return {
+      tuijian_icon:require("../../../assets/images/home_tuijian.png"),
       m_w: 0,
       menu_item_width: 0,
       menu_len: 0,
@@ -94,12 +111,7 @@ export default {
       step_width: 0,
       swiperOption: {
         autoplay: 5000,
-        initialSlide: 1,
-        loop: true,
-        pagination: '.swiper-pagination',
-        onSlideChangeEnd: swiper => {
-          console.log('onSlideChangeEnd', swiper.realIndex)
-        }
+        pagination: '.swiper-pagination'
       }
     }
   },
@@ -363,8 +375,8 @@ export default {
 #go-top,
 .go-top {
     display: block;
-    width: 42px;
-    height: 42px;
+    width: 1.12rem;
+    height: 1.12rem;
     position: fixed;
     right: 0.53rem;
     bottom: 1.71rem;
@@ -380,7 +392,7 @@ export default {
     bottom: 0.19rem;
     width: 100%;
     display: block;
-    height: 12px;
+    height: .32rem;
     line-height: 0.32rem;
     text-align: center;
     font-size: 0.27rem;
@@ -391,11 +403,66 @@ export default {
     opacity: 0;
 }
 .top-button-show {
-    bottom: 64px;
+    bottom: 1.71rem;
     opacity: 1;
 }
 //幻灯片焦点颜色
 .swiper-pagination-bullet-active{
   background:#e02e24;
+}
+.haitao-middle-hint {
+    background-color: #fff;
+    padding: .32rem .05rem;
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+    margin-top: .27rem;
+}
+.haitao-middle-hint .haitao-middle-title {
+    font-size: 0;
+    text-align: center;
+    color: #58595b;
+    margin-bottom: .13rem;
+    font-weight: 700;
+}
+.haitao-middle-hint .haitao-middle-title span {
+    font-size: .43rem;
+    line-height: .43rem;
+}
+.haitao-middle-hint .haitao-service-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+}
+.haitao-middle-hint .haitao-service-list .haitao-service-item {
+    position: relative;
+    padding: 0 .4rem 0 .53rem;
+    font-size: .32rem;
+    color: #9c9c9c;
+}
+.haitao-middle-hint .haitao-service-list .haitao-service-item-0:before {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAYUExURQAAAJycnJycnJycnJycnJycnJycnJycnNomLWoAAAAHdFJOUwDCFkXmm3uyI8i9AAAAs0lEQVQY02WRyQ4CIQyGO0TlSjIuVxLHB8CMd5XEs0vieUycu3rh9W2LLEITaD74KV0AyHZzd7hBMPFcbmH9OOkf91d2G+txasP5md0l6MSCr1UM1JCg1ymw9Ssa3s1Qs3Jkb3w7wERnLPZgvNJ518L9j0c8ydnAkf5VgO8pjw4+uMtXYBnZ6yXrE3ccL7Hh/xKPnE/ilvJtnDdF+WI9ibGest6yH1W/yn5W/S7nUc0rn+cXvM8p6hnkJwkAAAAASUVORK5CYII=);
+}
+.haitao-middle-hint .haitao-service-list .haitao-service-item-1:before {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAeUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnH07P/YAAAAJdFJOUwDhB8IYmjhRe2n7kmUAAADNSURBVBjTY2AAAqZSw5nC4QoMUMDUaJGi5NYsARMoDAFTruIQrqoYVDwxCKw6GKaOxRTEYjWCmcOgHADS7QDnMwFNYALqZgMZ6JoANEGBgQOohnWiAwOLJIjRwKAIVM4iKcLgOBHEEGIoBml0nOgCFAICc4YIsE2SghPBxrYymAFJy5kgMBnISmYQQeE7MkyCWD0TQmli8EVQ+I4Y5kWg8Fsh7oGrNwe7F84HuhfkHzgf6B8mSGgZQ0JMASM8MMILPTzRwxsjPjDiCzk+AS2lM6tGE5W0AAAAAElFTkSuQmCC);
+}
+.haitao-middle-hint .haitao-service-list .haitao-service-item-2:before {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnHeZTvgAAAALdFJOUwCWCv7mGsF4UTevIbFztQAAAPdJREFUGNNtUcFKw0AQHQMh19ol6DEmxXPj/oC0aY23DfTSm2ih1VMkwXPF4gdo2x8Q/U5n5iUgiXuZnXmzb9+8IeLjva7s/Dyi5nj1+hAvX27awi7UUORIT26b+n6g4aft858Uvm956FIadk7vgRAzg4fXvimFIaIAJIW9k7cljRxgI3V/Qu+AU+2nDZ2pQhN+beXyTI8SLlI3/Yj5cqQZYLLWsq4FXQGmOpsyQ6J5lWUlU0aSS39i7dg3Q5J+4fPiz2uFmU//o7dvE+I/6KlOUwc90GsAs17M8wCY58G8FSzkeeFHAKPzf/zq+tnzu7uP3r7+7vMXPpYvPI7Ew5IAAAAASUVORK5CYII=);
+}
+.haitao-middle-hint .haitao-service-list .haitao-service-item-0:before, .haitao-middle-hint .haitao-service-list .haitao-service-item-1:before, .haitao-middle-hint .haitao-service-list .haitao-service-item-2:before {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    content: '';
+    height: .43rem;
+    width: .43rem;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: .4rem .4rem;
 }
 </style>

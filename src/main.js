@@ -20,7 +20,6 @@ import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   preLoad: 1.3,
     try: 3,
-  //attempt: 1
 })
 // Page Components
 const Index = resolve => require(['./components/Index'], resolve)

@@ -152,7 +152,7 @@ export default {
 }
 
 .active .fb-chat,.active .fb-class,.active .fb-home,.active .fb-oversea,.active .fb-rank,.active .fb-user,.fb-chat,.fb-class,.fb-home,.fb-oversea,.fb-rank,.fb-user {
-	background: url("http://cdn.yangkeduo.com/assets/img/tabbar_v7_3x-6ac59b7c5a.png") no-repeat;
+	background: url('../../assets/images/tabbar.png') no-repeat;
 	background-size: auto 23px;
 	content: "";
 	height: 23px;
