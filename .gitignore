@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+dest/
 node_modules/
 npm-debug.log*
 yarn-debug.log*
