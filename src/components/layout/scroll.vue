@@ -150,11 +150,14 @@ export default {
     infiniteDone() {
       this.infiniteLoading = false
     },
-    getscrollTop(){
-      let scrollTop = this.$el.scrollTop
-      return scrollTop
+    getscrollTop(cb){
+      this.$nextTick(()=>{
+        let scrollTop = this.$el.scrollTop
+        cb(scrollTop)
+      })
     },
     setscrollTop(scroll){
+
       this.$el.scrollTop = scroll
     },
     onScroll(e) {

@@ -40,10 +40,9 @@ const actions = {
             is_load: true
         })
         var gc=state.goods_class[state.active]
-        console.log(state.active,JSON.stringify(gc))
+        //console.log(state.active,JSON.stringify(gc))
         var gc_id=0
         if(gc) gc_id=gc.gc_id
-
         var showpage=1
         var activelist=state.list[state.active]
         if(activelist) showpage=state.list[state.active].page
@@ -70,9 +69,6 @@ const mutations = {
             if(state.active==0){
               state.goods_class = payload.data.data.goods_class
               state.swiper_data = payload.data.data.slide.adv
-
-
-
             }else {
               state.list[state.active].subclass = payload.data.data.goods_class
             }
@@ -103,9 +99,7 @@ const mutations = {
 
     },
     ['UPDATE_HOME_LIST_SCROLL'](state, payload){
-      for (var key in payload) {
-        state.list_scroll[state.active][key] = payload[key]
-      }
+      state.list_scroll[payload.active].scroll = payload.scrol
     }
 }
 export default {

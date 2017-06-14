@@ -177,8 +177,11 @@ export default {
       })
     },
     changeMenu(index) {
-      //设置当前滚动距离
-      this.$store.commit('UPDATE_HOME_LIST_SCROLL', {scroll: this.st })
+      //设置当前滚动距离(不准确)
+      let o_scrol = this.$refs.lyf_scroll.$el.scrollTop;
+      let o_active = this.active;
+      //this.$store.commit('UPDATE_HOME_LIST_SCROLL', {active:o_active,scrol:o_scrol})
+
       //移动menu
       this.active = index;
       this.$store.commit('UPDATE', { active: index })
@@ -192,14 +195,15 @@ export default {
       if (this.list[this.active].init == false) {
         this.$store.dispatch('getData', res => {
           this.$nextTick(()=>{
-            this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
+            //this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
+            this.$refs.lyf_scroll.setscrollTop(0)
             this.$refs.lyf_scroll.infiniteDone()
           })
         })
       }else{
         this.$nextTick(()=>{
-          console.log(this.list_scroll);
-          this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
+          //console.log(this.list_scroll);
+          this.$refs.lyf_scroll.setscrollTop(0)
           this.$refs.lyf_scroll.infiniteDone()
 
         })
