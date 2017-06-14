@@ -47,6 +47,7 @@ const routes = [{
       },
       {
         path: 'class_all',
+        name:"class_all",
         component: ClassAll
       },
       {

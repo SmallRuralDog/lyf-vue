@@ -130,7 +130,7 @@ export default {
       listHeight: [],
       scrollY: 0,
       show_search:false,
-      search_key:''
+      search_key:'',
     }
   },
   computed: {
@@ -153,6 +153,11 @@ export default {
     }
   },
   mounted() {
+    let s_h = this.$route.params.show_search;
+    if(s_h==1){
+      this.show_search = true
+    }
+
     if (!this.class_list) {
       $loading.show('拼命加载中..')
       this.$store.dispatch('getClassIndexData', res => {

@@ -7,7 +7,7 @@
                         <li ref="top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index)">{{item.gc_name}}</li>
                     </ul>
                 </div>
-                <a class="search-btn J_search-btn"><i class="ion-gear-b"></i></a>
+                <a class="search-btn J_search-btn" @click="go_search()"><i class="ion-search"></i></a>
             </div>
             <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="260" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->
@@ -223,6 +223,14 @@ export default {
         name: 'catgoods',
         params: {
           gc_id: gc_id,
+        }
+      });
+    },
+    go_search(){
+      $router.push({
+        name: 'class_all',
+        params: {
+          show_search: 1,
         }
       });
     },

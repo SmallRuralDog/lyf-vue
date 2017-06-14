@@ -10,7 +10,33 @@ img {
 // 图片懒加载动画
 img[lazy=loading] {opacity:0;}
 img[lazy=loaded] {transition:opacity .2s; opacity:1;}
-
+.color-assertive{
+  color:#EA5A49;
+}
+.color-positive{
+  color:#4A90E2;
+}
+.color-balanced{
+  color:#44CC00;
+}
+.color-energized{
+  color:#FFBD17;
+}
+.color-calm{
+  color:#11C1F3;
+}
+.color-dark{
+  color:#484746;
+}
+.color-royal{
+  color:#B5B5B5;
+}
+.color-stable{
+  color:#F5F5F5;
+}
+.color-light{
+  color:#FFFFFF;
+}
 .tabbar{
   box-shadow: none;
   height: 1.31rem;
