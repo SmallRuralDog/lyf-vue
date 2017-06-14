@@ -9,7 +9,7 @@
                 </div>
                 <a class="search-btn J_search-btn"><i class="ion-gear-b"></i></a>
             </div>
-            <scroll class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite">
+            <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="260" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->
                 <swiper :options="swiperOption"  v-show="active==0">
                   <template v-for="slide in swiper_data">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="goods-list clear" v-for="(item,index) in goods_class" v-show="active == index">
+                <div class="goods-list clear" v-for="(item,index) in goods_class" v-if="active == index">
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
                     <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods[active].goods">
                       <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
@@ -89,6 +89,7 @@
 
 <script>
 import LyfTabBar from '../../layout/lyf-tab-bar';
+import scroll from '../../layout/scroll';
 import {
   mapState,
   mapActions
@@ -98,6 +99,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   components: {
     LyfTabBar,
+    scroll,
     swiper,
     swiperSlide
   },
@@ -105,6 +107,7 @@ export default {
     return {
       tuijian_icon:require("../../../assets/images/home_tuijian.png"),
       m_w: 0,
+      st:0,
       menu_item_width: 0,
       menu_len: 0,
       active: 0,
@@ -123,6 +126,7 @@ export default {
 
     //goods: state => state.home.list[state.home.active].goods,
     goods: state => state.home.list,
+    list_scroll: state => state.home.list_scroll[state.home.active].scroll,
     subclass: state => state.home.list[state.home.active].subclass,
     page: state => state.home.list[state.home.active].page,
     is_load: state => state.home.list[state.home.active].is_load,
@@ -142,10 +146,10 @@ export default {
   },
   methods: {
     initScroll() {
-      if (this.scroll) {
-        this.scroll.refresh()
+      if (this.top_menu_scroll) {
+        this.top_menu_scroll.refresh()
       } else {
-        this.scroll = new BScroll(this.$refs.top_menu, {
+        this.top_menu_scroll = new BScroll(this.$refs.top_menu, {
           startX: 0,
           startY: 0,
           scrollX: true,
@@ -173,31 +177,33 @@ export default {
       })
     },
     changeMenu(index) {
-      //Vonic.app.pageContentScrollTop(h.scrollTop)
+      //设置当前滚动距离
+      this.$store.commit('UPDATE_HOME_LIST_SCROLL', {scroll: this.st })
       //移动menu
       this.active = index;
       this.$store.commit('UPDATE', { active: index })
       if (index >= 1 && index < this.menu_len) {
-        this.scroll.scrollTo(-this.step_width * (index - 1), 0, 500);
-        console.log(index, -this.step_width * (index - 1));
+        this.top_menu_scroll.scrollTo(-this.step_width * (index - 1), 0, 500);
       }
       if (index == this.menu_len) {
-        this.scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
-        console.log(index, -this.step_width * (index - 2));
+        this.top_menu_scroll.scrollTo(-this.step_width * (index - 2), 0, 500);
       }
       //请求数据
       if (this.list[this.active].init == false) {
         this.$store.dispatch('getData', res => {
           this.$nextTick(()=>{
-            document.querySelector(".scroll").scrollTop = 0
+            this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
+            this.$refs.lyf_scroll.infiniteDone()
           })
         })
+      }else{
+        this.$nextTick(()=>{
+          console.log(this.list_scroll);
+          this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
+          this.$refs.lyf_scroll.infiniteDone()
+
+        })
       }
-
-      this.$nextTick(()=>{
-        document.querySelector(".scroll").scrollTop = 0
-      })
-
     },
     goodsClick(id) {
       $router.push({
@@ -237,6 +243,9 @@ export default {
         done()
       })
     },
+    onScrollListener(res){
+      this.st = res
+    },
     goTop() {
       document.querySelector(".scroll").scrollTop = 0
     }
@@ -250,7 +259,6 @@ export default {
     background: #ffffff;
     z-index: 2000;
     position: fixed;
-    border-bottom: 0.025rem solid #e0e0e0;
     top: 0;
     left: 0;
     width: 100%;

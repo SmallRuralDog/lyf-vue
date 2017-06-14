@@ -1,6 +1,7 @@
 import http from '../../api/http.js'
 
 let list = []
+let list_scroll = []//列表滚动距离
 let catLen=12
 for (var i=0;i<catLen;i++){
     list.push({
@@ -12,6 +13,9 @@ for (var i=0;i<catLen;i++){
         is_load: false,
         load_more: true,
         more_data: '--- 到底了 ---',
+    })
+    list_scroll.push({
+      scroll:0,
     })
 }
 
@@ -25,6 +29,7 @@ const state = {
     //load_more: true,
     //more_data: '--- 到底了 ---',
     list,
+    list_scroll,
     active:0,
     init_load:false
 }
@@ -97,6 +102,11 @@ const mutations = {
         }
 
     },
+    ['UPDATE_HOME_LIST_SCROLL'](state, payload){
+      for (var key in payload) {
+        state.list_scroll[state.active][key] = payload[key]
+      }
+    }
 }
 export default {
     state,
