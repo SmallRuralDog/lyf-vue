@@ -23,7 +23,7 @@
                 <div class="hm-content" v-show="subclass.length>0" style="margin-bottom: 0.1rem;">
                     <ul class="category hm-flex" style="flex-wrap:wrap;">
                         <li style="width: 25%;" v-for="item in subclass">
-                            <div @click="switchbtn0( $index )">
+                            <div @click="go_cat(item.gc_id)">
                                 <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
                                 <img :src="item.logo">
                                 <span>{{item.gc_name}}</span>
@@ -31,7 +31,7 @@
                             </div>
                         </li>
                         <li style="width: 25%;">
-                            <div @click="">
+                            <div @click="go_cat(goods_class[active].gc_id)">
                                 <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
                                 <img src="../../../assets/images/more_cat.png">
                                 <span>查看全部</span>
@@ -215,6 +215,14 @@ export default {
         name: 'goods_detail',
         params: {
           id: id,
+        }
+      });
+    },
+    go_cat(gc_id){
+      $router.push({
+        name: 'catgoods',
+        params: {
+          gc_id: gc_id,
         }
       });
     },
