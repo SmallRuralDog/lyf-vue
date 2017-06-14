@@ -9,7 +9,7 @@
                 </div>
                 <a class="search-btn J_search-btn" @click="go_search()"><i class="ion-search"></i></a>
             </div>
-            <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="260" :onScrollListener="onScrollListener">
+            <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="360" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->
                 <swiper :options="swiperOption"  v-show="active==0">
                   <template v-for="slide in swiper_data">
