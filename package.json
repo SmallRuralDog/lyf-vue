@@ -15,6 +15,7 @@
     "es6-promise": "^4.1.0",
     "fastclick": "^1.0.6",
     "lib-flexible": "^0.3.2",
+    "mint-popup": "^2.0.0",
     "object-assign": "^4.1.1",
     "storage-js-iso": "^0.2.0",
     "vonic": "^2.0.0-beta.15",

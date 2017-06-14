@@ -7,36 +7,72 @@
   <div class="page-content" v-show="init">
     <!-- 页面内容 -->
 
-
-    <swiper :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
-      <template v-for="slide in data.goods_image">
+        <swiper :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
+          <template v-for="slide in data.goods_image">
                 <swiper-slide>
                     <img :src="slide" alt="" style="background-color:#ffffff; width:100%;">
                 </swiper-slide>
-</template>
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
+            </template>
+                    <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
 
-            <!--<div v-bind:style="{height: swipe_height+'px'}">-->
-                <!--<swipe :auto="4000" >-->
-                    <!--<template v-for="item in data.goods_image">
--->
-<!--<swipe-item>-->
-<!--<img :src="item" alt="" style="background-color:#ffffff; width:100%; height:100%;">-->
-<!--</swipe-item>-->
-<!--
-</template>-->
+          <div class="infos">
+              <div class="area">
+                  <div class="prices flex-center align-bottom">
+                      <p class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price}}</i></p>
+                      <p class="price-old">¥268</p>
+                      <p class="sale-tag-wrapper">
 
-                <!--</swipe>-->
-            <!--</div>-->
+                          <span class="sale-tag" style="background:#e02e24">拼团价</span>
 
-            <div>
-                ￥{{data.goods_info.goods_price}}
-            </div>
-            <div>{{data.goods_info.goods_name}}</div>
+                          <span class="sale-tag" style="background:#e02e24">包邮</span>
 
-            <div>图文详情</div>
-            <div></div>
+                      </p>
+                  </div>
+              </div>
+              <div class="product">
+                  <h3>
+                    <span>{{data.goods_info.goods_name}}</span>
+                  </h3>
+              </div>
+          </div>
+
+          <item class="item-icon-right promise-block hm-margin-b">
+
+              <div class="hm-flex">
+                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>正品保证</div>
+                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>全场包邮</div>
+                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>24h发货</div>
+                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>售后补贴</div>
+              </div>
+              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+          </item>
+
+          <item class="item-icon-right">
+
+              已选"深蓝色" "32"
+              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+          </item>
+
+
+
+          <!--<mt-popup-->
+                  <!--v-model="popupVisible"-->
+                  <!--popup-transition="popup-fade"-->
+                  <!--position="bottom"-->
+                  <!--style="width:100%;"-->
+          <!--&gt;-->
+              <!--<div>-->
+                  <!--sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>-->
+              <!--</div>-->
+
+
+          <!--</mt-popup>-->
+
+
+
+
+
         </div>
         <!--固定不动的元素 要放到page-content的外面-->
         <div class="submit-order">
@@ -60,15 +96,25 @@
                 <div class="hm-flex-2 buy-align"  @click="buy">
                     <span>立即购买</span>
                 </div>
-
-
             </div>
-
         </div>
+
+        {{/*属性选择*/}}
+        <actionsheet  :data="data" :pick="pick" :goodsid="goods_id"></actionsheet>
+    <!--:show="popupVisible"-->
+
+
+
+
     </div>
 </template>
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import 'mint-popup/lib/index.css'
+
+import actionsheet from '../layout/action-sheet.vue';
+import {mapState,mapActions} from 'vuex'
+
 
 function dataInit() {
   return {
@@ -94,14 +140,28 @@ function dataInit() {
         console.log('onSlideChangeEnd', swiper.realIndex)
       }
     },
+    popupVisible:false,
+    pick : {
+        complete  : false,  // 用户是否完成选择
+        showSheet : false,  // 是否显示拾取器窗口
+        operation : 0,      // 拾取器被什么方法调用，0：无   1：购物车   2：立即购买
+        quantity  : 1,      // 商品数量
+        price     : null,   // 商品价格
+        warehouse : null,   // 商品库存
+        value : [],
+        post  : "",         // 提交数据包
+    },
   }
 }
 export default {
-  components: {
-    swiper,
-    swiperSlide
-  },
+    name:'goods_detail',
   data: dataInit,
+    components: {
+        swiper,
+        swiperSlide,
+        actionsheet
+
+    },
 
   created() {
 
@@ -134,14 +194,28 @@ export default {
       this.$router.push('/home')
     },
     add() {
-
+        this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
     },
     buy() {
+        this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
 
     },
+      quit(){
+          this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:false})
+      }
+//      ...mapMutations([
+//          'open_sheet':this.$store.commit('ACTIONSHEET_UPDATE',{popupVisible:true})
+//          'close_sheet',
+//      ]),
 
   },
+    computed:{
+        ...mapState({
+            showpicksheet:state=>state.actionsheet.showpicksheet,
+        }),
+    },
   watch: {
+
     gid(val, newVal) {
       console.log('watch', val, newVal)
       this.goods_id = val
@@ -262,5 +336,72 @@ $color-theme: #e02e24;
         z-index: 100;
     }
 
+}
+.promise-block{
+    font-size: 12px;
+    i{font-size: 12px;color:$color-theme;margin-right: 5px;}
+    .hm-flex-1{text-align: center;color:#666}
+}
+
+//贝贝样式
+  .flex-center {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  }
+.flex-center.align-bottom {
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+.infos {
+    padding:10px;
+    background-color: #fff;
+}
+.infos .area .prices .sale-tag-wrapper {
+    display: inline-block;
+    margin-left: .34133333rem;
+    -webkit-transform: scale(.6);
+    -moz-transform: scale(.6);
+    transform: scale(.6);
+    -webkit-transform-origin: left bottom;
+    transform-origin: left bottom;
+}
+.infos .area .prices .sale-tag {
+    display: inline-block;
+    margin: 0 .17066667rem .04266667rem;
+    padding:0 5px;
+    color: #fff;
+    line-height: 2;
+    font-size: 12px;
+}
+.infos .area .prices span {
+    vertical-align: bottom;
+}
+.infos .area .prices .price {
+    /*display: inline-block;*/
+    /*line-height: 1;*/
+    font-size: 15px;
+}
+.infos .area .prices .price i {
+    font-size: 24px;
+    /*line-height: 1.024rem;*/
+    margin: 0 .064rem;
+}
+.infos .area .prices .price-old {
+    margin-left: .256rem;
+    /*display: inline-block;
+    line-height: 1;*/
+    font-size: 13px;
+    text-decoration: line-through;
+    color: #8f8f8f;
+}
+.infos .product h3 {
+    font-size: 18px;
 }
 </style>

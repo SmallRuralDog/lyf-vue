@@ -4,12 +4,9 @@ Vue.use(VueRouter)
 import Vonic from 'vonic'
 Vue.use(Vonic)
 
-//幻灯片插件
-//import 'vue-swipe/dist/vue-swipe.css'
-//import { Swipe, SwipeItem } from 'vue-swipe';
-//Vue.component('swipe', Swipe);
-//Vue.component('swipe-item', SwipeItem);
-
+//popup插件
+import { Popup } from 'mint-ui';
+Vue.component(Popup.name, Popup);
 
 import 'lib-flexible/flexible'
 import './assets/common.scss'
