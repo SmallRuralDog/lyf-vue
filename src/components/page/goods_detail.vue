@@ -124,9 +124,11 @@ function dataInit() {
       goods_image: [],
       goods_info: {
         goods_price: 0,
-        goods_name: ''
-      }
-
+        goods_name: '',
+        spec_name:[],
+        spec_value:[],
+        goods_spec:[]
+      },
     },
     swipe_height: 100,
     cartNumber: 0,
@@ -134,11 +136,7 @@ function dataInit() {
       autoplay: 4000,
       initialSlide: 1,
       loop: true,
-      pagination: '.swiper-pagination',
-
-      onSlideChangeEnd: swiper => {
-        console.log('onSlideChangeEnd', swiper.realIndex)
-      }
+      pagination: '.swiper-pagination'
     },
     popupVisible:false,
     pick : {
@@ -180,7 +178,6 @@ export default {
         //            this.init=true;
         this.$nextTick(() => {
           this.init = true;
-          console.log('this.$nextTlick')
         })
 
       }, err => {
@@ -201,6 +198,7 @@ export default {
 
     },
       quit(){
+        console.log("quit");
           this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:false})
       }
 //      ...mapMutations([
