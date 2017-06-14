@@ -11,7 +11,7 @@
     <swiper :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="slide in data.goods_image">
                 <swiper-slide>
-                    <img v-lazy="slide" alt="" style="background-color:#ffffff; width:100%;">
+                    <img :src="slide" alt="" style="background-color:#ffffff; width:100%;">
                 </swiper-slide>
 </template>
                 <div class="swiper-pagination" slot="pagination"></div>
