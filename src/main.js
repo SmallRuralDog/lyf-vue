@@ -30,6 +30,7 @@ const User = resolve => require(['./components/page/index/user.vue'], resolve)
 const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
 const goods_detail = resolve => require(['./components/page/goods_detail.vue'], resolve)
 const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
+const address = resolve => require(['./components/page/user/addresses.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -67,6 +68,11 @@ const routes = [{
         path: '/catgoods/:gc_id',
         name: 'catgoods',
         component: catgoods
+      },
+      {
+        path: '/address',
+        name: 'address',
+        component: address
       }
     ]
 

@@ -41,6 +41,9 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
   box-shadow: none;
   height: 1.31rem;
 }
+.pd-10{
+  padding: .27rem;
+}
 .tabbar:before {
     position: absolute;
     content: "";
@@ -76,6 +79,7 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
   padding: 1px 2px;
   border-radius: 2px;
 }
+
 
 //原样式
 

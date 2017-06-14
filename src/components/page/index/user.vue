@@ -69,7 +69,7 @@
                 <div class="item item-divider">
                     必备工具
                 </div>
-                <item class="item-icon-left item-icon-right">
+                <item class="item-icon-left item-icon-right" @click.native='this.$router.push({name:"address"})'>
                     <i class="icon ion-ios-navigate dark"></i>
                     收货地址
                     <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
