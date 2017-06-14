@@ -1,7 +1,7 @@
 <template>
 <div class="" v-nav="{hideNavbar:true}">
     <transition name="fade">
-        <keep-alive>
+        <keep-alive exclude="catgoods">
             <router-view></router-view>
         </keep-alive>
     </transition>

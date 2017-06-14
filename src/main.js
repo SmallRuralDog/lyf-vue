@@ -29,6 +29,7 @@ const Cart = resolve => require(['./components/page/index/cart.vue'], resolve)
 const User = resolve => require(['./components/page/index/user.vue'], resolve)
 const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
 const goods_detail = resolve => require(['./components/page/goods_detail.vue'], resolve)
+const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -55,11 +56,18 @@ const routes = [{
       {
         path: 'user',
         component: User
-      }, {
+      },
+      {
         path: '/goods/:id',
         name: 'goods_detail',
         component: goods_detail
-      }]
+      },
+      {
+        path: '/catgoods/:gc_id',
+        name: 'catgoods',
+        component: catgoods
+      }
+    ]
 
   }
 ]

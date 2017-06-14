@@ -97,6 +97,7 @@ import {
 import BScroll from 'better-scroll'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
+  name:"home",
   components: {
     LyfTabBar,
     scroll,

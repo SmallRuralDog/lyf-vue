@@ -29,13 +29,13 @@
                             <div class="tab">
                                 <span>{{item.gc_name}}</span>
                             </div>
-                            <div class="show-all">
+                            <div class="show-all" @click="go_cat(item.gc_id)">
                                 查看更多
                                 <img class="detail-arrow" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAQBAMAAADdUfNzAAAAIVBMVEUAAACcnJycnJycnJycnJycnJycnJycnJycnJycnJycnJx3mU74AAAAC3RSTlMAfw5vJHdYSjUbQQwBkC0AAAAySURBVAjXY+AoYgCCicIKQFJV0AhIsgiCOY6onAQgySUYAGFDxMFqIEywXpg5IDNhAAB0CwdERcuYjQAAAABJRU5ErkJggg==">
                             </div>
                         </div>
                         <ul class="detail">
-                            <li v-for="chidren in item.children" class="detail-item">
+                            <li v-for="chidren in item.children" class="detail-item" @click="go_cat(chidren.gc_id)">
                                 <img v-lazy="chidren.logo">
                                 <p>{{chidren.gc_name}}</p>
                             </li>
@@ -119,6 +119,7 @@ import {
 } from 'vuex'
 import BScroll from 'better-scroll'
 export default {
+  name:"class_all",
   components: {
     LyfTabBar
   },
@@ -163,6 +164,7 @@ export default {
     }
   },
   methods: {
+
     _initScroll() {
       if (this.root_list_scroll) {
         this.root_list_scroll.refresh()
@@ -237,6 +239,14 @@ export default {
     },
     clear_search(){
       this.search_key = ''
+    },
+    go_cat(gc_id){
+      $router.push({
+        name: 'catgoods',
+        params: {
+          gc_id: gc_id,
+        }
+      });
     }
   }
 }
