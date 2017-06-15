@@ -9,15 +9,15 @@
 <template lang="html">
 
 <div v-if="show_page">
-    <div class="page-content">
+    <div class="page-content" style="margin-bottom:2.64rem;">
         <div class="cartbuy">
-            <div class="allItemv2" v-for="store in cart_list">
+            <div class="allItemv2" v-for="(store,s_key,s_index) in cart_list">
                 <div class="bundlev2" id="bundlev2_s_92042735">
                     <div class="shop">
                         <div class="o-t-title-shop">
                             <div class="tcont">
                                 <div class="shopcb">
-                                    <p>
+                                    <p v-if="false">
                                         <input :id="'cb-'+store.store_id" class="o-t-cb" type="checkbox">
                                         <label :for="'cb-'+store.store_id"></label>
                                     </p>
@@ -61,12 +61,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="itemv2 edit-false" v-for="goods in store.goods">
+                        <div class="itemv2 edit-false" v-for="(goods,index) in store.goods">
                             <div class="item-box" style="background:#fff8f4;" v-if="!store.is_edit">
                                 <div class="item-list o-t-item undefined">
                                     <div class="item-cb">
                                         <p>
-                                            <input :id="'cb-'+goods.cart_id" type="checkbox" class="cb o-t-cb">
+                                            <input :id="'cb-'+goods.cart_id" type="checkbox" v-model="goods_all_list[goods.cart_id].is_check"  class="cb o-t-cb">
                                             <label :for="'cb-'+goods.cart_id"></label>
                                         </p>
                                     </div>
@@ -87,7 +87,9 @@
                                                         <p>{{goods.goods_spec_text}}</p>
                                                     </div>
                                                 </a>
-                                                <div class="item-logos"></div>
+                                                <div class="item-logos">
+
+                                                </div>
                                                 <div class="pay">
                                                     <div class="pay-price">
                                                         <div class="price">
@@ -120,7 +122,7 @@
                             <div class="item-edit o-t-item undefined" style="background:#fff8f4;" v-if="store.is_edit">
                                 <div class="item-cb">
                                     <p>
-                                        <input :id="'cb-'+goods.cart_id" type="checkbox" class="cb o-t-cb">
+                                        <input :id="'cb-'+goods.cart_id" type="checkbox" class="cb o-t-cb" v-model="goods_all_list[goods.cart_id].is_check">
                                         <label :for="'cb-'+goods.cart_id"></label>
                                     </p>
                                 </div>
@@ -134,13 +136,13 @@
                                         <div class="item-info2">
                                             <div class="edit-quantity">
                                                 <p class="btn-minus">
-                                                    <a class="btn minus off" min="1"></a>
+                                                    <a @click="cut_goods_num(store.store_id,index)" class="btn minus off" min="1"></a>
                                                 </p>
                                                 <p class="btn-input">
                                                     <input type="tel" max="2" min="1" v-model="goods.goods_num">
                                                 </p>
                                                 <p class="btn-plus">
-                                                    <a class="btn plus" max="2"></a>
+                                                    <a @click="add_goods_num(store.store_id,index)" class="btn plus" max="2"></a>
                                                 </p>
                                             </div>
                                             <div class="edit-sku">
@@ -180,7 +182,7 @@
                 <div>
                     <div class="ft-cb">
                         <p>
-                            <input id="cb-footer" type="checkbox" class="cb o-t-cb">
+                            <input id="cb-footer" type="checkbox" class="cb o-t-cb" v-model="cart_check_all">
                             <label for="cb-footer"></label>
                         </p>
                     </div>
@@ -189,20 +191,16 @@
                         <div>
                             <div>合计：</span>
                                 <p class="o-t-price" data-symbol="￥">
-                                    <span>
-                          <span class="major" >0</span>
-                                    <span class="point">.</span>
-                                    <span class="minor">00</span>
-                                    </span>
+                                    <span v-html="total.total"></span>
                                 </p>
                             </div>
                             <p>不含运费</p>
                         </div>
                     </div>
-                    <div class="btn">
+                    <div class="btn" @click="submit_cart()">
                         <p>
                             <span>结算</span>
-                            <span>(</span><span>0</span><span>)</span>
+                            <span>(</span><span>{{total.num}}</span><span>)</span>
                         </p>
                     </div>
                 </div>
@@ -224,7 +222,37 @@ export default {
   data() {
     return {
       cart_list: [],
+      goods_all_list: [],
       show_page: false
+    }
+  },
+  computed: {
+    cart_check_all: {
+      get: function() {
+        console.log(this.goods_all_list.length);
+        return this.goods_all_list.filter(function(item) {
+          return item.is_check == true;
+        }).length == this.goods_all_list.length-2;
+      },
+      set: function(val) {
+        this.goods_all_list.forEach(function(item) {
+          console.log(item);
+          item.is_check = val;
+        });
+      }
+    },
+    total: function() {
+      var total = 0;
+      var num = 0;
+      this.goods_all_list.filter(function(a) {
+        return a.is_check;
+      }).map(function(a) {
+        num++;
+        return a.goods_num * a.goods_price
+      }).forEach(function(a) {
+        total += a;
+      });
+      return {total:this.$api.fmoney(total,2),num:num};
     }
   },
   props: {
@@ -246,16 +274,19 @@ export default {
         for (var key in res.data.data.cart_list) {
           res.data.data.cart_list[key].is_edit = false;
           res.data.data.cart_list[key].edit_text = "编辑";
+          for (var c_k in res.data.data.cart_list[key].goods) {
+            res.data.data.cart_list[key].goods[c_k].is_check = false
+            this.goods_all_list[res.data.data.cart_list[key].goods[c_k].cart_id] = res.data.data.cart_list[key].goods[c_k]
+          }
         }
         this.cart_list = res.data.data.cart_list
+        console.log(this.goods_all_list);
         this.show_page = true
       }, error => {
 
       })
     },
     edit_cart(store_id) {
-      console.log(store_id);
-      console.log(this.cart_list[store_id]);
       if (this.cart_list[store_id].is_edit) {
         this.cart_list[store_id].is_edit = false;
         this.cart_list[store_id].edit_text = "编辑";
@@ -263,6 +294,19 @@ export default {
         this.cart_list[store_id].is_edit = true;
         this.cart_list[store_id].edit_text = "完成";
       }
+    },
+    add_goods_num(store_id, index) {
+      this.cart_list[store_id].goods[index].goods_num++
+    },
+    cut_goods_num(store_id, index) {
+      if (this.cart_list[store_id].goods[index].goods_num == 1) {
+        $toast.show("受不鸟了，宝贝不能再减少了哦")
+        return
+      }
+      this.cart_list[store_id].goods[index].goods_num--
+    },
+    submit_cart() {
+      console.log(this.cart_checked);
     }
   }
 }
