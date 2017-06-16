@@ -100,7 +100,7 @@
         </div>
 
         {{/*属性选择*/}}
-        <actionsheet  :data="data" :pick="pick" :goodsid="goods_id"></actionsheet>
+        <actionsheet  :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec"></actionsheet>
     <!--:show="popupVisible"-->
 
 
@@ -192,9 +192,11 @@ export default {
     },
     add() {
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
+        this.$emit('openSheet')
     },
     buy() {
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
+        this.$emit('openSheet')
 
     },
       quit(){
@@ -211,6 +213,33 @@ export default {
         ...mapState({
             showpicksheet:state=>state.actionsheet.showpicksheet,
         }),
+
+        init_spec(){
+            console.log('init_spec_keys')
+            let goods_spec=this.data.goods_info.goods_spec
+            let spec_value=this.data.goods_info.spec_value
+            let spec_key={}
+            let spec_arr=[]
+
+            for(var goodsKey in goods_spec){
+                //console.log(goodsKey)
+                for(var valueKey in spec_value) {
+                    //console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
+                    let valueJson=spec_value[valueKey]
+                    for(var keyValueJson in valueJson){
+                        if(keyValueJson==goodsKey){
+                            console.log(valueKey,keyValueJson)
+                            spec_key[valueKey]=keyValueJson
+                            spec_arr.push(keyValueJson)
+                        }
+                    }
+
+                }
+            }
+            console.log(JSON.stringify(spec_key))
+            return spec_arr //spec_key
+        },
+
     },
   watch: {
 
