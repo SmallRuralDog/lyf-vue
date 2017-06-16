@@ -11,18 +11,18 @@
 <div v-if="show_page">
     <div class="page-content" style="margin-bottom:2.64rem;">
         <div class="cartbuy">
-            <div class="allItemv2" v-for="(store,s_key,s_index) in cart_list">
+            <div class="allItemv2" v-for="(store,s_key,s_index) in cart_list" v-if="store.goods.length > 0">
                 <div class="bundlev2" id="bundlev2_s_92042735">
                     <div class="shop">
                         <div class="o-t-title-shop">
                             <div class="tcont">
                                 <div class="shopcb">
-                                    <p v-if="false">
-                                        <input :id="'cb-'+store.store_id" class="o-t-cb" type="checkbox">
-                                        <label :for="'cb-'+store.store_id"></label>
+                                    <p>
+                                        <input :id="'cb-s-'+store.store_id" :value="store.store_id" v-model="store_check_all" class="o-t-cb" type="checkbox">
+                                        <label :for="'cb-s-'+store.store_id"></label>
                                     </p>
                                 </div>
-                                <div class="ico">
+                                <div class="ico" v-if="false">
                                     <span class="shopIco_B"></span></div>
                                 <div class="contact">
                                     <a>
@@ -66,7 +66,7 @@
                                 <div class="item-list o-t-item undefined">
                                     <div class="item-cb">
                                         <p>
-                                            <input :id="'cb-'+goods.cart_id" type="checkbox" v-model="goods_all_list[goods.cart_id].is_check"  class="cb o-t-cb">
+                                            <input :id="'cb-'+goods.cart_id" type="checkbox" v-model="goods.is_check"  class="cb o-t-cb">
                                             <label :for="'cb-'+goods.cart_id"></label>
                                         </p>
                                     </div>
@@ -74,11 +74,11 @@
                                         <div>
                                             <div class="item-img">
                                                 <a>
-                                                    <img class="lazy" v-lazy="goods.goods_image_url" >
+                                                    <img class="lazy" :src="goods.goods_image_url" >
                                                   </a>
                                                 <div class="icoTxt" v-if="false">
                                                     <span style="color:;background:;">
-                                                  <img src="//img.alicdn.com/bao/uploaded/TB14wX2RXXXXXcOaXXXwu0bFXXX.png" ></span></div>
+                                                  <img src="" ></span></div>
                                             </div>
                                             <div class="item-info">
                                                 <a>
@@ -114,15 +114,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="item-del c-edit-delhide">
-                                        <p>删除</p>
-                                    </div>
                                 </div>
                             </div>
                             <div class="item-edit o-t-item undefined" style="background:#fff8f4;" v-if="store.is_edit">
                                 <div class="item-cb">
                                     <p>
-                                        <input :id="'cb-'+goods.cart_id" type="checkbox" class="cb o-t-cb" v-model="goods_all_list[goods.cart_id].is_check">
+                                        <input :id="'cb-'+goods.cart_id" type="checkbox" class="cb o-t-cb" v-model="goods.is_check">
                                         <label :for="'cb-'+goods.cart_id"></label>
                                     </p>
                                 </div>
@@ -130,7 +127,7 @@
                                     <div>
                                         <div class="item-img">
                                             <a>
-                                              <img class="lazy" v-lazy="goods.goods_image_url" >
+                                              <img class="lazy" :src="goods.goods_image_url" >
                                             </a>
                                         </div>
                                         <div class="item-info2">
@@ -157,12 +154,7 @@
                                       <img src="" ></span>
                                     </div>
                                 </div>
-                                <div class="item-del c-edit-delshow">
-                                    <p>删除</p>
-                                </div>
-                            </div>
-                            <div class="op">
-                                <div class="item-del c-edit-delhide">
+                                <div class="item-del c-edit-delshow" @click="del_cart(goods.cart_id,store.store_id,index)">
                                     <p>删除</p>
                                 </div>
                             </div>
@@ -222,37 +214,87 @@ export default {
   data() {
     return {
       cart_list: [],
-      goods_all_list: [],
-      show_page: false
+      store_check_all: [],
+      show_page: false,
+      is_cart_state: [],
+      is_c: true,
+    }
+  },
+  watch: {
+    store_check_all: function(val, oldVal) {
+      var add = val.length > oldVal.length
+      var difference = val.concat(oldVal).filter(function(v) {
+        return val.indexOf(v) === -1 || oldVal.indexOf(v) === -1
+      })
+      if (difference.length > 0 && this.is_c) {
+        for (var key in this.cart_list[difference[0]].goods) {
+          this.$set(this.cart_list[difference[0]].goods[key], 'is_check', add)
+        }
+      }
+      this.is_c = true
+    },
+    is_cart_state: function(val, oldVal) {
+      this.is_c = false
+      this.store_check_all = []
+      for (var key in val) {
+        if (!this.$api.isCon(this.store_check_all, key)) {
+          this.is_c = false
+          this.store_check_all.push(Number(key))
+        }
+      }
     }
   },
   computed: {
     cart_check_all: {
       get: function() {
-        console.log(this.goods_all_list.length);
-        return this.goods_all_list.filter(function(item) {
-          return item.is_check == true;
-        }).length == this.goods_all_list.length-2;
+        var all = 0;
+        var check = 0;
+        for (var k in this.cart_list) {
+          var g_all = 0;
+          var g_check = 0;
+          for (var key in this.cart_list[k].goods) {
+            all++;
+            g_all++;
+            if (this.cart_list[k].goods[key].is_check) {
+              check++;
+              g_check++;
+            }
+          }
+          if (g_all == g_check) {
+            this.$set(this.is_cart_state, k, true)
+          } else {
+            this.$delete(this.is_cart_state, k)
+          }
+        }
+        if (all == check) {
+          return true;
+        } else {
+          return false;
+        }
       },
       set: function(val) {
-        this.goods_all_list.forEach(function(item) {
-          console.log(item);
-          item.is_check = val;
-        });
+        for (var k in this.cart_list) {
+          this.$set(this.cart_list[k], 'check_all', val)
+          for (var key in this.cart_list[k].goods) {
+            this.$set(this.cart_list[k].goods[key], 'is_check', val)
+          }
+        }
       }
     },
     total: function() {
       var total = 0;
       var num = 0;
-      this.goods_all_list.filter(function(a) {
-        return a.is_check;
-      }).map(function(a) {
-        num++;
-        return a.goods_num * a.goods_price
-      }).forEach(function(a) {
-        total += a;
-      });
-      return {total:this.$api.fmoney(total,2),num:num};
+      for (var k in this.cart_list) {
+        let goods_list = this.cart_list[k].goods;
+        for (var key in goods_list) {
+          let goods = goods_list[key];
+          if (goods.is_check) {
+            num++;
+            total = total + goods.goods_num * goods.goods_price
+          }
+        }
+      }
+      return { total: this.$api.fmoney(total, 2), num: num };
     }
   },
   props: {
@@ -272,15 +314,16 @@ export default {
     getList() {
       this.$api.userAuthGet('cart_list', res => {
         for (var key in res.data.data.cart_list) {
-          res.data.data.cart_list[key].is_edit = false;
-          res.data.data.cart_list[key].edit_text = "编辑";
+          this.$set(res.data.data.cart_list[key], "is_edit", false)
+          this.$set(res.data.data.cart_list[key], "ckeck_all", false)
+          this.$set(res.data.data.cart_list[key], "edit_text", "编辑")
           for (var c_k in res.data.data.cart_list[key].goods) {
-            res.data.data.cart_list[key].goods[c_k].is_check = false
-            this.goods_all_list[res.data.data.cart_list[key].goods[c_k].cart_id] = res.data.data.cart_list[key].goods[c_k]
+            this.$set(res.data.data.cart_list[key].goods[c_k], "is_check", false)
           }
         }
         this.cart_list = res.data.data.cart_list
-        console.log(this.goods_all_list);
+
+        console.log(this.cart_list);
         this.show_page = true
       }, error => {
 
@@ -304,6 +347,18 @@ export default {
         return
       }
       this.cart_list[store_id].goods[index].goods_num--
+    },
+    del_cart(cart_id, store_id, index) {
+      $dialog.confirm({
+        theme: 'ios',
+        title: '确认要删除这个宝贝吗?',
+        cancelText: '取消',
+        okText: '确认'
+      }).then((res) => {
+        if (res) {
+          this.$delete(this.cart_list[store_id].goods, index)
+        }
+      })
     },
     submit_cart() {
       console.log(this.cart_checked);

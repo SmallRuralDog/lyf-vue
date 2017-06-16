@@ -61,6 +61,13 @@ export default {
     for (var i = 0; i < l.length; i++) {
       t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
     }
-    return '<span class="major" >'+t.split("").reverse().join("") + "</span><span class='point'>.</span><span class='minor'>" + r+"</span>";
+    return '<span class="major" >' + t.split("").reverse().join("") + "</span><span class='point'>.</span><span class='minor'>" + r + "</span>";
+  },
+  isCon(arr, val) {//检测数组是否存在某个值
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] == val)
+        return true;
+    }
+    return false;
   }
 }

@@ -34,7 +34,7 @@ export default {
 	transform: translate3d(-50%,0,0);
 	-webkit-transform: translate3d(-50%,0,0);
 	background-color: #fff;
-	z-index: 10000!important;
+	z-index: 10!important;
   border-top: .025rem solid #e0e0e0;
 }
 
