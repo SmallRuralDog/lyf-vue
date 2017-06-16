@@ -159,7 +159,7 @@ export default {
     }
 
     if (!this.class_list) {
-      $loading.show('拼命加载中..')
+      $loading.show('')
       this.$store.dispatch('getClassIndexData', res => {
         this.$nextTick(() => {
           $loading.hide()

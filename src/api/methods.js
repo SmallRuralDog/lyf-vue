@@ -27,15 +27,12 @@ export default {
   //判断登录的请求
   userAuthGet(url, cb, error) {
     http.get(url).then(res => {
-      $loading.hide()
+      //$loading.hide()
       cb(res)
     }).catch(err => {
       $loading.hide()
       //TODO 判断是否登录
-
-
       error(err)
-
     });
   },
   //ssession

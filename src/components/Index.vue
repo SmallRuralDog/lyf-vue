@@ -1,6 +1,6 @@
 <template>
 <div class="" v-nav="{hideNavbar:true}">
-    <transition name="fade">
+    <transition>
         <keep-alive exclude="catgoods,goods_detail,cart-data">
             <router-view></router-view>
         </keep-alive>

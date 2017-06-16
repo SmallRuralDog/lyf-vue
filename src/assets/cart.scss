@@ -1086,7 +1086,7 @@ h5 {
 .cartbuy .footer .btn {
   width: 2.773rem;
   color: #fff;
-  background: #f50;
+  background: #dcdcdc;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -1097,6 +1097,9 @@ h5 {
   display: -ms-flexbox;
   display: flex;
   margin-left: 0.32rem;
+}
+.cartbuy .footer .btn-success{
+  background: #f50;
 }
 
 [data-dpr="1"] .cartbuy .footer .btn p {

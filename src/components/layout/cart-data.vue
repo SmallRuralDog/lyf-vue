@@ -136,7 +136,7 @@
                                                     <a @click="cut_goods_num(store.store_id,index)" class="btn minus off" min="1"></a>
                                                 </p>
                                                 <p class="btn-input">
-                                                    <input type="tel" max="2" min="1" v-model="goods.goods_num">
+                                                    <input type="number" min="1" v-model="goods.goods_num">
                                                 </p>
                                                 <p class="btn-plus">
                                                     <a @click="add_goods_num(store.store_id,index)" class="btn plus" max="2"></a>
@@ -189,7 +189,7 @@
                             <p>不含运费</p>
                         </div>
                     </div>
-                    <div class="btn" @click="submit_cart()">
+                    <div class="btn" :class="{'btn-success':total.num>0}" @click="submit_cart()">
                         <p>
                             <span>结算</span>
                             <span>(</span><span>{{total.num}}</span><span>)</span>
@@ -306,7 +306,7 @@ export default {
   },
   mounted() {
     if (!this.show_page) {
-      $loading.show("加载中");
+      $loading.show("");
       this.getList();
     }
   },
@@ -325,6 +325,7 @@ export default {
 
         console.log(this.cart_list);
         this.show_page = true
+        $loading.hide()
       }, error => {
 
       })
@@ -339,7 +340,21 @@ export default {
       }
     },
     add_goods_num(store_id, index) {
+      $loading.show("");
       this.cart_list[store_id].goods[index].goods_num++
+      let quantity = this.cart_list[store_id].goods[index].goods_num
+      let cart_id = this.cart_list[store_id].goods[index].cart_id
+      this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
+        if (res.data.status_code != 1) {
+          this.cart_list[store_id].goods[index].goods_num--
+          $toast.show(res.data.message)
+        }else{
+            $loading.hide()
+        }
+      }, error => {
+        this.cart_list[store_id].goods[index].goods_num--
+      })
+
     },
     cut_goods_num(store_id, index) {
       if (this.cart_list[store_id].goods[index].goods_num == 1) {
@@ -347,6 +362,19 @@ export default {
         return
       }
       this.cart_list[store_id].goods[index].goods_num--
+      $loading.show("");
+      let quantity = this.cart_list[store_id].goods[index].goods_num
+      let cart_id = this.cart_list[store_id].goods[index].cart_id
+      this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
+        if (res.data.status_code != 1) {
+          this.cart_list[store_id].goods[index].goods_num++
+          $toast.show(res.data.message)
+        }else{
+            $loading.hide()
+        }
+      }, error => {
+        this.cart_list[store_id].goods[index].goods_num++
+      })
     },
     del_cart(cart_id, store_id, index) {
       $dialog.confirm({
@@ -356,12 +384,25 @@ export default {
         okText: '确认'
       }).then((res) => {
         if (res) {
-          this.$delete(this.cart_list[store_id].goods, index)
+          $loading.show("");
+          this.$api.userAuthGet('del_cart?cart_id='+cart_id,res=>{
+            if (res.data.status_code == 1) {
+              this.$delete(this.cart_list[store_id].goods, index)
+              $loading.hide()
+            }else if (res.data.status_code == -1) {
+              $toast.show(res.data.message)
+              this.$delete(this.cart_list[store_id].goods, index)
+            }else{
+              $toast.show(res.data.message)
+            }
+          },error=>{
+            $toast.show('请求错误')
+          })
         }
       })
     },
     submit_cart() {
-      console.log(this.cart_checked);
+      if(this.total.num<=0){return}
     }
   }
 }
