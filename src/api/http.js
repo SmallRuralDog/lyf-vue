@@ -1,6 +1,6 @@
 import axios from 'axios'
 var http = axios.create({
-    baseURL: 'http://116.62.104.134/api/',
+    baseURL: HOST+'/api/',
     //baseURL:'http://192.168.10.54:88/api/',
     timeout: 10000,
     headers: {
