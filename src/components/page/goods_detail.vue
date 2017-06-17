@@ -56,18 +56,7 @@
 
 
 
-          <!--<mt-popup-->
-                  <!--v-model="popupVisible"-->
-                  <!--popup-transition="popup-fade"-->
-                  <!--position="bottom"-->
-                  <!--style="width:100%;"-->
-          <!--&gt;-->
-              <!--<div>-->
-                  <!--sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>sfdfdf<br>-->
-              <!--</div>-->
-
-
-          <!--</mt-popup>-->
+         d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>
 
 
 
@@ -85,8 +74,8 @@
                     <i class="iconfont icon-shouye"></i>
 
                 </div>
-                <div class="hm-flex-1 icon-align hm-border-l"  style="position: relative;">
-                    <i class="iconfont icon-shouye"></i>
+                <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
+                    <i class="iconfont icon-fahuo"></i>
                     <div v-if="cartNumber>0" style="background: #15bc7f;color: #fff;position: absolute;width: 0.7rem;height: 0.7rem;border-radius: 50%;top:0.3rem;right: 0.5rem;font-size: 0.6rem;display: flex;justify-content: center;align-items: center;">{{cartNumber}}</div>
 
                 </div>
@@ -190,13 +179,22 @@ export default {
     gohome() {
       this.$router.push('/home')
     },
+      gocart() {
+          this.$router.push('/cart')
+      },
     add() {
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
-        this.$emit('openSheet')
+        if(this.fisrtTimeOpenSheet==false){
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
+        }
+//        this.$emit('openSheet')
     },
     buy() {
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
-        this.$emit('openSheet')
+        if(this.fisrtTimeOpenSheet==false){
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
+        }
+//        this.$emit('openSheet')
 
     },
       quit(){
@@ -212,6 +210,7 @@ export default {
     computed:{
         ...mapState({
             showpicksheet:state=>state.actionsheet.showpicksheet,
+            fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
         }),
 
         init_spec(){
@@ -222,9 +221,9 @@ export default {
             let spec_arr=[]
 
             for(var goodsKey in goods_spec){
-                //console.log(goodsKey)
+                console.log(goodsKey)
                 for(var valueKey in spec_value) {
-                    //console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
+                    console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
                     let valueJson=spec_value[valueKey]
                     for(var keyValueJson in valueJson){
                         if(keyValueJson==goodsKey){
@@ -233,10 +232,9 @@ export default {
                             spec_arr.push(keyValueJson)
                         }
                     }
-
                 }
             }
-            console.log(JSON.stringify(spec_key))
+            console.log(JSON.stringify(spec_arr))
             return spec_arr //spec_key
         },
 
@@ -287,7 +285,7 @@ $color-theme: #e02e24;
     left: 0;
     right: 0;
     background-color: #fff;
-    z-index: 1;
+    z-index: 100;
 }
 .submit-order .buy-align {
     color: #fff;
