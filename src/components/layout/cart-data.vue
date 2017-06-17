@@ -207,7 +207,7 @@
 import '../../assets/cart.scss'
 import CartNoData from './cart-no-data'
 export default {
-  name: "cart-data",
+  name: "cart_data",
   components: {
     CartNoData
   },
@@ -364,7 +364,7 @@ export default {
         return
       }
       this.cart_list[store_id].goods[index].goods_num--
-      $loading.show("");
+        $loading.show("");
       let quantity = this.cart_list[store_id].goods[index].goods_num
       let cart_id = this.cart_list[store_id].goods[index].cart_id
       this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
@@ -405,25 +405,19 @@ export default {
     },
     submit_cart() {
       if (this.total.num > 0) {
-
-        for(var store_id in this.cart_list){
-          /*for(var index in this.cart_list[store_id].goods){
-            console.log(index);
-          }*/
-          this.cart_list[store_id].goods.filter(function(a){
+        let cart_arr = [];
+        for (var store_id in this.cart_list) {
+          this.cart_list[store_id].goods.filter(function(a) {
             return a.is_check === true;
-          }).map(function(a){
-            console.log(a);
+          }).map(function(a) {
+            let c_p = a.cart_id + '|' + a.goods_num
+            cart_arr.push(c_p)
           })
         }
-
-        /*$router.push({
+        $router.push({
           name: 'order_buynow',
-          query: { cart_id: 'private', ifcart: true },
-          params: {
-
-          }
-        })*/
+          params: { cart_id: cart_arr.join(","), ifcart: true },
+        })
       }
     }
   }

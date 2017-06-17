@@ -35,6 +35,16 @@ export default {
       error(err)
     });
   },
+  userAuthPost(url,data, cb, error) {
+    http.post(url,data).then(res => {
+      //$loading.hide()
+      cb(res)
+    }).catch(err => {
+      $loading.hide()
+      //TODO 判断是否登录
+      error(err)
+    });
+  },
   //ssession
   get(name) {
     let value = sessionStorage.getItem(name)

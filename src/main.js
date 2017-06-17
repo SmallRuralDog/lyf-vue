@@ -73,7 +73,7 @@ const routes = [{
         component: address
       },
       {
-        path: '/order_buynow',//（购物车，快速购买）下单第一步
+        path: '/order_buynow/:cart_id-:ifcart',//（购物车，快速购买）下单第一步  参数格式  :cart_id（产品ID|购买数量）  :ifcart  (true or false) 是否从购物车
         name: 'order_buynow',
         component: order_buynow
       }
