@@ -82,6 +82,9 @@
 require('mint-popup/lib/index.css');
 import Popup from 'mint-popup';
 export default {
+  components: {
+    'MtPopup': Popup
+  },
   data() {
     return {
       popupVisible: false
