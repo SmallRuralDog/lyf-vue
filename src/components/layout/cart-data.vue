@@ -186,7 +186,7 @@
                                     <span v-html="total.total"></span>
                                 </p>
                             </div>
-                            <p>不含运费</p>
+                            <p>不含运费，优惠券等</p>
                         </div>
                     </div>
                     <div class="btn" :class="{'btn-success':total.num>0}" @click="submit_cart()">

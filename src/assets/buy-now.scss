@@ -3,8 +3,9 @@
   margin-bottom: 0.24rem;
   background-color: #fff;
   font-size: 0.37rem;
-  color: #666;
+  color: #333;
   position: relative;
+  background-color: #ffffff;
 }
 
 .mui-flex {
@@ -86,42 +87,317 @@
 
 .s1-borderB {
   position: absolute;
-  bottom: 1px;
+  bottom: 0.01rem;
   left: 0;
-  height: 3px;
+  height: .08rem;
   width: 100%;
   background: url("./images/location-border.png") repeat-x;
-  background-size: 80px 4px;
+  background-size: 2.13rem .11rem;
+
 }
 //****************************/
-.nctouch-cart-container {
-    display: block;
-    clear: both;
-    background-color: #FFF;
-    margin-bottom: 0.5rem;
-    border: solid #EEE;
-    border-width: 0.05rem;
+
+.order_total {
+  background: #fff;
+  font-size: .37rem;
+  margin-bottom: .53rem;
+  padding-bottom: .27rem;
 }
-.nctouch-cart-store {
-    display: block;
-    border-bottom: solid 0.025rem #EEE;
+
+.total-title {
+  font-size: .53rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  color: #333;
+  font-weight: 400;
+  text-align: center;
+  border-bottom: 0.01rem solid #ebebeb;
 }
-.nctouch-cart-store dt {
-    position: relative;
-    z-index: 1;
-    display: block;
-    height: .48rem;
-    padding: .27rem;
+
+.total-title span {
+  color: #ff464e;
+  margin-left: .16rem;
+  font-size: .48rem;
+}
+
+.order_total p {
+  padding: .13rem .37rem;
+  color: #333;
+  margin-bottom: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.clear:after,
+.clear:before {
+  clear: both;
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.order_total p .sp1 {
+  float: left;
+  font-size: .32rem;
+}
+
+.order_total p .sp3 {
+  float: right;
+  margin-left: .16rem;
+  width: .32rem;
+  height: .21rem;
+  display: inline-block;
+}
+
+.order_total p .sp2 {
+  float: right;
+}
+
+.user-coupon {
+    background-color: #fff;
     font-size: .37rem;
-    line-height:.48rem;
+    padding-left: .32rem;
+    padding-right: .32rem;
+    border-top: 0.01rem solid #ebebeb;
 }
-.nctouch-cart-store dt i.icon-store {
-    display: inline-block;
-    width: .43rem;
-    height: .48rem;
-    margin-right: .11rem;
+.user-coupon .uc-title {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    font-size: .37rem;
+    font-weight: 400;
+    position: relative;
+}
+.user-coupon .uc-title span.cp-title {
+    color: #333;
+    font-size: .37rem;
+}
+.user-coupon .uc-title span {
+    color: #bbb;
+    font-size: .32rem;
+    text-align: right;
+    margin-right: .16rem;
+}
+.user-coupon .uc-title span.iconfont {
+    font-size: .27rem;
+    margin: 0;
+    color: #bbb;
+    float: right;
+}
+.user-coupon .uc-title span.coupon-status {
+    font-size: .32rem;
+    color: #333;
+}
+.fr {
+    float: right;
+}
+.pay-type {
+    background: #fff;
+    padding: 0 4%;
+    color: #333;
+    border-top: 0.01rem solid #ebebeb;
+}
+.pay-type h5 {
+    height: 1.28rem;
+    line-height: 1.28rem;
+    font-size: .43rem;
+    font-weight: 400;
+    margin: 0;
+    border-bottom: 0.01rem solid #ebebeb;
+}
+.pay-type .type li {
+    height: 1.28rem;
+    line-height: 1.28rem;
+}
+.pay-type .type li img {
+    width: .64rem;
+    height: .64rem;
     vertical-align: middle;
-    background: url(./images/store_b.png) no-repeat 50% 50%;
-    background-size: 90%;
-    opacity: 0.8;
+    margin-right: .21rem;
+}
+.pay-type .type li span {
+    position: relative;
+    font-size: .37rem;
+}
+.pay-type .type li span.payway-tips-ad {
+    padding: .05rem .13rem;
+    border: 0.025rem solid #ff464e;
+    color: #ff464e;
+    border-radius: .05rem;
+    font-size: .27rem;
+}
+.pay-type-radio {
+    float: right;
+    width: .48rem;
+    height: .48rem;
+    border: 0.01rem solid #999;
+    border-radius: .48rem;
+    margin-top: .4rem;
+}
+.pay-type .type li.active .pay-type-radio {
+    background: url(./images/radio-checked.png) no-repeat;
+    background-size: cover;
+    border: none;
+}
+.shopping-confirm-box {
+    background-color: #fff;
+    margin-bottom: .27rem;
+    margin-top: .32rem;
+}
+.shopping-confirm-box .scb-title {
+    height: 1.2rem;
+    line-height: 1.2rem;
+    color: #333;
+    font-size: .37rem;
+    padding: 0 4%;
+    margin: 0;
+}
+.shopping-confirm-box .scb-list {
+    //display: none;
+    background-color: #fff;
+}
+.scb-content {
+    font-size: .37rem;
+}
+.scb-content .seller {
+    line-height: 1.12rem;
+    height: 1.12rem;
+    overflow: hidden;
+    color: #333;
+    padding-left: 4%;
+    font-size: .37rem;
+
+    border-top: 0.01rem solid #ebebeb;
+    margin: 0;
+}
+.scb-content .seller span {
+    float: right;
+    margin-right: 4%;
+    color: #333;
+}
+.bag-list {
+    width: 100%;
+}
+.scb-content ul.bag-list li {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.bag-list li {
+    position: relative;
+    overflow: hidden;
+}
+.scb-content .seller-name {
+    line-height: 1.12rem;
+    height: 1.12rem;
+    padding-left: .37rem;
+    padding-right: .37rem;
+    margin: 0;
+}
+.scb-content .seller-name .iconfont {
+    font-size: .48rem;
+    vertical-align: middle;
+    margin-right: .13rem;
+}
+.shopping-confirm-box .bag-list .orderlist-box {
+    padding-bottom: .32rem;
+}
+.bag-list li .orderlist-box {
+    position: relative;
+    display: block;
+    padding: .37rem;
+}
+.orderlist-box .pic {
+    width: 1.87rem;
+    height: 1.87rem;
+    float: left;
+}
+.orderlist-box .pic img {
+    display: block;
+    width: 100%;
+    border: none;
+}
+.orderlist-box .ob-info {
+    height: 1.87rem;
+    margin-left: 2.27rem;
+    font-size: .37rem;
+    position: relative;
+}
+.obi-first {
+    color: #333;
+}
+.obi-first, .obi-second, .obi-third {
+    height: auto;
+    overflow: hidden;
+}
+.obi-first p:first-child, .obi-second p:first-child {
+    width: 70%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+    display: inline-block;
+}
+.obi-first .current{
+  margin: 0;
+}
+.obi-first .title {
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+}
+.obi-second {
+    color: #bbb;
+    margin-top: .13rem;
+}
+.obi-first, .obi-second, .obi-third {
+    height: auto;
+    overflow: hidden;
+}.bag-list li .n, .bag-list li .old {
+    color: #bbb;
+}
+.bag-list li .old {
+    //text-decoration: line-through;
+}
+.scb-content .activate-box {
+  clear: both;
+      padding: .27rem;
+}
+.scb-content .activate-box .activate-key {
+  border-radius: .11rem;
+  padding-left: .29866667rem;
+  box-sizing: border-box;
+  width: 100%;
+  background: #eeeeee;
+  height: 1.07rem;
+  font-size: .37rem;
+  border: none;
+}
+a, a:active, a:hover {
+    -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+}
+a {
+    color: #666;
+}
+.bag-total {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+}
+.bag-total .go_pay {
+    width: 100%;
+    display: block;
+    height: 1.33rem;
+    line-height: 1.33rem;
+    background-color: #ff464e;
+    font-size: .48rem;
+    color: #fff;
+    text-align: center;
 }

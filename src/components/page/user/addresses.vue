@@ -38,7 +38,7 @@
     </div>
   </div>
   <div style="width:100%;">
-    <mt-popup v-model="popupVisible"  popup-transition="popup-fade" class="mint-popup-100">
+    <popup v-model="popupVisible"  popup-transition="popup-fade" class="mint-popup-100">
       <div class="" style="width:100%;">
         <div class="m-addr-main">
         <div class="m-addr-title">添加新收货地址</div>
@@ -73,7 +73,7 @@
         <!--ms-if-->
     </div>
       </div>
-    </mt-popup>
+    </popup>
   </div>
 </div>
 </template>
@@ -83,8 +83,8 @@ require('mint-popup/lib/index.css');
 import Popup from 'mint-popup';
 export default {
   components: {
-    'MtPopup': Popup
-  },
+   'popup': Popup
+ },
   data() {
     return {
       popupVisible: false
