@@ -1,6 +1,7 @@
 
 const state = {    
     showpicksheet :false,
+    fisrtTimeOpenSheet:false,
     pin_id:null,
     pin_goodid:null
 

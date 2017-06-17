@@ -21,7 +21,7 @@
             <section v-for="(spec,key,index) in data.goods_info.spec_name">
               <h3>{{spec}}</h3>
               <ul class="J_sku-list">
-                <li class="sku-item" @click="choose_spec(index,key,keys)" :class="{'active':keys==cur_spec[index]}" v-for="(item,keys,indexs) in data.goods_info.spec_value[key]">{{item}}</li>
+                <li class="sku-item" @click="choose_spec(index,key,keys)" :class="{'active':keys==cur_spec[index]}" v-for="(item,keys,indexs) in data.goods_info.spec_value[key]">{{item}}{{keys}}</li>
               </ul>
             </section>
 
@@ -41,7 +41,8 @@
         </div>
       </div>
 
-      <div class="sku-btns"><div class="sku-btn addcart" >加入购物车</div><div class="sku-btn gobuy">立即购买</div></div>
+
+      <div class="sku-btns"><div class="sku-btn addcart" @click="add_cart">加入购物车</div><div class="sku-btn gobuy">立即购买</div></div>
     </div>
   </div>
 
@@ -54,8 +55,9 @@ export default {
   data() {
     return {
       popupVisible: false,
-        cur_spec:this.init_spec,
+        cur_spec:[],
         quantity:1,
+
     }
   },
   mounted(){
@@ -87,14 +89,26 @@ export default {
   computed: {
     ...mapState({
       showpicksheet: state => state.actionsheet.showpicksheet,
+      fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
     }),
     init_color_id() {
       return this.data.goods_info.color_id
     },
+    spec_string(){
+//        var cur_spec2=this.cur_spec;
+        var cur_spec2 = this.cur_spec.slice(0,this.cur_spec.length);
+        console.log('cur_spec2=',cur_spec2);
+        if(cur_spec2){
+            var cur_spec_sort=cur_spec2.sort();
+            var str=''
+            for(var i in cur_spec_sort){
+                str+=cur_spec_sort[i]+'|';
+            }
+            str=str.substring(0,str.length-1)
+            return str;
+        }
 
-
-
-
+    },
 
   },
   watch: {
@@ -112,19 +126,48 @@ export default {
     },
       cur_spec(val, oldVal){
 //          console.log(val)
-          for(var i in val){
-              console.log(val[i])
-          }
+//          for(var i in val){
+//              console.log(val[i])
+//          }
 
+      },
+      spec_string(val, oldVal) {
+
+      },
+      fisrtTimeOpenSheet(val, oldVal){
+          console.log('fisrtTimeOpenSheet set  this.cur_spec')
+          if(val){
+//              this.cur_spec=this.init_spec
+              for(var i in this.init_spec){
+                  this.cur_spec.push(this.init_spec[i])
+              }
+
+          }
       }
 
   },
 
   methods: {
       choose_spec(index,key1,key2){
-          console.log(index,key1,key2)
+          console.log(index,key2)
           this.$set(this.cur_spec,index,key2)
+          console.log('cur_spec=',this.cur_spec);
 //          this.cur_spec[index]=key2
+      },
+      add_cart(){
+          this.$api.userGet('add_cart?goods_id=' + this.goodsid+'&quantity='+this.quantity, res => {
+              console.log(JSON.stringify(res.data));
+
+//              this.data = res.data.data;
+//
+//              this.$nextTick(() => {
+//                  this.init = true;
+//              })
+
+          }, err => {
+                  //$toast(err)
+              console.log(JSON.stringify(err));
+          })
       },
 
 
@@ -394,6 +437,7 @@ export default {
         top: auto;
         width: 100%;
         font-size: .37rem;
+
     }
     .ctrl-ui-sku .sku-btns .addcart {
         background: #f90;
