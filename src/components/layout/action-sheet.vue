@@ -10,20 +10,25 @@
           </p>
           <p class="text">库存：{{data.goods_info.goods_storage}}</p>
           <p class="text">已选
+              <template v-if="data.goods_info.goods_spec">xx
               <template v-for="value in data.goods_info.goods_spec">
                   "{{value}}"
-              </template></p>
+              </template>
+              </template>
+              </p>
         </div>
       </div>
       <div ref="sku_scroll" class="scroll-container">
         <div class="">
           <div class="prop-mainer">
+          <template v-if="data.goods_info.spec_name">yy
             <section v-for="(spec,key,index) in data.goods_info.spec_name">
               <h3>{{spec}}</h3>
               <ul class="J_sku-list">
                 <li class="sku-item" @click="choose_spec(index,key,keys)" :class="{'active':keys==cur_spec[index]}" v-for="(item,keys,indexs) in data.goods_info.spec_value[key]">{{item}}{{keys}}</li>
               </ul>
             </section>
+          </template>
 
           </div>
           <div class="quantity-info">
@@ -74,7 +79,7 @@ export default {
       default: null,
     },
     goodsid: {
-      type: String,
+      type: [String, Number],
       default: null,
     },
     buytype: {
@@ -92,7 +97,7 @@ export default {
       fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
     }),
     init_color_id() {
-      return this.data.goods_info.color_id
+         return this.data.goods_info.color_id
     },
     spec_string(){
 //        var cur_spec2=this.cur_spec;

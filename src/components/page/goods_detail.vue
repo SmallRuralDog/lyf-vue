@@ -56,10 +56,6 @@
 
 
 
-         d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>d<br>
-
-
-
 
 
         </div>
@@ -89,21 +85,14 @@
         </div>
 
         {{/*属性选择*/}}
-        <actionsheet  :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec"></actionsheet>
-    <!--:show="popupVisible"-->
-
-
-
+        <actionsheet :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec"></actionsheet>
 
     </div>
 </template>
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import 'mint-popup/lib/index.css'
-
 import actionsheet from '../layout/action-sheet.vue';
 import {mapState,mapActions} from 'vuex'
-
 
 function dataInit() {
   return {
@@ -127,7 +116,7 @@ function dataInit() {
       loop: true,
       pagination: '.swiper-pagination'
     },
-    popupVisible:false,
+    // popupVisible:false,
     pick : {
         complete  : false,  // 用户是否完成选择
         showSheet : false,  // 是否显示拾取器窗口
@@ -142,7 +131,7 @@ function dataInit() {
 }
 export default {
     name:'goods_detail',
-  data: dataInit,
+    data: dataInit,
     components: {
         swiper,
         swiperSlide,
@@ -183,6 +172,7 @@ export default {
           this.$router.push('/cart')
       },
     add() {
+        // this.popupVisible=true
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
         if(this.fisrtTimeOpenSheet==false){
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
@@ -190,6 +180,7 @@ export default {
 //        this.$emit('openSheet')
     },
     buy() {
+        // this.popupVisible=true
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
         if(this.fisrtTimeOpenSheet==false){
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})

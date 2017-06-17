@@ -5,8 +5,8 @@ import Vonic from 'vonic'
 Vue.use(Vonic)
 
 //popup插件
-/*import { Popup } from 'mint-popup';
-Vue.component(Popup.name, Popup);*/
+import { Popup } from 'mint-ui';
+Vue.component(Popup.name, Popup);
 
 import 'lib-flexible/flexible'
 import './assets/common.scss'
@@ -79,7 +79,12 @@ const routes = [{
       }
     ]
 
-  }
+  },
+  // {
+  //   path: '/goods/:id',
+  //   name: 'goods_detail',
+  //   component: goods_detail
+  // },
 ]
 //******************************//
 import sess from './api/sess'
