@@ -38,7 +38,7 @@
     </div>
   </div>
   <div style="width:100%;">
-    <mt-popup v-model="popupVisible"  popup-transition="popup-fade" class="mint-popup-100">
+    <mt-popup v-model="popupVisible" popup-transition="popup-fade"  class="mint-popup-100">
       <div class="" style="width:100%;">
         <div class="m-addr-main">
         <div class="m-addr-title">添加新收货地址</div>
@@ -70,21 +70,21 @@
         <div class="m-addr-close">
             <div class="ms-addr-close-icon"></div>
         </div>
-        <!--ms-if-->
+
     </div>
-      </div>
+    </div>
     </mt-popup>
   </div>
 </div>
 </template>
 
 <script>
-require('mint-popup/lib/index.css');
-import Popup from 'mint-popup';
+// require('mint-popup/lib/index.css');
+// import Popup from 'mint-popup';
 export default {
-  components: {
-    'MtPopup': Popup
-  },
+  // components: {
+  //   'MtPopup': Popup
+  // },
   data() {
     return {
       popupVisible: false
