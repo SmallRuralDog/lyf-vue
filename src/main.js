@@ -28,6 +28,7 @@ const ClassAll = resolve => require(['./components/page/index/class_all.vue'], r
 const goods_detail = resolve => require(['./components/page/goods_detail.vue'], resolve)
 const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
 const address = resolve => require(['./components/page/user/addresses.vue'], resolve)
+const order_buynow = resolve => require(['./components/page/order/buy-now.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -70,6 +71,11 @@ const routes = [{
         path: '/address',
         name: 'address',
         component: address
+      },
+      {
+        path: '/order_buynow',//（购物车，快速购买）下单第一步
+        name: 'order_buynow',
+        component: order_buynow
       }
     ]
 

@@ -28,12 +28,12 @@
                                     <a>
                                         <p class="title">{{store.store_name}}</p>
                                         <p class="arrow">
-                                        <span class="icon-right"></span></p>
+                                            <span class="icon-right"></span></p>
                                     </a>
                                 </div>
                                 <div class="state">
                                     <div class="state-cont" v-if="false">
-                                        <p class="edit undefined" >领券</p>
+                                        <p class="edit undefined">领券</p>
                                     </div>
                                     <div class="state-cont">
                                         <p class="edit undefined" @click="edit_cart(store.store_id)">{{store.edit_text}}</p>
@@ -66,7 +66,7 @@
                                 <div class="item-list o-t-item undefined">
                                     <div class="item-cb">
                                         <p>
-                                            <input :id="'cb-'+goods.cart_id" type="checkbox" v-model="goods.is_check"  class="cb o-t-cb">
+                                            <input :id="'cb-'+goods.cart_id" type="checkbox" v-model="goods.is_check" class="cb o-t-cb">
                                             <label :for="'cb-'+goods.cart_id"></label>
                                         </p>
                                     </div>
@@ -74,8 +74,8 @@
                                         <div>
                                             <div class="item-img">
                                                 <a>
-                                                    <img class="lazy" :src="goods.goods_image_url" >
-                                                  </a>
+                                                    <img class="lazy" :src="goods.goods_image_url">
+                                                </a>
                                                 <div class="icoTxt" v-if="false">
                                                     <span style="color:;background:;">
                                                   <img src="" ></span></div>
@@ -97,7 +97,7 @@
                                                                 <span>
                                                           <span class="major" >{{goods.goods_price}}</span>
                                                                 <span class="point" v-if="false">.</span>
-                                                                <span class="minor"  v-if="false">00</span></span>
+                                                                <span class="minor" v-if="false">00</span></span>
                                                             </p>
                                                         </div>
                                                         <div class="originPrice">
@@ -127,7 +127,7 @@
                                     <div>
                                         <div class="item-img">
                                             <a>
-                                              <img class="lazy" :src="goods.goods_image_url" >
+                                                <img class="lazy" :src="goods.goods_image_url">
                                             </a>
                                         </div>
                                         <div class="item-info2">
@@ -165,10 +165,10 @@
             </div>
         </div>
         <div>
-            <cart-no-data v-if="!cart_list"></cart-no-data>
+            <cart-no-data v-if="cart_count <= 0"></cart-no-data>
         </div>
     </div>
-    <div class="cartbuy">
+    <div class="cartbuy" v-if="cart_count > 0">
         <div class="footer" :class="{'c_fb':show_footer}">
             <div class="f-fx">
                 <div>
@@ -214,6 +214,7 @@ export default {
   data() {
     return {
       cart_list: [],
+      cart_count: 0,
       store_check_all: [],
       show_page: false,
       is_cart_state: [],
@@ -266,7 +267,7 @@ export default {
             this.$delete(this.is_cart_state, k)
           }
         }
-        if (all == check) {
+        if (all == check && all > 0) {
           return true;
         } else {
           return false;
@@ -274,7 +275,6 @@ export default {
       },
       set: function(val) {
         for (var k in this.cart_list) {
-          this.$set(this.cart_list[k], 'check_all', val)
           for (var key in this.cart_list[k].goods) {
             this.$set(this.cart_list[k].goods[key], 'is_check', val)
           }
@@ -294,7 +294,10 @@ export default {
           }
         }
       }
-      return { total: this.$api.fmoney(total, 2), num: num };
+      return {
+        total: this.$api.fmoney(total, 2),
+        num: num
+      };
     }
   },
   props: {
@@ -315,14 +318,13 @@ export default {
       this.$api.userAuthGet('cart_list', res => {
         for (var key in res.data.data.cart_list) {
           this.$set(res.data.data.cart_list[key], "is_edit", false)
-          this.$set(res.data.data.cart_list[key], "ckeck_all", false)
           this.$set(res.data.data.cart_list[key], "edit_text", "编辑")
           for (var c_k in res.data.data.cart_list[key].goods) {
             this.$set(res.data.data.cart_list[key].goods[c_k], "is_check", false)
           }
         }
         this.cart_list = res.data.data.cart_list
-
+        this.cart_count = res.data.data.cart_count
         console.log(this.cart_list);
         this.show_page = true
         $loading.hide()
@@ -342,14 +344,14 @@ export default {
     add_goods_num(store_id, index) {
       $loading.show("");
       this.cart_list[store_id].goods[index].goods_num++
-      let quantity = this.cart_list[store_id].goods[index].goods_num
+        let quantity = this.cart_list[store_id].goods[index].goods_num
       let cart_id = this.cart_list[store_id].goods[index].cart_id
       this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
         if (res.data.status_code != 1) {
           this.cart_list[store_id].goods[index].goods_num--
-          $toast.show(res.data.message)
-        }else{
-            $loading.hide()
+            $toast.show(res.data.message)
+        } else {
+          $loading.hide()
         }
       }, error => {
         this.cart_list[store_id].goods[index].goods_num--
@@ -368,9 +370,9 @@ export default {
       this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
         if (res.data.status_code != 1) {
           this.cart_list[store_id].goods[index].goods_num++
-          $toast.show(res.data.message)
-        }else{
-            $loading.hide()
+            $toast.show(res.data.message)
+        } else {
+          $loading.hide()
         }
       }, error => {
         this.cart_list[store_id].goods[index].goods_num++
@@ -385,24 +387,44 @@ export default {
       }).then((res) => {
         if (res) {
           $loading.show("");
-          this.$api.userAuthGet('del_cart?cart_id='+cart_id,res=>{
+          this.$api.userAuthGet('del_cart?cart_id=' + cart_id, res => {
             if (res.data.status_code == 1) {
               this.$delete(this.cart_list[store_id].goods, index)
               $loading.hide()
-            }else if (res.data.status_code == -1) {
+            } else if (res.data.status_code == -1) {
               $toast.show(res.data.message)
               this.$delete(this.cart_list[store_id].goods, index)
-            }else{
+            } else {
               $toast.show(res.data.message)
             }
-          },error=>{
+          }, error => {
             $toast.show('请求错误')
           })
         }
       })
     },
     submit_cart() {
-      if(this.total.num<=0){return}
+      if (this.total.num > 0) {
+
+        for(var store_id in this.cart_list){
+          /*for(var index in this.cart_list[store_id].goods){
+            console.log(index);
+          }*/
+          this.cart_list[store_id].goods.filter(function(a){
+            return a.is_check === true;
+          }).map(function(a){
+            console.log(a);
+          })
+        }
+
+        /*$router.push({
+          name: 'order_buynow',
+          query: { cart_id: 'private', ifcart: true },
+          params: {
+
+          }
+        })*/
+      }
     }
   }
 }
