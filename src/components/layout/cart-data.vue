@@ -207,6 +207,10 @@
 import '../../assets/cart.scss'
 import CartNoData from './cart-no-data'
 import bus from '../../bus.js'
+import {
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   name: "cart_data",
   components: {
@@ -244,9 +248,17 @@ export default {
           this.store_check_all.push(Number(key))
         }
       }
+    },
+    cart_view_data_reload:function(val, oldVal){
+      if(val){
+        this.getData()
+      }
     }
   },
   computed: {
+    ...mapState({
+      cart_view_data_reload: state => state.common.cart_view_data_reload,
+    }),
     cart_check_all: {
       get: function() {
         var all = 0;
@@ -313,11 +325,6 @@ export default {
       $loading.show("");
       this.getList();
     }
-    bus.$on("reLoadCart", address=> {
-     console.log("address-c-ok");
-     console.log(address);
-     this.getList();
-   })
   },
   methods: {
     getList() {
@@ -334,8 +341,13 @@ export default {
         console.log(this.cart_list);
         this.show_page = true
         $loading.hide()
+        this.$store.commit('UPDATE_COMMON_DATA', {
+          cart_view_data_reload:false
+        })
       }, error => {
-
+        this.$store.commit('UPDATE_COMMON_DATA', {
+          cart_view_data_reload:false
+        })
       })
     },
     edit_cart(store_id) {

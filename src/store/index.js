@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import home from './modules/home'
 import class_index from './modules/class_index'
 import actionsheet from './modules/actionsheet'
+import common from './modules/common'
 
 
 Vue.use(Vuex)
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     home,
     class_index,
     actionsheet,
+    common
   },
   strict: debug
 })
