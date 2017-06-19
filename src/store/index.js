@@ -15,7 +15,7 @@ export default new Vuex.Store({
     home,
     class_index,
     actionsheet,
-    common
+    common,
   },
   strict: debug
 })
