@@ -4,14 +4,14 @@
     <i class="icon_closed ion-ios-close-outline" @click="quit()"></i>
     <div class="container_sku">
       <div class="head">
-        <img :src="data.spec_image[init_color_id]">
+        <img :src="data.spec_image[init_color_id]"><!--sheet_thumb-->
         <div class="infos">
           <p class="price">¥<strong id="J_sku-price">{{data.goods_info.goods_price}}</strong><span id="J_sku-stock"></span>
           </p>
           <p class="text">库存：{{data.goods_info.goods_storage}}</p>
           <p class="text">已选
-              <template v-if="data.goods_info.goods_spec">xx
-              <template v-for="value in data.goods_info.goods_spec">
+              <template v-if="data.goods_info.goods_spec">
+              <template v-for="value in cur_spec_name"><!--data.goods_info.goods_spec-->
                   "{{value}}"
               </template>
               </template>
@@ -21,7 +21,7 @@
       <div ref="sku_scroll" class="scroll-container">
         <div class="">
           <div class="prop-mainer">
-          <template v-if="data.goods_info.spec_name">yy
+          <template v-if="data.goods_info.spec_name">
             <section v-for="(spec,key,index) in data.goods_info.spec_name">
               <h3>{{spec}}</h3>
               <ul class="J_sku-list">
@@ -61,6 +61,7 @@ export default {
     return {
       popupVisible: false,
         cur_spec:[],
+        cur_spec_name:[],
         quantity:1,
 
     }
@@ -89,7 +90,11 @@ export default {
       init_spec:{
           type:Array,
           default:null,
-      }
+      },
+      init_spec_name:{
+          type:Array,
+          default:null,
+      },
   },
   computed: {
     ...mapState({
@@ -100,9 +105,8 @@ export default {
          return this.data.goods_info.color_id
     },
     spec_string(){
-//        var cur_spec2=this.cur_spec;
         var cur_spec2 = this.cur_spec.slice(0,this.cur_spec.length);
-        console.log('cur_spec2=',cur_spec2);
+        //        console.log('cur_spec2=',cur_spec2);
         if(cur_spec2){
             var cur_spec_sort=cur_spec2.sort();
             var str=''
@@ -112,8 +116,22 @@ export default {
             str=str.substring(0,str.length-1)
             return str;
         }
+    },
+    goodsid_choose(){
+        let spec_list=this.data.spec_list;
+        let spec_string=this.spec_string;
+        if(spec_string){
+            for(var key in spec_list){
+                if(spec_string==key) return spec_list[key]
+
+            }
+        }
 
     },
+    sheet_thumb(){
+        let thumb_key=this.goodsid_choose
+        return this.data.spec_image[thumb_key]
+    }
 
   },
   watch: {
@@ -130,10 +148,11 @@ export default {
       this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: val })
     },
       cur_spec(val, oldVal){
-//          console.log(val)
-//          for(var i in val){
-//              console.log(val[i])
-//          }
+
+        //          console.log(val)
+        //          for(var i in val){
+        //              console.log(val[i])
+        //          }
 
       },
       spec_string(val, oldVal) {
@@ -146,6 +165,9 @@ export default {
               for(var i in this.init_spec){
                   this.cur_spec.push(this.init_spec[i])
               }
+              for(var i in this.init_spec_name){
+                  this.cur_spec_name.push(this.init_spec_name[i])
+              }
 
           }
       }
@@ -154,20 +176,17 @@ export default {
 
   methods: {
       choose_spec(index,key1,key2){
-          console.log(index,key2)
           this.$set(this.cur_spec,index,key2)
-          console.log('cur_spec=',this.cur_spec);
-//          this.cur_spec[index]=key2
+          this.cur_spec_name[index]=this.data.goods_info.spec_value[key1][key2]
+
       },
       add_cart(){
-          this.$api.userGet('add_cart?goods_id=' + this.goodsid+'&quantity='+this.quantity, res => {
+          this.$api.userGet('add_cart?goods_id=' + this.goodsid_choose+'&quantity='+this.quantity, res => {
               console.log(JSON.stringify(res.data));
-
-//              this.data = res.data.data;
-//
-//              this.$nextTick(() => {
-//                  this.init = true;
-//              })
+              this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
+              $toast.show('加入购物车成功', 3000).then(() => {
+                      console.log('toast hide')
+              })
 
           }, err => {
                   //$toast(err)
@@ -175,11 +194,6 @@ export default {
           })
       },
 
-
-
-//      testk(){
-//          this.get_goodsid()
-//      },
     _initScroll() {
       if (this.sku_scroll) {
         this.sku_scroll.refresh()
@@ -191,21 +205,7 @@ export default {
         })
       }
     },
-    pickattr(key, val) {
-      this.$set('pick.value[' + key + '].index', val);
-      this.$set('pick.value[' + key + '].active', this.pick.value[key].tag[this.pick.value[key].index]);
-      this.$set('pick.value[' + key + '].attr', this.pick.value[key].pack[this.pick.value[key].index]);
-      // 判断是否选择完成
-      var complete = true;
-      var arr = [];
-      for (var i = 0; i < this.pick.value.length; i++) {
-        if (this.pick.value[i].index === null) complete = false;
-        arr.push(this.pick.value[i].attr);
-      }
-      this.$set('pick.complete', complete);
-      this.$set('pick.post', this.pick.complete ? JSON.stringify(arr) : "");
-      if (complete) this.query();
-    },
+
     add() {
       if (this.quantity < 999)
         this.quantity= this.quantity + 1;
@@ -215,25 +215,25 @@ export default {
       if (this.quantity > 1)
         this.quantity=this.quantity - 1;
     },
-    query() {
-      this.$root.ajax({
-        url: '/home/goods/getByAttr',
-        loading: 3,
-        params: {
-          goods_id: this.goodsid,
-          spec: this.pick.post,
-        },
-      }, (ret, err) => {
-        if (ret) {
-          this.$set('pick.price', ret.result.price);
-          this.$set('pick.warehouse', ret.result.product_number);
-        } else {
-          this.$set('pick.complete', false);
-          this.$set('show', false);
-          this.$root.toast(err.msg);
-        }
-      });
-    },
+//    query() {
+//      this.$root.ajax({
+//        url: '/home/goods/getByAttr',
+//        loading: 3,
+//        params: {
+//          goods_id: this.goodsid,
+//          spec: this.pick.post,
+//        },
+//      }, (ret, err) => {
+//        if (ret) {
+//          this.$set('pick.price', ret.result.price);
+//          this.$set('pick.warehouse', ret.result.product_number);
+//        } else {
+//          this.$set('pick.complete', false);
+//          this.$set('show', false);
+//          this.$root.toast(err.msg);
+//        }
+//      });
+//    },
     submit(control) {
       console.log('control=', control);
       if (this.pick.complete) {

@@ -85,7 +85,7 @@
         </div>
 
         {{/*属性选择*/}}
-        <actionsheet :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec"></actionsheet>
+        <actionsheet :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name"></actionsheet>
 
     </div>
 </template>
@@ -192,10 +192,7 @@ export default {
         console.log("quit");
           this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:false})
       }
-//      ...mapMutations([
-//          'open_sheet':this.$store.commit('ACTIONSHEET_UPDATE',{popupVisible:true})
-//          'close_sheet',
-//      ]),
+
 
   },
     computed:{
@@ -205,28 +202,59 @@ export default {
         }),
 
         init_spec(){
-            console.log('init_spec_keys')
+//            console.log('init_spec_keys')
             let goods_spec=this.data.goods_info.goods_spec
             let spec_value=this.data.goods_info.spec_value
             let spec_key={}
             let spec_arr=[]
 
             for(var goodsKey in goods_spec){
-                console.log(goodsKey)
+//                console.log(goodsKey)
                 for(var valueKey in spec_value) {
-                    console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
+//                    console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
                     let valueJson=spec_value[valueKey]
                     for(var keyValueJson in valueJson){
                         if(keyValueJson==goodsKey){
-                            console.log(valueKey,keyValueJson)
+//                            console.log(valueKey,keyValueJson)
                             spec_key[valueKey]=keyValueJson
-                            spec_arr.push(keyValueJson)
                         }
                     }
                 }
             }
-            console.log(JSON.stringify(spec_arr))
-            return spec_arr //spec_key
+            for(var i in spec_key){
+                spec_arr.push(spec_key[i])
+            }
+//            console.log('spec_key=',JSON.stringify(spec_key))
+//            console.log('spec_arr=',spec_arr)
+            return spec_arr
+        },
+        init_spec_name(){
+        //            console.log('init_spec_keys')
+            let goods_spec=this.data.goods_info.goods_spec
+            let spec_value=this.data.goods_info.spec_value
+            let spec_key={}
+            let spec_name={}
+            let spec_arr=[]
+
+            for(var goodsKey in goods_spec){
+        //                console.log(goodsKey)
+                for(var valueKey in spec_value) {
+        //                    console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
+                    let valueJson=spec_value[valueKey]
+                    for(var keyValueJson in valueJson){
+                        if(keyValueJson==goodsKey){
+        //                            console.log(valueKey,keyValueJson)
+                            spec_key[valueKey]=valueJson[keyValueJson]//仅此处与init_spec有区别
+                        }
+                    }
+                }
+            }
+            for(var i in spec_key){
+                spec_arr.push(spec_key[i])
+            }
+        //            console.log('spec_key=',JSON.stringify(spec_key))
+        //            console.log('spec_arr=',spec_arr)
+            return spec_arr
         },
 
     },
@@ -257,10 +285,10 @@ export default {
     next()
   },
   activated() {
-    console.log('activated=============')
+    console.log('==activated==')
   },
   deactivated() {
-    console.log('deactivated~~~~~~~~~~~~~~~~~~')
+    console.log('~~deactivated~~')
   }
 
 
