@@ -171,6 +171,9 @@ export default {
       choose_spec(index,key1,key2){
           this.$set(this.cur_spec,index,key2)
           this.cur_spec_name[index]=this.data.goods_info.spec_value[key1][key2]
+          //更新init_spec，init_spec_name至vuex
+          this.$store.commit('ACTIONSHEET_UPDATE_ARR',{key:'cur_specx',value:this.cur_spec})
+          this.$store.commit('ACTIONSHEET_UPDATE_ARR',{key:'cur_spec_namex',value:this.cur_spec_name})
 
       },
       add_cart(){
@@ -214,7 +217,6 @@ export default {
           })
 
       },
-
     _initScroll() {
       if (this.sku_scroll) {
         this.sku_scroll.refresh()
@@ -226,7 +228,6 @@ export default {
         })
       }
     },
-
     add() {
       if (this.quantity < 999)
         this.quantity= this.quantity + 1;
@@ -236,42 +237,6 @@ export default {
       if (this.quantity > 1)
         this.quantity=this.quantity - 1;
     },
-//    query() {
-//      this.$root.ajax({
-//        url: '/home/goods/getByAttr',
-//        loading: 3,
-//        params: {
-//          goods_id: this.goodsid,
-//          spec: this.pick.post,
-//        },
-//      }, (ret, err) => {
-//        if (ret) {
-//          this.$set('pick.price', ret.result.price);
-//          this.$set('pick.warehouse', ret.result.product_number);
-//        } else {
-//          this.$set('pick.complete', false);
-//          this.$set('show', false);
-//          this.$root.toast(err.msg);
-//        }
-//      });
-//    },
-//    submit(control) {
-//      console.log('control=', control);
-//      if (this.pick.complete) {
-//        if (control) {
-//          if (this.pick.warehouse !== null && this.pick.warehouse < this.pick.quantity) {
-//            this.$root.toast('商品库存不足');
-//          } else {
-//            this.$dispatch('goodsControl', control);
-//          }
-//        } else {
-//          this.quit();
-//        }
-//      } else {
-//        this.$root.toast('请选择商品属性');
-//      }
-//    },
-
     quit() {
       this.popupVisible = false
     },

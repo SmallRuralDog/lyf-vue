@@ -4,7 +4,7 @@
   <div class="download-app">
     <i class="iconfont icon-zuo4" @click="gohome"></i>
   </div>
-  <div class="page-content" v-show="init">
+  <div class="page-content" v-show="init" style="padding-bottom: 70px;">
     <!-- 页面内容 -->
 
         <swiper :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
@@ -48,9 +48,21 @@
               <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </item>
 
+          <item class="item-icon-right hm-margin-b">
+
+              已选
+              <template v-if="data.goods_info.goods_spec">
+              <template v-for="value in cur_spec_namex"><!--data.goods_info.goods_spec-->
+                  "{{value}}"
+              </template>
+              </template>
+              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+          </item>
+
           <item class="item-icon-right">
 
-              已选"深蓝色" "32"
+              {{data.store_info.store_name}}
+
               <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </item>
 
@@ -109,6 +121,7 @@ function dataInit() {
         goods_spec:[],
       },
       spec_image:{},
+      store_info:{},
     },
     swipe_height: 100,
     cartNumber: 0,
@@ -140,6 +153,9 @@ export default {
         //            this.init=true;
         this.$nextTick(() => {
           this.init = true;
+            //更新init_spec，init_spec_name至vuex
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_specx',value:this.init_spec})
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_spec_namex',value:this.init_spec_name})
         })
 
       }, err => {
@@ -180,9 +196,10 @@ export default {
         ...mapState({
             showpicksheet:state=>state.actionsheet.showpicksheet,
             fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
+            cur_spec_namex:state=>state.actionsheet.cur_spec_namex,
         }),
 
-        init_spec(){
+        init_spec(){//默认属性id数组
 //            console.log('init_spec_keys')
             let goods_spec=this.data.goods_info.goods_spec
             let spec_value=this.data.goods_info.spec_value
@@ -209,7 +226,7 @@ export default {
 //            console.log('spec_arr=',spec_arr)
             return spec_arr
         },
-        init_spec_name(){
+        init_spec_name(){//默认属性名数组
         //            console.log('init_spec_keys')
             let goods_spec=this.data.goods_info.goods_spec
             let spec_value=this.data.goods_info.spec_value
@@ -428,6 +445,6 @@ $color-theme: #e02e24;
     color: #8f8f8f;
 }
 .infos .product h3 {
-    font-size: 18px;
+    font-size: 16px;
 }
 </style>
