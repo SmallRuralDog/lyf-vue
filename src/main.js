@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 import Vonic from 'vonic'
 Vue.use(Vonic)
-
+import BUS from './bus.js'
 //popup插件
 import { Popup } from 'mint-ui';
 Vue.component(Popup.name, Popup);

@@ -1,14 +1,12 @@
 <style lang="css">
 
-
-
 </style>
 
 <template lang="html">
 
 <div class="page">
     <div class="page-content" v-if="page_show" style="margin-bottom:1.33rem">
-        <div id="confirmOrder_1" class="order-confirmOrder">
+        <div id="confirmOrder_1" class="order-confirmOrder" @click="select_address()">
             <div class="order-address mui-flex align-center" id="address_1">
                 <div class="cell fixed align-center">
                     <div class="icon"></div>
@@ -118,7 +116,7 @@
         <div class="order_total order-amount-total">
             <div class="total-title">应付金额<span>¥39.00</span></div>
             <p class="clear"><span class="sp1">商品总额</span><span class="sp2">¥39.00</span></p>
-            <p class="clear"><span class="sp1">总运费 <font color="#C8C8C8">(2天发货)</font></span><span class="sp2">¥0.00</span></p>
+            <p class="clear"><span class="sp1">总运费</span><span class="sp2">¥0.00</span></p>
         </div>
 
 
@@ -134,47 +132,70 @@
 </template>
 
 <script>
-
 import "../../../assets/buy-now.scss"
 import 'lib-flexible/flexible'
+
+import address_modal from "../user/addresses.vue"
+import bus from "../../../bus.js"
 export default {
-    name: "order_buynow",
-    data() {
-        return {
-            page_show: false,
-            cart_id: '',
-            ifcart: false,
-            address_info: [],
-            store_cart_list:[],
-            address_api:[],
-            store_final_total_list:[]
-        }
-    },
-    mounted() {
-        this.cart_id = this.$route.params.cart_id
-        this.ifcart = this.$route.params.ifcart
-
-        this.getData()
-    },
-    methods: {
-        getData() {
-            $loading.show()
-            this.$api.userAuthPost("buy_step1", {
-                cart_id: this.cart_id,
-                ifcart: this.ifcart
-            }, res => {
-
-                this.address_info = res.data.data.address_info
-                this.store_cart_list = res.data.data.store_cart_list
-                this.address_api = res.data.data.address_api
-                this.store_final_total_list = res.data.data.store_final_total_list
-                this.page_show = true
-                $loading.hide()
-            }, error => {
-                $loading.hide()
-            })
-        }
+  name: "order_buynow",
+  data() {
+    return {
+      page_show: false,
+      cart_id: '',
+      ifcart: false,
+      address_info: [],
+      store_cart_list: [],
+      address_api: [],
+      store_final_total_list: [],
+      modal: undefined
     }
-}
+  },
+  mounted() {
+    this.cart_id = this.$route.params.cart_id
+    this.ifcart = this.$route.params.ifcart
+    this.getData()
 
+    $modal.fromComponent(address_modal, {
+      title: '地址管理',
+      theme: 'default'
+    }).then((modal) => {
+      this.modal = modal
+    })
+
+    bus.$on("onChangeAddress", address=> {
+     this.address_info = address
+
+     this.modal.hide();
+
+   })
+  },
+  destroyed() {
+    if (this.modal)
+      $modal.destroy(this.modal)
+  },
+  methods: {
+    getData() {
+      $loading.show()
+      this.$api.userAuthPost("buy_step1", {
+        cart_id: this.cart_id,
+        ifcart: this.ifcart
+      }, res => {
+
+        this.address_info = res.data.data.address_info
+        this.store_cart_list = res.data.data.store_cart_list
+        this.address_api = res.data.data.address_api
+        this.store_final_total_list = res.data.data.store_final_total_list
+        this.page_show = true
+        $loading.hide()
+      }, error => {
+        $loading.hide()
+      })
+    },
+    select_address() {
+      this.modal.show()
+    }
+
+  }
+}
 </script>

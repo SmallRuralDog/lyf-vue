@@ -10,9 +10,9 @@
 
 <div v-if="show_page">
     <div class="page-content" style="margin-bottom:2.64rem;">
-        <div class="cartbuy">
+        <div class="cartbuy" style="margin-bottom: 1.32rem;">
             <div class="allItemv2" v-for="(store,s_key,s_index) in cart_list" v-if="store.goods.length > 0">
-                <div class="bundlev2" id="bundlev2_s_92042735">
+                <div class="bundlev2">
                     <div class="shop">
                         <div class="o-t-title-shop">
                             <div class="tcont">
@@ -206,6 +206,7 @@
 <script>
 import '../../assets/cart.scss'
 import CartNoData from './cart-no-data'
+import bus from '../../bus.js'
 export default {
   name: "cart_data",
   components: {
@@ -312,6 +313,11 @@ export default {
       $loading.show("");
       this.getList();
     }
+    bus.$on("reLoadCart", address=> {
+     console.log("address-c-ok");
+     console.log(address);
+     this.getList();
+   })
   },
   methods: {
     getList() {
