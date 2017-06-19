@@ -187,6 +187,9 @@ export default {
               $toast.show('加入购物车成功', 3000).then(() => {
                       console.log('toast hide')
               })
+              this.$store.commit('UPDATE_COMMON_DATA', {
+                  cart_view_data_reload:true
+              })
 
           }, err => {
                   //$toast(err)

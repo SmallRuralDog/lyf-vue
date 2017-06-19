@@ -251,7 +251,7 @@ export default {
     },
     cart_view_data_reload:function(val, oldVal){
       if(val){
-        this.getData()
+        this.getList()
       }
     }
   },
