@@ -85,7 +85,7 @@
         </div>
 
         {{/*属性选择*/}}
-        <actionsheet :data="data" :pick="pick" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name"></actionsheet>
+        <actionsheet :data="data" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name"></actionsheet>
 
     </div>
 </template>
@@ -102,11 +102,13 @@ function dataInit() {
       goods_image: [],
       goods_info: {
         goods_price: 0,
+        color_id:0,
         goods_name: '',
         spec_name:[],
         spec_value:[],
-        goods_spec:[]
+        goods_spec:[],
       },
+      spec_image:{},
     },
     swipe_height: 100,
     cartNumber: 0,
@@ -116,17 +118,7 @@ function dataInit() {
       loop: true,
       pagination: '.swiper-pagination'
     },
-    // popupVisible:false,
-    pick : {
-        complete  : false,  // 用户是否完成选择
-        showSheet : false,  // 是否显示拾取器窗口
-        operation : 0,      // 拾取器被什么方法调用，0：无   1：购物车   2：立即购买
-        quantity  : 1,      // 商品数量
-        price     : null,   // 商品价格
-        warehouse : null,   // 商品库存
-        value : [],
-        post  : "",         // 提交数据包
-    },
+
   }
 }
 export default {
@@ -136,22 +128,14 @@ export default {
         swiper,
         swiperSlide,
         actionsheet
-
     },
-
   created() {
-
-    //        let id=this.$route.params.id;
-    //        this.goods_id=id;
-    //        this.getData(id);
     this.swipe_height = screen.width;
   },
   methods: {
     getData() {
-
       this.$api.userGet('goods_info?goods_id=' + this.goods_id, res => {
         //                console.log(JSON.stringify(res.data));
-
         this.data = res.data.data;
         //            this.init=true;
         this.$nextTick(() => {
@@ -177,7 +161,6 @@ export default {
         if(this.fisrtTimeOpenSheet==false){
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
         }
-//        this.$emit('openSheet')
     },
     buy() {
         // this.popupVisible=true
@@ -185,8 +168,6 @@ export default {
         if(this.fisrtTimeOpenSheet==false){
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
         }
-//        this.$emit('openSheet')
-
     },
       quit(){
         console.log("quit");
@@ -269,7 +250,7 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log(to.path, from.path)
+    console.log('to:'+to.path, 'from:'+from.path)
     next(vm => {
       let id = vm.$route.params.id;
       //            vm.data=dataInit()
@@ -280,8 +261,9 @@ export default {
     })
   },
   beforeRouteLeave(to, from, next) {
-    console.log(to.path, from.path)
+    console.log('to:'+to.path, 'from:'+from.path)
     this.init = false
+    this.$store.commit('ACTIONSHEET_UPDATE', { key: 'fisrtTimeOpenSheet', value: false })
     next()
   },
   activated() {

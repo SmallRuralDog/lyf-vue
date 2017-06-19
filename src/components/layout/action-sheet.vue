@@ -4,7 +4,9 @@
     <i class="icon_closed ion-ios-close-outline" @click="quit()"></i>
     <div class="container_sku">
       <div class="head">
-        <img :src="data.spec_image[init_color_id]"><!--sheet_thumb-->
+        <template v-show="this.data.goods_info.color_id">
+            <img :src="data.spec_image[this.data.goods_info.color_id]"><!--init_color_id  -->
+        </template>
         <div class="infos">
           <p class="price">¥<strong id="J_sku-price">{{data.goods_info.goods_price}}</strong><span id="J_sku-stock"></span>
           </p>
@@ -15,7 +17,7 @@
                   "{{value}}"
               </template>
               </template>
-              </p>
+          </p>
         </div>
       </div>
       <div ref="sku_scroll" class="scroll-container">
@@ -47,7 +49,7 @@
       </div>
 
 
-      <div class="sku-btns"><div class="sku-btn addcart" @click="add_cart">加入购物车</div><div class="sku-btn gobuy">立即购买</div></div>
+      <div class="sku-btns"><div class="sku-btn addcart" @click="add_cart">加入购物车</div><div class="sku-btn gobuy" @click="buy_now">立即购买</div></div>
     </div>
   </div>
 
@@ -70,21 +72,12 @@ export default {
 
   },
   props: {
-
     data: {
-      type: Object,
-      default: null,
-    },
-    pick: {
       type: Object,
       default: null,
     },
     goodsid: {
       type: [String, Number],
-      default: null,
-    },
-    buytype: {
-      type: String,
       default: null,
     },
       init_spec:{
@@ -181,12 +174,12 @@ export default {
 
       },
       add_cart(){
+          $loading.show("");
           this.$api.userGet('add_cart?goods_id=' + this.goodsid_choose+'&quantity='+this.quantity, res => {
               console.log(JSON.stringify(res.data));
               this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
-              $toast.show('加入购物车成功', 3000).then(() => {
-                      console.log('toast hide')
-              })
+//              $loading.hide()
+              $toast.show('加入购物车成功', 3000)
               this.$store.commit('UPDATE_COMMON_DATA', {
                   cart_view_data_reload:true
               })
@@ -195,6 +188,31 @@ export default {
                   //$toast(err)
               console.log(JSON.stringify(err));
           })
+      },
+      buy_now(){
+          $loading.show("");
+          this.$api.userAuthPost('buy_step1',{cart_id:this.goodsid_choose+'|'+this.quantity,ifcart:0,address_id:0}, res => {
+              console.log(JSON.stringify(res.data));
+                $router.push({
+                    name:'order_buynow',
+                    params:{
+                        cart_id:this.goodsid_choose+'|'+this.quantity,
+                        ifcart:0,
+                        address_id:0
+                    }
+                })
+//              this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
+//
+//              $toast.show('加入购物车成功', 3000)
+//              this.$store.commit('UPDATE_COMMON_DATA', {
+//                  cart_view_data_reload:true
+//              })
+
+          }, err => {
+              //$toast(err)
+              console.log(JSON.stringify(err));
+          })
+
       },
 
     _initScroll() {
@@ -237,22 +255,22 @@ export default {
 //        }
 //      });
 //    },
-    submit(control) {
-      console.log('control=', control);
-      if (this.pick.complete) {
-        if (control) {
-          if (this.pick.warehouse !== null && this.pick.warehouse < this.pick.quantity) {
-            this.$root.toast('商品库存不足');
-          } else {
-            this.$dispatch('goodsControl', control);
-          }
-        } else {
-          this.quit();
-        }
-      } else {
-        this.$root.toast('请选择商品属性');
-      }
-    },
+//    submit(control) {
+//      console.log('control=', control);
+//      if (this.pick.complete) {
+//        if (control) {
+//          if (this.pick.warehouse !== null && this.pick.warehouse < this.pick.quantity) {
+//            this.$root.toast('商品库存不足');
+//          } else {
+//            this.$dispatch('goodsControl', control);
+//          }
+//        } else {
+//          this.quit();
+//        }
+//      } else {
+//        this.$root.toast('请选择商品属性');
+//      }
+//    },
 
     quit() {
       this.popupVisible = false
@@ -448,7 +466,8 @@ export default {
 
     }
     .ctrl-ui-sku .sku-btns .addcart {
-        background: #f90;
+        /*background: #f90;*/
+        background: lighten($color-theme,10%);
     }
     .ctrl-ui-sku .sku-btns .sku-btn {
         -webkit-box-flex: 1;
