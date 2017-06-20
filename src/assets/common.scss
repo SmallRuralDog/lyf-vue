@@ -10,6 +10,7 @@ img {
 // 图片懒加载动画
 img[lazy=loading] {opacity:0;}
 img[lazy=loaded] {transition:opacity .2s; opacity:1;}
+
 .color-assertive{
   color:#EA5A49;
 }
@@ -92,8 +93,48 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
   border-radius: 2px;
 }
 
+//顶部菜单
+.topbar {
+  height: 1.07rem;
+  background: #ffffff;
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  color: #333;
+}
+.top-menu {
+  overflow: hidden;
+  // padding-left: 0.27rem;
+}
 
-//原样式
+.top-menu-list {
+  height: 1.07rem;
+  width: 100%;
+  display: flex;
+}
+
+.top-menu-item {
+  min-width: 1.33rem;
+  // font-weight: bold;
+  height: 100%;
+  font-size: 0.37rem;
+  text-align: center;
+  line-height: 1.07rem;
+}
+.top-menu-item:first {
+  padding-left: 0.53rem;
+}
+
+.top-menu-list .active {
+  color: #ea5a49;
+  border-bottom: 0.08rem solid #ea5a49;
+  font-weight: bold;
+}
+
+//弹性盒子
 
 .hm-flex {
   display: -webkit-box;

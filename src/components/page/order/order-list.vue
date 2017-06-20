@@ -1,14 +1,14 @@
 <template>
-<!--<div class="page has-navbar" v-nav="{title: '页面标题'}">-->
-    <!--<div class="page-content">-->
-        <!--&lt;!&ndash;<tabs :tab-items="tabs" :tab-index="tabIndex" :on-tab-click="onTabClick"></tabs>&ndash;&gt;-->
-        <!--ss-->
-    <!--</div>-->
-
-<!--</div>-->
-    <div div class="page">
-        <tabs :tab-items="tabs" :tab-index="tabIndex" :on-tab-click="onTabClick"></tabs>
+<div div class="page">
+    <div class="topbar">
+        <div ref="top_menu" class="top-menu">
+            <ul ref="top_menu_list" class="top-menu-list" >
+                <li ref="top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in tabs" @click="onTabClick(index)">{{item}}</li>
+            </ul>
+        </div>
     </div>
+
+</div>
 </template>
 
 <script>
@@ -32,10 +32,23 @@ export default {
             "待收货",
             "待评价"
         ],
-        tabIndex: 0,
+        active: 0,
 
     }
   },
+    beforeRouteEnter(to, from, next) {
+        console.log('to:'+to.path, 'from:'+from.path)
+        next(vm => {
+            let id = vm.$route.params.id;
+        //            vm.data=dataInit()
+        console.log('beforeRouteEnter id=', id)
+        vm.active = id;
+//        vm.getData();
+
+        })
+    },
+
+
   computed: mapState({
     goods_class: state => state.home.goods_class,
     swiper_data: state => state.home.swiper_data,
@@ -57,7 +70,7 @@ export default {
   },
   methods: {
       onTabClick(index) {
-          this.tabIndex = index
+          this.active = index
       },
 
 
@@ -126,5 +139,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.top-menu{
+    width:100%;
+}
+.top-menu-item{
+    width:20%;
+}
 </style>
