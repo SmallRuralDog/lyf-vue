@@ -15,13 +15,13 @@
                 </div>
             </div>
             <div class="personal-wrapper-1">
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(0)">
                     <div class="p-unpaid"><i class="ion-help-buoy"></i></div>
                     <p class="p-wrap-1-title">
                         待付款
                     </p>
                 </div>
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(1)">
                     <div class="p-grouping"><i class="ion-compass"></i></div>
                     <p class="p-wrap-1-title">
                         待成团
@@ -93,6 +93,16 @@
         data() {
             return {
     
+            }
+        },
+        methods:{
+            go_orderlist(id){
+                $router.push({
+                    name:'order_list',
+                    params:{
+                        id:id
+                    }
+                })
             }
         }
     }

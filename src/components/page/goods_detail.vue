@@ -23,9 +23,9 @@
                       <p class="price-old">¥268</p>
                       <p class="sale-tag-wrapper">
 
-                          <span class="sale-tag" style="background:#e02e24">拼团价</span>
+                          <span class="sale-tag">拼团价</span>
 
-                          <span class="sale-tag" style="background:#e02e24">包邮</span>
+                          <span class="sale-tag">包邮</span>
 
                       </p>
                   </div>
@@ -60,6 +60,7 @@
 
           <item class="item-icon-right">
               {{data.store_info.store_name}}
+              <span style="float:right;font-size: 12px;color: #888;">进入店铺</span>
               <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </item>
 
@@ -102,7 +103,7 @@
         <!--固定不动的元素 要放到page-content的外面-->
         <div class="submit-order">
             <div class="hm-center hm-flex"  style="padding: 0;margin: 0;height:100%;">
-
+                <div style="flex:0.1"></div>
                 <div class="hm-flex-1 icon-align" @click="gohome">
                     <i class="iconfont icon-shouye"></i>
                 </div>
@@ -112,13 +113,14 @@
                 </div>
                 <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
                     <i class="iconfont icon-fahuo"></i>
-                    <div v-if="cartNumber>0" style="background: #15bc7f;color: #fff;position: absolute;width: 0.7rem;height: 0.7rem;border-radius: 50%;top:0.3rem;right: 0.5rem;font-size: 0.6rem;display: flex;justify-content: center;align-items: center;">{{cartNumber}}</div>
+                    <div v-show="cartNumber>0" class="cart-badge">{{cartNumber}}</div>
 
                 </div>
-                <div class="hm-flex-2 buy-align cart"  @click="add">
+                <div style="flex:0.1"></div>
+                <div class="hm-flex-2 buy-align cart" style="flex:2.5" @click="add">
                     <span>加入购物车</span>
                 </div>
-                <div class="hm-flex-2 buy-align"  @click="buy">
+                <div class="hm-flex-2 buy-align" style="flex:2.5" @click="buy">
                     <span>立即购买</span>
                 </div>
             </div>
@@ -161,7 +163,7 @@ function dataInit() {
       },
     },
     swipe_height: 100,
-    cartNumber: 0,
+    cartNumber: 5,
     swiperOption: {
       autoplay: 4000,
       initialSlide: 1,
@@ -184,16 +186,17 @@ export default {
   },
   methods: {
     getData() {
+        $loading.show("")
       this.$api.userGet('goods_info?goods_id=' + this.goods_id, res => {
         //                console.log(JSON.stringify(res.data));
         this.data = res.data.data;
-        //            this.init=true;
-        this.$nextTick(() => {
+//        this.$nextTick(() => {
           this.init = true;
+            $loading.hide();
             //更新init_spec，init_spec_name至vuex
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_specx',value:this.init_spec})
             this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_spec_namex',value:this.init_spec_name})
-        })
+//        })
 
       }, err => {
         //$toast(err)
@@ -318,6 +321,7 @@ export default {
     console.log('to:'+to.path, 'from:'+from.path)
     this.init = false
     this.$store.commit('ACTIONSHEET_UPDATE', { key: 'fisrtTimeOpenSheet', value: false })
+    this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:false})
     next()
   },
   activated() {
@@ -331,7 +335,7 @@ export default {
 
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 // 主题色
 $color-theme: #e02e24;
 .submit-order {
@@ -387,6 +391,21 @@ $color-theme: #e02e24;
     font-size: 20px;
     // line-height: 1.5;
 }
+.cart-badge{
+    background: lighten($color-theme,10%);
+    color: #fff;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    top:4px;
+    right: 8px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 //幻灯片焦点颜色
 .swiper-pagination-bullet-active {
     background: #e02e24;
@@ -448,22 +467,26 @@ $color-theme: #e02e24;
 .infos .area .prices .sale-tag-wrapper {
     display: inline-block;
     margin-left: .34133333rem;
-    -webkit-transform: scale(.6);
-    -moz-transform: scale(.6);
-    transform: scale(.6);
-    -webkit-transform-origin: left bottom;
-    transform-origin: left bottom;
+    /*-webkit-transform: scale(.6);*/
+    /*-moz-transform: scale(.6);*/
+    /*transform: scale(.6);*/
+    /*-webkit-transform-origin: left bottom;*/
+    /*transform-origin: left bottom;*/
 }
 .infos .area .prices .sale-tag {
     display: inline-block;
-    margin: 0 .17066667rem .04266667rem;
-    padding:0 5px;
+    /*display: flex;*/
+    /*align-items:center;*/
+    /*justify-content:center;*/
+    margin-left: 4px;
+    padding:1px 7px 0;
     color: #fff;
-    line-height: 2;
-    font-size: 12px;
+    line-height: 1.8;
+    font-size: 8px;
+    background: lighten($color-theme,5%);
 }
 .infos .area .prices span {
-    vertical-align: bottom;
+    /*vertical-align: bottom;*/
 }
 .infos .area .prices .price {
     /*display: inline-block;*/

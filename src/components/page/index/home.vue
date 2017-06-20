@@ -368,33 +368,6 @@ export default {
     -webkit-line-clamp: 2;
 }
 
-.hm-flex {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-}
-.hm-flex-1,
-.hm-flex-item {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-}
-.hm-flex-2 {
-    -webkit-box-flex: 2;
-    -ms-flex: 2;
-    flex: 2;
-}
-.hm-flex-3 {
-    -webkit-box-flex: 3;
-    -ms-flex: 3;
-    flex: 3;
-}
-.hm-margin-b,
-.hm-margin-b-m,
-.hm-margin-tb,
-.hm-margin-tb-m {
-    margin-bottom: 0.6rem;
-}
 .category {
     overflow: hidden;
     background: #fff;

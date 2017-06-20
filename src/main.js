@@ -29,6 +29,7 @@ const goods_detail = resolve => require(['./components/page/goods_detail.vue'], 
 const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
 const address = resolve => require(['./components/page/user/addresses.vue'], resolve)
 const order_buynow = resolve => require(['./components/page/order/buy-now.vue'], resolve)
+const order_list = resolve => require(['./components/page/order/order-list.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -76,7 +77,12 @@ const routes = [{
         path: '/order_buynow/:cart_id-:ifcart',//（购物车，快速购买）下单第一步  参数格式  :cart_id（产品ID|购买数量）  :ifcart  (true or false) 是否从购物车
         name: 'order_buynow',
         component: order_buynow
-      }
+      },
+        {
+            path: '/order_list/:id',
+            name: 'order_list',
+            component: order_list
+        },
     ]
 
   },
