@@ -7,82 +7,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <title>老友粉</title>
   <link rel="icon" href="http://cdn2.gxlyf.cn/favicon.ico" type="image/x-icon">
-  <style>
-    #spinner {
-      margin-top: -.85rem;
-      margin-left: -.85rem;
-      width: 85rem;
-      height: 85rem;
-      left: 50%;
-      top: 45%;
-      position: relative;
-    }
-
-    #cube1, #cube2 {
-      background-color: #f50;
-      width: .8rem;
-      height: .8rem;
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      -webkit-animation: cubemove 1.8s infinite ease-in-out;
-      animation: cubemove 1.8s infinite ease-in-out;
-    }
-
-    #cube2 {
-      -webkit-animation-delay: -0.9s;
-      animation-delay: -0.9s;
-    }
-
-    @-webkit-keyframes cubemove {
-      25% {
-        -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5)
-      }
-      50% {
-        -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg)
-      }
-      75% {
-        -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5)
-      }
-      100% {
-        -webkit-transform: rotate(-360deg)
-      }
-    }
-
-    @keyframes cubemove {
-      25% {
-        transform: translateX(42px) rotate(-90deg) scale(0.5);
-        -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
-      }
-      50% {
-        transform: translateX(42px) translateY(42px) rotate(-179deg);
-        -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
-      }
-      50.1% {
-        transform: translateX(42px) translateY(42px) rotate(-180deg);
-        -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
-      }
-      75% {
-        transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-        -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
-      }
-      100% {
-        transform: rotate(-360deg);
-        -webkit-transform: rotate(-360deg);
-      }
-    }
-  </style>
   <script>
     var HOST = 'https://api2.gxlyf.cn';
   </script>
 </head>
 
 <body>
-<div id="spinner">
-  <div id="cube1"></div>
-  <div id="cube2"></div>
-</div>
 <von-app></von-app>
 <!-- built files will be auto injected -->
 </body>
