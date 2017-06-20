@@ -71,9 +71,7 @@
                                         <p class="current fr">￥{{goods.goods_price}}</p>
                                     </div>
                                     <div class="obi-second">
-                                        <p class="type fl">
-                                            条纹&nbsp;M
-                                        </p>
+                                        <p class="type fl">{{goods.goods_spec|goods_spec}}</p>
                                         <p class="old fr">×{{goods.goods_num}}</p>
                                     </div>
                                 </div>
@@ -88,7 +86,7 @@
                         </span>
                     </p>
                     <div class="activate-box">
-                        <input type="text" class="activate-key js-user-note" name="user_notes[32495699]" maxlength="50" x-webkit-speech="" placeholder="给卖家留言(50字以内)" autocomplete="off">
+                        <input type="text" class="activate-key js-user-note" :name="key" v-model="pay_massage[key]"  maxlength="50" placeholder="给卖家留言(50字以内)" autocomplete="off">
                     </div>
                 </div>
                 <div class="bg"></div>
@@ -114,9 +112,9 @@
         </div>
 
         <div class="order_total order-amount-total">
-            <div class="total-title">应付金额<span>¥39.00</span></div>
-            <p class="clear"><span class="sp1">商品总额</span><span class="sp2">¥39.00</span></p>
-            <p class="clear"><span class="sp1">总运费</span><span class="sp2">¥0.00</span></p>
+            <div class="total-title">应付金额<span>¥{{order_amount}}</span></div>
+            <p class="clear"><span class="sp1">商品总额</span><span class="sp2">¥{{goods_total}}</span></p>
+            <p class="clear"><span class="sp1">总运费</span><span class="sp2">¥{{freight_total}}</span></p>
         </div>
 
 
@@ -124,8 +122,8 @@
 
 
     </div>
-    <div class="bag-total order_temai">
-        <a href="javascript:;" id="go-pay" _payentrance="1" class="go_pay">去付款</a>
+    <div class="bag-total order_temai" v-if="page_show">
+        <a href="javascript:;" class="go_pay" @click="go_pay()">去付款</a>
     </div>
 </div>
 
@@ -148,27 +146,59 @@ export default {
       store_cart_list: [],
       address_api: [],
       store_final_total_list: [],
+      order_amount: 0,
+      pay_massage: [],
       modal: undefined
+    }
+  },
+  filters: {
+    goods_spec: function(val) {
+      if (val != null) {
+        return val.join(";")
+      }
+
     }
   },
   mounted() {
     this.cart_id = this.$route.params.cart_id
     this.ifcart = this.$route.params.ifcart
     this.getData()
-
     $modal.fromComponent(address_modal, {
       title: '地址管理',
       theme: 'default'
     }).then((modal) => {
       this.modal = modal
     })
+    bus.$on("onChangeAddress", address => {
+      this.address_info = address
+      this.modal.hide();
+    })
+  },
+  computed: {
+    goods_total: {
+      get() {
+        let total = 0;
+        for (var key in this.store_final_total_list) {
+          total = total + parseFloat(this.store_final_total_list[key])
+        }
+        return total - this.freight_total
+      },
+      set() {
 
-    bus.$on("onChangeAddress", address=> {
-     this.address_info = address
+      }
+    },
+    freight_total: {
+      get() {
+        let total = 0;
+        for (var key in this.address_api.content) {
+          total = total + parseFloat(this.address_api.content[key])
+        }
+        return total
+      },
+      set() {
 
-     this.modal.hide();
-
-   })
+      }
+    }
   },
   destroyed() {
     if (this.modal)
@@ -181,12 +211,20 @@ export default {
         cart_id: this.cart_id,
         ifcart: this.ifcart
       }, res => {
-
-        this.address_info = res.data.data.address_info
-        this.store_cart_list = res.data.data.store_cart_list
-        this.address_api = res.data.data.address_api
-        this.store_final_total_list = res.data.data.store_final_total_list
-        this.page_show = true
+        if (res.data.status_code == 1) {
+          this.address_info = res.data.data.address_info
+          this.store_cart_list = res.data.data.store_cart_list
+          this.address_api = res.data.data.address_api
+          this.store_final_total_list = res.data.data.store_final_total_list
+          this.order_amount = res.data.data.order_amount
+          this.page_show = true
+          for (var key in this.store_cart_list) {
+            this.$set(this.pay_massage, key, '')
+          }
+        } else {
+          $toast.show(res.data.message)
+          $router.go(-1)
+        }
         $loading.hide()
       }, error => {
         $loading.hide()
@@ -194,8 +232,35 @@ export default {
     },
     select_address() {
       this.modal.show()
+    },
+    go_pay() {
+      let msg = [];
+      for (var store_id in this.pay_massage) {
+        let c_p = store_id + '|' + this.pay_massage[store_id]
+        msg.push(c_p)
+      }
+      $loading.show()
+      this.$api.userAuthPost("buy_step2", {
+        cart_id: this.cart_id,
+        ifcart: this.ifcart,
+        address_id: this.address_info.address_id,
+        pay_message: msg.join(",")
+      }, res => {
+        $loading.hide()
+        if (res.data.status_code == 1) {
+          window.location.href = res.data.data
+        } else {
+          $toast.show(res.data.message)
+          this.$store.commit('UPDATE_COMMON_DATA', {
+            cart_view_data_reload: true
+          })
+          $roter.go(-1)
+        }
+      }, error => {
+        console.log(error);
+        $toast.show("支付失败")
+      })
     }
-
   }
 }
 </script>

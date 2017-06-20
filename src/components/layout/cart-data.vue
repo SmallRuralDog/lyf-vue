@@ -83,7 +83,7 @@
                                             <div class="item-info">
                                                 <a>
                                                     <h3 class="title">{{goods.goods_name}}</h3>
-                                                    <div class="sku">
+                                                    <div class="sku" style="min-height: 1.12rem;">
                                                         <p>{{goods.goods_spec_text}}</p>
                                                     </div>
                                                 </a>
