@@ -102,7 +102,7 @@
                     <span class="payway-tips-ad">推荐</span>
                     <i class="pay-type-radio"></i>
                 </li>
-                <li data-pay-type="5" class="  ">
+                <li data-pay-type="5" class="" v-if="false">
                     <img src="//jp.juancdn.com/jpwebapp/images/shopping/icon_ali.png">
                     <span>支付宝支付</span>
                     <span class="payway-tips-text"></span>
@@ -247,13 +247,13 @@ export default {
         pay_message: msg.join(",")
       }, res => {
         $loading.hide()
+        this.$store.commit('UPDATE_COMMON_DATA', {
+          cart_view_data_reload: true
+        })
         if (res.data.status_code == 1) {
           window.location.href = res.data.data
         } else {
           $toast.show(res.data.message)
-          this.$store.commit('UPDATE_COMMON_DATA', {
-            cart_view_data_reload: true
-          })
           $roter.go(-1)
         }
       }, error => {

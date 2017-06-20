@@ -39,6 +39,10 @@
 <script>
 import BScroll from 'better-scroll'
 import scroll from '../layout/scroll.vue';
+import {
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   name: "catgoods",
   components: {
@@ -49,27 +53,48 @@ export default {
       goods_class: [],
       goods: [],
       m_w: 0,
-      active: 0,
-      gc_id: 0,
       page: 1,
       is_load: false,
       load_more: true,
       more_data: '-- 没有更多了 --',
-      init_menu:false
+    }
+  },
+  computed: {
+    ...mapState({
+      cat_goods_list_class_id: state => state.common.cat_goods_list_class_id,
+      cat_goods_list_class_init_menu: state => state.common.cat_goods_list_class_init_menu,
+      active: state => state.common.cat_goods_list_class_active,
+    }),
+  },
+  watch: {
+    cat_goods_list_class_id: function(val, oldVal) {
+      if (val != oldVal) {
+        this.page = 1
+        this.m_w = 0
+        this.load_more = true
+        this.$refs.lyf_scroll.setscrollTop(0)
+        this.getData(() => {
+
+        })
+      }
     }
   },
   mounted() {
     this.gc_id = this.$route.params.gc_id;
-
+    if (this.gc_id > 0) {
+      this.$store.commit('UPDATE_COMMON_DATA', {
+        cat_goods_list_class_id: this.gc_id
+      })
+    }
     this.getData(() => {})
   },
   methods: {
     getData(done) {
       this.is_load = true
-      this.$api.userGet('goods_list?gc_id=' + this.gc_id + '&page=' + this.page, res => {
+      this.$api.userGet('goods_list?gc_id=' + this.cat_goods_list_class_id + '&page=' + this.page, res => {
         if (res.data.data.goods_list.current_page == 1) {
-          if(!this.init_menu){
-            this.init_menu = true
+          if (!this.cat_goods_list_class_init_menu) {
+
             this.goods_class = res.data.data.goods_class
           }
           this.goods = res.data.data.goods_list.data
@@ -83,8 +108,13 @@ export default {
         }
 
         this.$nextTick(() => {
-          this._initScroll()
-          this._setMenuW()
+          if (!this.cat_goods_list_class_init_menu) {
+            this._initScroll()
+            this._setMenuW()
+            this.$store.commit('UPDATE_COMMON_DATA', {
+              cat_goods_list_class_init_menu: true
+            })
+          }
           done()
           this.$refs.lyf_scroll.infiniteDone()
           this.is_load = false
@@ -120,16 +150,18 @@ export default {
         this._initScroll()
       })
     },
-    changeMenu(index,gc_id) {
-      if(this.active == index) return;
-      this.active = index
-      this.gc_id = gc_id
+    changeMenu(index, gc_id) {
+      if (this.active == index) return;
+      this.$store.commit('UPDATE_COMMON_DATA', {
+        cat_goods_list_class_id: gc_id,
+        cat_goods_list_class_active: index
+      })
       this.page = 1
       this.is_load = false
       this.load_more = true
       this.more_data = "没有更多数据"
       $loading.show("加载中")
-      this.getData(()=>{
+      this.getData(() => {
         $loading.hide()
         this.$refs.lyf_scroll.setscrollTop(0)
       })
@@ -146,7 +178,15 @@ export default {
       if (this.is_load || !this.load_more) return;
       this.page = this.page + 1
       this.getData(done)
-    }
+    },
+    goodsClick(id) {
+      $router.push({
+        name: 'goods_detail',
+        params: {
+          id: id,
+        }
+      });
+    },
   }
 }
 </script>
