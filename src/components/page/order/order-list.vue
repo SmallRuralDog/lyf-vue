@@ -23,7 +23,6 @@
     flex-grow: 1;
     flex-shrink: 0;
 }
-
 .order-manage .nav-tab-top ul .cur {
     border-bottom: 0.08rem solid #ea5a49;
     box-sizing: border-box;
