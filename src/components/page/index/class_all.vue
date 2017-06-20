@@ -153,6 +153,10 @@ export default {
     }
   },
   mounted() {
+    $loading.hide()
+    this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
+      class_all:true,
+    })
     let s_h = this.$route.params.show_search;
     if(s_h==1){
       this.show_search = true
@@ -246,6 +250,11 @@ export default {
       this.search_key = ''
     },
     go_cat(gc_id){
+      this.$store.commit('UPDATE_COMMON_DATA', {
+        cat_goods_list_class_id:gc_id,
+        cat_goods_list_class_init_menu:false,
+        cat_goods_list_class_active:0
+      })
       $router.push({
         name: 'catgoods',
         params: {

@@ -1,7 +1,7 @@
 <template>
 <div class="" v-nav="{hideNavbar:true}">
     <transition>
-        <keep-alive exclude="catgoods,cart_data,order_buynow,address_list">
+        <keep-alive exclude="cart_data,order_buynow,address_list">
             <router-view></router-view>
         </keep-alive>
     </transition>
@@ -37,6 +37,9 @@ export default {
                 }
             ]
         }
+    },
+    mounted(){
+    
     },
     methods: {
         menuClicked(menuIndex) {}
