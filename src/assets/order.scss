@@ -58,7 +58,7 @@ del {
     display: none!important
 }
 .h {
-    color: #ff5000
+    color: #ea5a49
 }
 .gray {
     color: #999
@@ -74,7 +74,7 @@ del {
 }
 .order-manage.list .order-list > li,
 .order-manage .order-box {
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: 0.01rem solid #e7e7e7;
     position: relative
 }
 .order-manage.list .order-list > li:after,
@@ -82,7 +82,7 @@ del {
     content: '';
     display: block;
     width: 100%;
-    height: 1px;
+    height: 0px;
     background: #d9d9d9;
     position: absolute;
     bottom: 0;
@@ -414,7 +414,7 @@ padding-right: .267rem;
 }
 .order-manage .order-serviceinfo li {
     display: inline-block;
-    background: #ff5000;
+    background: #ea5a49;
     color: #fff;
     padding: .04rem .133rem;
     margin: .133rem .133rem 0 0
@@ -436,8 +436,8 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .order-phase li.current {
-    color: #ff5000;
-    border-color: #ff5000
+    color: #ea5a49;
+    border-color: #ea5a49
 }
 .order-manage .order-price-freight {
     padding: .133rem 0;
@@ -571,9 +571,9 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .nav-tab-top ul .cur {
-    border-bottom: .04rem solid #ff5000;
+    border-bottom: .04rem solid #ea5a49;
     box-sizing: border-box;
-    color: #ff5000
+    color: #ea5a49
 }
 .order-manage .o-t-title-shop {
     height: 1.067rem;
@@ -727,9 +727,9 @@ padding-right: .267rem;
     display: -ms-box;
     display: -o-box;
     display: box;
-    padding: .133rem .32rem;
+    padding: .233rem .32rem;
     box-sizing: border-box;
-    background: #f5f5f5
+    background: #f7f7f7
 }
 [data-dpr="1"] .order-manage .o-t-item {
     font-size: 12px
@@ -813,7 +813,7 @@ padding-right: .267rem;
     color: #999
 }
 .order-manage .o-t-item .item-info .state {
-    color: #ff5000
+    color: #ea5a49
 }
 .order-manage .o-t-item .item-img {
     width: 1.6rem;
@@ -881,8 +881,8 @@ padding-right: .267rem;
 .order-manage .o-t-item .item-pay .item-pay-btn a {
     padding: 0 .133rem;
     display: inline-block;
-    border-color: #ff5000;
-    color: #ff5000;
+    border-color: #ea5a49;
+    color: #ea5a49;
     overflow: hidden
 }
 .order-manage .o-t-item .item-pay .price {
@@ -921,12 +921,12 @@ padding-right: .267rem;
 .order-manage .o-item-pay-btn a {
     padding: 0 .133rem;
     display: inline-block;
-    border-color: #ff5000;
-    color: #ff5000
+    border-color: #ea5a49;
+    color: #ea5a49
 }
 .order-manage .o-total-price {
-    min-height: .8rem;
-    padding: .067rem .32rem .067rem 0;
+    min-height: .9rem;
+    padding: .267rem .32rem .267rem 0;
     text-align: right;
     -webkit-box-pack: center;
     -moz-box-pack: center;
@@ -944,7 +944,7 @@ padding-right: .267rem;
     display: -o-box;
     display: box;
     background: #fff;
-    border-bottom: 1px solid #e7e7e7
+    border-bottom: 0.01rem solid #f7f7f7
 }
 .order-manage .o-total-price .cont {
     width: 100%;
@@ -958,8 +958,7 @@ padding-right: .267rem;
     font-weight: 700
 }
 .order-manage .o-tab-btn {
-    padding: .067rem .32rem .067rem 0;
-    border-bottom: 1px solid #e7e7e7;
+    padding: .167rem .32rem .167rem 0;
     background: #fff
 }
 .order-manage .o-tab-btn:before,
@@ -1023,7 +1022,7 @@ padding-right: .267rem;
     border: 0
 }
 .order-manage .o-tab-btn .h {
-    border-color: #ff5000
+    border-color: #ea5a49
 }
 .order-manage .o-t-contmsg {
     padding: .32rem;
@@ -1440,7 +1439,7 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .o-pop-btm .subinfo {
-    color: #ff5000;
+    color: #ea5a49;
     text-align: center;
     padding: .133rem 0
 }
@@ -1473,7 +1472,7 @@ padding-right: .267rem;
 }
 .order-manage .o-pop-btm .btn p.confirmPay,
 .order-manage .o-pop-btm .btn p.pay {
-    background: #ff5000;
+    background: #ea5a49;
     color: #fff
 }
 .order-manage .o-pop-btm .btn p.cancel {
