@@ -11,35 +11,35 @@
             <div class="personal-orders">
                 <div class="p-orders">
                     <span class="p-all-orders">我的订单</span>
-                    <span class="p-all-orders-span">查看更多订单 <i class="ion-ios-arrow-right"></i></span>
+                    <span class="p-all-orders-span" @click="go_orderlist(0)">查看更多订单 <i class="ion-ios-arrow-right"></i></span>
                 </div>
             </div>
             <div class="personal-wrapper-1">
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(0)">
                     <div class="p-unpaid"><i class="ion-help-buoy"></i></div>
                     <p class="p-wrap-1-title">
                         待付款
                     </p>
                 </div>
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(1)">
                     <div class="p-grouping"><i class="ion-compass"></i></div>
                     <p class="p-wrap-1-title">
                         待成团
                     </p>
                 </div>
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(2)">
                     <div class="p-unshipping"><i class="ion-at"></i></div>
                     <p class="p-wrap-1-title">
                         待发货
                     </p>
                 </div>
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(3)">
                     <div class="p-unreceived"><i class="ion-power"></i></div>
                     <p class="p-wrap-1-title">
                         待收货
                     </p>
                 </div>
-                <div class="p-wrapper-1-item">
+                <div class="p-wrapper-1-item" @click="go_orderlist(4)">
                     <div class="p-unrated"><i class="ion-wifi"></i></div>
                     <p class="p-wrap-1-title">
                         待评价
@@ -93,6 +93,16 @@
         data() {
             return {
     
+            }
+        },
+        methods:{
+            go_orderlist(id){
+                $router.push({
+                    name:'order_list',
+                    params:{
+                        id:id
+                    }
+                })
             }
         }
     }

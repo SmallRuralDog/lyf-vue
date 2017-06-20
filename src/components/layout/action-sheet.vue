@@ -1,5 +1,5 @@
 <template>
-<mt-popup v-model="popupVisible" position="bottom" style="width:100%;height:11.17rem">
+<mt-popup v-model="popupVisible" position="bottom" style="width:100%;height:11.17rem;">
   <div class="sku_list sku-prop ctrl-ui-sku">
     <i class="icon_closed ion-ios-close-outline" @click="quit()"></i>
     <div class="container_sku">
@@ -116,8 +116,9 @@ export default {
         if(spec_string){
             for(var key in spec_list){
                 if(spec_string==key) return spec_list[key]
-
             }
+        }else{
+            return this.goodsid
         }
 
     },
@@ -163,6 +164,14 @@ export default {
               }
 
           }
+      },
+      goodsid_choose(val, oldVal){
+          if(val && oldVal && val!=oldVal){
+              console.log('goodsid_choose=',val, oldVal)
+              this.$emit('refresh_goods_data',val)
+
+          }
+
       }
 
   },
