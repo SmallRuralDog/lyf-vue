@@ -92,7 +92,7 @@ export default {
   computed: {
     ...mapState({
       showpicksheet: state => state.actionsheet.showpicksheet,
-      fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
+      firstTimeOpenSheet:state=>state.actionsheet.firstTimeOpenSheet,
     }),
     init_color_id() {
          return this.data.goods_info.color_id
@@ -152,10 +152,11 @@ export default {
       spec_string(val, oldVal) {
 
       },
-      fisrtTimeOpenSheet(val, oldVal){
-          console.log('fisrtTimeOpenSheet set  this.cur_spec')
+      firstTimeOpenSheet(val, oldVal){
+          console.log('firstTimeOpenSheet set  this.cur_spec')
           if(val){
-//              this.cur_spec=this.init_spec
+             this.cur_spec=[]
+             this.cur_spec_name=[]
               for(var i in this.init_spec){
                   this.cur_spec.push(this.init_spec[i])
               }

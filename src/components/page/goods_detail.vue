@@ -228,15 +228,15 @@ export default {
     add() {
         // this.popupVisible=true
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
-        if(this.fisrtTimeOpenSheet==false){
-            this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
+        if(this.firstTimeOpenSheet==false){
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'firstTimeOpenSheet',value:true})
         }
     },
     buy() {
         // this.popupVisible=true
         this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:true})
-        if(this.fisrtTimeOpenSheet==false){
-            this.$store.commit('ACTIONSHEET_UPDATE',{key:'fisrtTimeOpenSheet',value:true})
+        if(this.firstTimeOpenSheet==false){
+            this.$store.commit('ACTIONSHEET_UPDATE',{key:'firstTimeOpenSheet',value:true})
         }
     },
       quit(){
@@ -249,7 +249,7 @@ export default {
     computed:{
         ...mapState({
             showpicksheet:state=>state.actionsheet.showpicksheet,
-            fisrtTimeOpenSheet:state=>state.actionsheet.fisrtTimeOpenSheet,
+            firstTimeOpenSheet:state=>state.actionsheet.firstTimeOpenSheet,
             cur_spec_namex:state=>state.actionsheet.cur_spec_namex,
         }),
 
@@ -334,7 +334,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     console.log('to:'+to.path, 'from:'+from.path)
     this.init = false
-    this.$store.commit('ACTIONSHEET_UPDATE', { key: 'fisrtTimeOpenSheet', value: false })
+    this.$store.commit('ACTIONSHEET_UPDATE', { key: 'firstTimeOpenSheet', value: false })
     this.$store.commit('ACTIONSHEET_UPDATE',{key:'showpicksheet',value:false})
     next()
   },
