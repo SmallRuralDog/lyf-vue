@@ -37,7 +37,7 @@
               </div>
           </div>
 
-          <item class="item-icon-right promise-block hm-margin-b">
+          <item class="promise-block hm-margin-b"><!--item-icon-right-->
 
               <div class="hm-flex">
                   <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>正品保证</div>
@@ -45,11 +45,10 @@
                   <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>24h发货</div>
                   <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>售后补贴</div>
               </div>
-              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+              <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
           </item>
 
-          <item class="item-icon-right hm-margin-b">
-
+          <item class="item-icon-right hm-margin-b" @click.native="add">
               已选
               <template v-if="data.goods_info.goods_spec">
               <template v-for="value in cur_spec_namex"><!--data.goods_info.goods_spec-->
@@ -60,14 +59,43 @@
           </item>
 
           <item class="item-icon-right">
-
               {{data.store_info.store_name}}
-
               <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </item>
 
-
-
+          <ul class="event-list">
+              <li class="event-item">
+                      <span class="event-item-num">{{data.store_info.goods_count}}件</span>
+                      <span class="event-item-text">全部商品</span>
+              </li>
+              <li class="event-item">
+                      <span class="event-item-num">{{data.store_info.buy_count}}</span>
+                      <span class="event-item-text">购买人数</span>
+              </li>
+              <li class="event-item">
+                      <span class="event-item-num">{{data.store_info.collect_count}}</span>
+                      <span class="event-item-text">收藏人数</span>
+              </li>
+              <li class="event-item">
+                      <ul class="logis-list">
+                          <li>
+                              <span>{{data.store_info.store_credit.store_deliverycredit.text}}评价</span>
+                              <span style="color: #FF4965" class="logis-score">{{data.store_info.store_credit.store_deliverycredit.credit}}</span>
+                              <span style="color: #FF4965" class="logis-val">{{data.store_info.store_credit.store_deliverycredit.percent_text}}</span>
+                          </li>
+                          <li>
+                              <span>{{data.store_info.store_credit.store_servicecredit.text}}评价</span>
+                              <span style="color: #8F8F8F" class="logis-score">{{data.store_info.store_credit.store_servicecredit.credit}}</span>
+                              <span style="color: #8F8F8F" class="logis-val">{{data.store_info.store_credit.store_servicecredit.percent_text}}</span>
+                          </li>
+                          <li>
+                              <span>{{data.store_info.store_credit.store_desccredit.text}}评价</span>
+                              <span style="color: #8F8F8F" class="logis-score">{{data.store_info.store_credit.store_desccredit.credit}}</span>
+                              <span style="color: #8F8F8F" class="logis-val">{{data.store_info.store_credit.store_desccredit.percent_text}}</span>
+                          </li>
+                      </ul>
+              </li>
+          </ul>
 
 
         </div>
@@ -121,7 +149,16 @@ function dataInit() {
         goods_spec:[],
       },
       spec_image:{},
-      store_info:{},
+      store_info:{
+          buy_count:'',
+          collect_count:'',
+          goods_count:'',
+          store_credit:{
+              store_deliverycredit:{},
+              store_desccredit:{},
+              store_servicecredit:{}
+          }
+      },
     },
     swipe_height: 100,
     cartNumber: 0,
@@ -304,6 +341,7 @@ $color-theme: #e02e24;
     right: 0;
     background-color: #fff;
     z-index: 100;
+    height:1.33rem;
 }
 .submit-order .buy-align {
     color: #fff;
@@ -321,6 +359,7 @@ $color-theme: #e02e24;
     -ms-flex-direction: column;
     flex-direction: column;
     background: $color-theme;
+    font-size: 14px;
 }
 .submit-order .buy-align.cart {
     background: lighten($color-theme,10%);
@@ -342,11 +381,11 @@ $color-theme: #e02e24;
 }
 .submit-order .hm-flex-1 {
     color: #888;
-    padding: 10px 0;
+    // padding: 10px 0;
 }
 .submit-order .hm-flex-1 .iconfont {
     font-size: 20px;
-    line-height: 1.5;
+    // line-height: 1.5;
 }
 //幻灯片焦点颜色
 .swiper-pagination-bullet-active {
@@ -445,6 +484,25 @@ $color-theme: #e02e24;
     color: #8f8f8f;
 }
 .infos .product h3 {
-    font-size: 16px;
+    font-size: 15px;
+    line-height:1.5;
 }
+/*===========*/
+.event-list{
+    display: flex;
+    background: #fff;
+    padding:15px 0;
+}
+.event-item{
+    flex:1;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: center;
+    border-right: 1px #fafafa solid;
+}
+.event-item:last-child{
+    flex:1.5;
+}
+    
 </style>
