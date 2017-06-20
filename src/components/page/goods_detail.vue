@@ -98,6 +98,10 @@
               </li>
           </ul>
 
+        <div v-html="data.goods_info.mobile_body">
+
+        </div>
+
 
         </div>
         <!--固定不动的元素 要放到page-content的外面-->
@@ -345,7 +349,7 @@ export default {
 
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 // 主题色
 $color-theme: #e02e24;
 .submit-order {
@@ -376,7 +380,7 @@ $color-theme: #e02e24;
     font-size: 14px;
 }
 .submit-order .buy-align.cart {
-    background: lighten($color-theme,10%);
+    background: lighten($color-theme,15%);
 }
 .submit-order .icon-align {
     display: -webkit-box;
