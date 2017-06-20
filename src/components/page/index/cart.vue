@@ -8,15 +8,19 @@
 </template>
 
 <script>
-
 import LyfTabBar from '../../layout/lyf-tab-bar'
 import CartData from '../../layout/cart-data'
 
 export default {
-    components: {
-        LyfTabBar,
-        CartData
-    },
+  components: {
+    LyfTabBar,
+    CartData
+  },
+  mounted() {
+    $loading.hide()
+    this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
+      cart: true,
+    })
+  }
 }
-
 </script>

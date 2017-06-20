@@ -137,7 +137,6 @@ Vonic.app.setConfig('afterEach', afterEach)
 //注册全局方法
 import api from './api/methods'
 Vue.prototype.$api = api;
-
 import store from './store'
 Vue.use(Vonic.app, {
   store: store,

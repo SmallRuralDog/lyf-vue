@@ -97,7 +97,7 @@ import {
 import BScroll from 'better-scroll'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
-  name:"home",
+  name: "home",
   components: {
     LyfTabBar,
     scroll,
@@ -106,9 +106,9 @@ export default {
   },
   data() {
     return {
-      tuijian_icon:require("../../../assets/images/home_tuijian.png"),
+      tuijian_icon: require("../../../assets/images/home_tuijian.png"),
       m_w: 0,
-      st:0,
+      st: 0,
       menu_item_width: 0,
       menu_len: 0,
       active: 0,
@@ -136,6 +136,10 @@ export default {
 
   }),
   mounted() {
+    $loading.hide()
+    this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
+      home: true,
+    })
     if (!this.init_load) {
       this.$store.dispatch('getData', res => {
         this.$nextTick(() => {
@@ -195,14 +199,14 @@ export default {
       //请求数据
       if (this.list[this.active].init == false) {
         this.$store.dispatch('getData', res => {
-          this.$nextTick(()=>{
+          this.$nextTick(() => {
             //this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
             this.$refs.lyf_scroll.setscrollTop(0)
             this.$refs.lyf_scroll.infiniteDone()
           })
         })
-      }else{
-        this.$nextTick(()=>{
+      } else {
+        this.$nextTick(() => {
           //console.log(this.list_scroll);
           this.$refs.lyf_scroll.setscrollTop(0)
           this.$refs.lyf_scroll.infiniteDone()
@@ -218,7 +222,7 @@ export default {
         }
       });
     },
-    go_cat(gc_id){
+    go_cat(gc_id) {
       $router.push({
         name: 'catgoods',
         params: {
@@ -226,7 +230,7 @@ export default {
         }
       });
     },
-    go_search(){
+    go_search() {
       $router.push({
         name: 'class_all',
         params: {
@@ -264,7 +268,7 @@ export default {
         done()
       })
     },
-    onScrollListener(res){
+    onScrollListener(res) {
       this.st = res
     },
     goTop() {
@@ -375,7 +379,7 @@ export default {
         padding: 0.27rem 0;
         box-sizing: border-box;
         text-align: center;
-        font-size: .32rem;
+        font-size: 0.32rem;
         color: #333333;
     }
     img {
@@ -407,7 +411,7 @@ export default {
     bottom: 0.19rem;
     width: 100%;
     display: block;
-    height: .32rem;
+    height: 0.32rem;
     line-height: 0.32rem;
     text-align: center;
     font-size: 0.27rem;
@@ -422,27 +426,27 @@ export default {
     opacity: 1;
 }
 //幻灯片焦点颜色
-.swiper-pagination-bullet-active{
-  background:#e02e24;
+.swiper-pagination-bullet-active {
+    background: #e02e24;
 }
 .haitao-middle-hint {
     background-color: #fff;
-    padding: .32rem .05rem;
+    padding: 0.32rem 0.05rem;
     height: auto;
     width: 100%;
     overflow: hidden;
-    margin-top: .27rem;
+    margin-top: 0.27rem;
 }
 .haitao-middle-hint .haitao-middle-title {
     font-size: 0;
     text-align: center;
     color: #58595b;
-    margin-bottom: .13rem;
+    margin-bottom: 0.13rem;
     font-weight: 700;
 }
 .haitao-middle-hint .haitao-middle-title span {
-    font-size: .43rem;
-    line-height: .43rem;
+    font-size: 0.43rem;
+    line-height: 0.43rem;
 }
 .haitao-middle-hint .haitao-service-list {
     display: -webkit-box;
@@ -456,28 +460,30 @@ export default {
 }
 .haitao-middle-hint .haitao-service-list .haitao-service-item {
     position: relative;
-    padding: 0 .4rem 0 .53rem;
-    font-size: .32rem;
+    padding: 0 0.4rem 0 0.53rem;
+    font-size: 0.32rem;
     color: #9c9c9c;
 }
 .haitao-middle-hint .haitao-service-list .haitao-service-item-0:before {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAYUExURQAAAJycnJycnJycnJycnJycnJycnJycnNomLWoAAAAHdFJOUwDCFkXmm3uyI8i9AAAAs0lEQVQY02WRyQ4CIQyGO0TlSjIuVxLHB8CMd5XEs0vieUycu3rh9W2LLEITaD74KV0AyHZzd7hBMPFcbmH9OOkf91d2G+txasP5md0l6MSCr1UM1JCg1ymw9Ssa3s1Qs3Jkb3w7wERnLPZgvNJ518L9j0c8ydnAkf5VgO8pjw4+uMtXYBnZ6yXrE3ccL7Hh/xKPnE/ilvJtnDdF+WI9ibGest6yH1W/yn5W/S7nUc0rn+cXvM8p6hnkJwkAAAAASUVORK5CYII=);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAYUExURQAAAJycnJycnJycnJycnJycnJycnJycnNomLWoAAAAHdFJOUwDCFkXmm3uyI8i9AAAAs0lEQVQY02WRyQ4CIQyGO0TlSjIuVxLHB8CMd5XEs0vieUycu3rh9W2LLEITaD74KV0AyHZzd7hBMPFcbmH9OOkf91d2G+txasP5md0l6MSCr1UM1JCg1ymw9Ssa3s1Qs3Jkb3w7wERnLPZgvNJ518L9j0c8ydnAkf5VgO8pjw4+uMtXYBnZ6yXrE3ccL7Hh/xKPnE/ilvJtnDdF+WI9ibGest6yH1W/yn5W/S7nUc0rn+cXvM8p6hnkJwkAAAAASUVORK5CYII=");
 }
 .haitao-middle-hint .haitao-service-list .haitao-service-item-1:before {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAeUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnH07P/YAAAAJdFJOUwDhB8IYmjhRe2n7kmUAAADNSURBVBjTY2AAAqZSw5nC4QoMUMDUaJGi5NYsARMoDAFTruIQrqoYVDwxCKw6GKaOxRTEYjWCmcOgHADS7QDnMwFNYALqZgMZ6JoANEGBgQOohnWiAwOLJIjRwKAIVM4iKcLgOBHEEGIoBml0nOgCFAICc4YIsE2SghPBxrYymAFJy5kgMBnISmYQQeE7MkyCWD0TQmli8EVQ+I4Y5kWg8Fsh7oGrNwe7F84HuhfkHzgf6B8mSGgZQ0JMASM8MMILPTzRwxsjPjDiCzk+AS2lM6tGE5W0AAAAAElFTkSuQmCC);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAeUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnH07P/YAAAAJdFJOUwDhB8IYmjhRe2n7kmUAAADNSURBVBjTY2AAAqZSw5nC4QoMUMDUaJGi5NYsARMoDAFTruIQrqoYVDwxCKw6GKaOxRTEYjWCmcOgHADS7QDnMwFNYALqZgMZ6JoANEGBgQOohnWiAwOLJIjRwKAIVM4iKcLgOBHEEGIoBml0nOgCFAICc4YIsE2SghPBxrYymAFJy5kgMBnISmYQQeE7MkyCWD0TQmli8EVQ+I4Y5kWg8Fsh7oGrNwe7F84HuhfkHzgf6B8mSGgZQ0JMASM8MMILPTzRwxsjPjDiCzk+AS2lM6tGE5W0AAAAAElFTkSuQmCC");
 }
 .haitao-middle-hint .haitao-service-list .haitao-service-item-2:before {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnHeZTvgAAAALdFJOUwCWCv7mGsF4UTevIbFztQAAAPdJREFUGNNtUcFKw0AQHQMh19ol6DEmxXPj/oC0aY23DfTSm2ih1VMkwXPF4gdo2x8Q/U5n5iUgiXuZnXmzb9+8IeLjva7s/Dyi5nj1+hAvX27awi7UUORIT26b+n6g4aft858Uvm956FIadk7vgRAzg4fXvimFIaIAJIW9k7cljRxgI3V/Qu+AU+2nDZ2pQhN+beXyTI8SLlI3/Yj5cqQZYLLWsq4FXQGmOpsyQ6J5lWUlU0aSS39i7dg3Q5J+4fPiz2uFmU//o7dvE+I/6KlOUwc90GsAs17M8wCY58G8FSzkeeFHAKPzf/zq+tnzu7uP3r7+7vMXPpYvPI7Ew5IAAAAASUVORK5CYII=);
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeBAMAAADJHrORAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURQAAAJycnJycnJycnJycnJycnJycnJycnJycnJycnJycnHeZTvgAAAALdFJOUwCWCv7mGsF4UTevIbFztQAAAPdJREFUGNNtUcFKw0AQHQMh19ol6DEmxXPj/oC0aY23DfTSm2ih1VMkwXPF4gdo2x8Q/U5n5iUgiXuZnXmzb9+8IeLjva7s/Dyi5nj1+hAvX27awi7UUORIT26b+n6g4aft858Uvm956FIadk7vgRAzg4fXvimFIaIAJIW9k7cljRxgI3V/Qu+AU+2nDZ2pQhN+beXyTI8SLlI3/Yj5cqQZYLLWsq4FXQGmOpsyQ6J5lWUlU0aSS39i7dg3Q5J+4fPiz2uFmU//o7dvE+I/6KlOUwc90GsAs17M8wCY58G8FSzkeeFHAKPzf/zq+tnzu7uP3r7+7vMXPpYvPI7Ew5IAAAAASUVORK5CYII=");
 }
-.haitao-middle-hint .haitao-service-list .haitao-service-item-0:before, .haitao-middle-hint .haitao-service-list .haitao-service-item-1:before, .haitao-middle-hint .haitao-service-list .haitao-service-item-2:before {
+.haitao-middle-hint .haitao-service-list .haitao-service-item-0:before,
+.haitao-middle-hint .haitao-service-list .haitao-service-item-1:before,
+.haitao-middle-hint .haitao-service-list .haitao-service-item-2:before {
     position: absolute;
     left: 0;
     top: 1px;
     content: '';
-    height: .43rem;
-    width: .43rem;
+    height: 0.43rem;
+    width: 0.43rem;
     background-repeat: no-repeat;
     background-position: 0 0;
-    background-size: .4rem .4rem;
+    background-size: 0.4rem 0.4rem;
 }
 </style>

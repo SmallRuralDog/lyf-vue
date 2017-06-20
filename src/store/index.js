@@ -6,6 +6,8 @@ import home from './modules/home'
 import class_index from './modules/class_index'
 import actionsheet from './modules/actionsheet'
 import common from './modules/common'
+import page_load_state from './modules/page_load_state'
+
 
 
 Vue.use(Vuex)
@@ -16,6 +18,7 @@ export default new Vuex.Store({
     class_index,
     actionsheet,
     common,
+    page_load_state
   },
   strict: debug
 })

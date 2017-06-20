@@ -406,8 +406,9 @@ export default {
     getData() {
       this.$api.userAuthGet("user_address", res => {
         this.address_list = res.data.data
+        $loading.hide()
       }, error => {
-
+        $loading.hide()
       })
     },
     getArea(parent_id = 0, level = 1) {

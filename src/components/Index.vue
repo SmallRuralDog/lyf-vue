@@ -38,6 +38,9 @@ export default {
             ]
         }
     },
+    mounted(){
+    
+    },
     methods: {
         menuClicked(menuIndex) {}
     },

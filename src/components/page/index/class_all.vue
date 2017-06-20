@@ -153,6 +153,10 @@ export default {
     }
   },
   mounted() {
+    $loading.hide()
+    this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
+      class_all:true,
+    })
     let s_h = this.$route.params.show_search;
     if(s_h==1){
       this.show_search = true
