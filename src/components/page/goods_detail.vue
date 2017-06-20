@@ -127,7 +127,7 @@
         </div>
 
         {{/*属性选择*/}}
-        <actionsheet :data="data" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name"></actionsheet>
+        <actionsheet :data="data" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name" @refresh_goods_data="refreshGoodsData"></actionsheet>
 
     </div>
 </template>
@@ -202,6 +202,16 @@ export default {
         //$toast(err)
       })
     },
+      refreshGoodsData(id) {
+          this.$api.userGet('goods_info?goods_id=' + id, res => {
+              this.data = res.data.data;
+              //更新init_spec，init_spec_name至vuex
+              this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_specx',value:this.init_spec})
+              this.$store.commit('ACTIONSHEET_UPDATE',{key:'cur_spec_namex',value:this.init_spec_name})
+          }, err => {
+              //$toast(err)
+          })
+      },
     collect() {
 
     },

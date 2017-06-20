@@ -164,6 +164,14 @@ export default {
               }
 
           }
+      },
+      goodsid_choose(val, oldVal){
+          if(val && oldVal && val!=oldVal){
+              console.log('goodsid_choose=',val, oldVal)
+              this.$emit('refresh_goods_data',val)
+
+          }
+
       }
 
   },
