@@ -5,7 +5,9 @@ import Vonic from 'vonic'
 Vue.use(Vonic)
 import BUS from './bus.js'
 //popup插件
-import { Popup } from 'mint-ui';
+import {
+  Popup
+} from 'mint-ui';
 Vue.component(Popup.name, Popup);
 
 import 'lib-flexible/flexible'
@@ -16,7 +18,7 @@ import './assets/icon/iconfont.css'
 import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-    try: 3,
+  try: 3,
 })
 // Page Components
 const Index = resolve => require(['./components/Index'], resolve)
@@ -30,15 +32,15 @@ const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
 const address = resolve => require(['./components/page/user/addresses.vue'], resolve)
 const order_buynow = resolve => require(['./components/page/order/buy-now.vue'], resolve)
 const order_list = resolve => require(['./components/page/order/order-list.vue'], resolve)
+const order_detail = resolve => require(['./components/page/order/order-detail.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
     redirect: '/home',
     component: Index,
-    children: [
-      {
+    children: [{
         path: '/home',
-          name:'home',
+        name: 'home',
         component: Home
       },
       {
@@ -47,7 +49,7 @@ const routes = [{
       },
       {
         path: 'class_all',
-        name:"class_all",
+        name: "class_all",
         component: ClassAll
       },
       {
@@ -74,15 +76,20 @@ const routes = [{
         component: address
       },
       {
-        path: '/order_buynow/:cart_id-:ifcart',//（购物车，快速购买）下单第一步  参数格式  :cart_id（产品ID|购买数量）  :ifcart  (true or false) 是否从购物车
+        path: '/order_buynow/:cart_id-:ifcart', //（购物车，快速购买）下单第一步  参数格式  :cart_id（产品ID|购买数量）  :ifcart  (true or false) 是否从购物车
         name: 'order_buynow',
         component: order_buynow
       },
-        {
-            path: '/order_list/:id',
-            name: 'order_list',
-            component: order_list
-        },
+      {
+        path: '/order-list/:type',
+        name: 'order_list',
+        component: order_list
+      },
+      {
+        path: '/order-detail/:order_id',
+        name: 'order_detail',
+        component: order_detail
+      },
     ]
 
   },

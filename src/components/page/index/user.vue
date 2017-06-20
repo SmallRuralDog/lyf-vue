@@ -46,7 +46,7 @@
                     </p>
                 </div>
             </div>
-    
+
             <div class="personal-wrapper-2">
                 <div class="p-wrapper-2-item">
                     <div class="p-messages"><i class="ion-help-buoy color-assertive"></i></div>
@@ -77,7 +77,7 @@
                     <i class="icon ion-ios-gear dark"></i> 设置
                     <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
                 </item>
-    
+
             </div>
         </div>
         <lyf-tab-bar :index="4"></lyf-tab-bar>
@@ -92,7 +92,7 @@
         },
         data() {
             return {
-    
+
             }
         },
         methods:{
@@ -100,7 +100,7 @@
                 $router.push({
                     name:'order_list',
                     params:{
-                        id:id
+                        type:id
                     }
                 })
             }
@@ -113,14 +113,14 @@
         position: relative;
         background-image: url("../../../assets/images/personal_sprite_v10-59e86df834.png");
     }
-    
+
     .bg-img,
     .head-bg-img,
     .personal-download-app .p-download-txt:before {
         background-repeat: no-repeat;
         background-size: 10.53rem 6.67rem;
     }
-    
+
     .personal-head {
         background-position: 0 0;
         font-size: 0;
@@ -129,7 +129,7 @@
         position: relative;
         width: 100%;
     }
-    
+
     .personal-head img {
         border: 0.015rem solid rgba(255, 255, 255, .5);
         border-radius: 100%;
@@ -138,25 +138,25 @@
         position: relative;
         width: 1.71rem;
     }
-    
+
     .personal-head .p-head-info {
         display: inline-block;
         margin: 0.4rem 0 0 0.43rem;
     }
-    
+
     .personal-head .p-head-info .p-nickname {
         color: #fff;
         font-size: 0.43rem;
         line-height: 0.43rem;
     }
-    
+
     .personal-head .p-head-info .p-platform {
         color: #e5e5e5;
         font-size: 0.29rem;
         line-height: 0.29rem;
         margin-top: 0.16rem;
     }
-    
+
     .personal-head .p-head-refresh {
         background-position: -3.2rem -4.8rem;
         height: 0.73rem;
@@ -165,13 +165,13 @@
         top: 0.4rem;
         width: 0.73rem;
     }
-    
+
     .personal-orders {
         background-color: #fff;
         position: relative;
         width: 100%;
     }
-    
+
     .personal-orders .p-orders {
         height: 1.2rem;
         line-height: 1.2rem;
@@ -180,13 +180,13 @@
         position: relative;
         border-bottom: 0.025rem solid #ededed;
     }
-    
+
     .personal-orders .p-orders .p-all-orders {
         color: #151516;
         float: left;
         font-size: 0.43rem;
     }
-    
+
     .personal-orders .p-orders .p-all-orders-span,
     .personal-orders .p-orders .p-unpaied-orders {
         color: #9c9c9c;
@@ -194,12 +194,12 @@
         font-size: 0.35rem;
         margin-right: 0.27rem;
     }
-    
+
     .personal-orders .p-orders .p-unpaied-orders b {
         color: #e02e24;
         font-weight: 500;
     }
-    
+
     .personal-orders .p-orders .p-unpaied-orders:before {
         width: 0.16rem;
         height: 0.16rem;
@@ -209,7 +209,7 @@
         margin-right: 0.05rem;
         border-radius: 0.08rem;
     }
-    
+
     .p-bubble,
     .personal-list,
     .personal-logout,
@@ -217,14 +217,14 @@
     .personal-wrapper-2 {
         background-color: #fff;
     }
-    
+
     .personal-wrapper-1 {
         height: 1.76rem;
         overflow: hidden;
         position: relative;
         width: 100%;
     }
-    
+
     .personal-wrapper-1 .p-wrapper-1-item {
         position: relative;
         display: inline-block;
@@ -233,7 +233,7 @@
         text-align: center;
         width: 20%;
     }
-    
+
     .personal-wrapper-1 .p-wrapper-1-item .p-complaint,
     .personal-wrapper-1 .p-wrapper-1-item .p-grouping,
     .personal-wrapper-1 .p-wrapper-1-item .p-unpaid,
@@ -248,14 +248,14 @@
             color: #999;
         }
     }
-    
+
     .personal-wrapper-1 .p-wrapper-1-item .p-wrap-1-title {
         color: #151516;
         font-size: 0.32rem;
         line-height: 0.32rem;
         position: relative;
     }
-    
+
     .personal-wrapper-2 {
         height: 2.03rem;
         margin-top: 0.27rem;
@@ -263,7 +263,7 @@
         position: relative;
         width: 100%;
     }
-    
+
     .personal-wrapper-2 .p-wrapper-2-item {
         display: inline-block;
         float: left;
@@ -271,7 +271,7 @@
         text-align: center;
         width: 25%;
     }
-    
+
     .personal-wrapper-2 .p-wrapper-2-item .p-after-sales,
     .personal-wrapper-2 .p-wrapper-2-item .p-coupons,
     .personal-wrapper-2 .p-wrapper-2-item .p-footprint-big,
@@ -285,7 +285,7 @@
             font-size: 0.67rem;
         }
     }
-    
+
     .personal-wrapper-2 .p-wrapper-2-item .p-wrap-2-title {
         color: #151516;
         font-size: 0.32rem;
