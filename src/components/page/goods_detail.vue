@@ -16,7 +16,7 @@
                     <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
 
-          <div class="infos">
+          <div class="infos hm-margin-b">
               <div class="area">
                   <div class="prices flex-center align-bottom">
                       <p class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price}}</i></p>
@@ -37,16 +37,16 @@
               </div>
           </div>
 
-          <item class="promise-block hm-margin-b"><!--item-icon-right-->
 
-              <div class="hm-flex">
-                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>正品保证</div>
-                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>全场包邮</div>
-                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>24h发货</div>
-                  <div class="hm-flex-1"><i class="iconfont icon-shouye"></i>售后补贴</div>
-              </div>
-              <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
-          </item>
+            <!--<div class="hm-margin-b promise-block" style="background: #fff;padding:0 10px 10px;">-->
+              <!--<div class="hm-flex">-->
+                  <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>正品保证</div>-->
+                  <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>全场包邮</div>-->
+                  <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>24h发货</div>-->
+                  <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>售后补贴</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
 
           <item class="item-icon-right hm-margin-b" @click.native="add">
               已选
@@ -77,7 +77,7 @@
                       <span class="event-item-num">{{data.store_info.collect_count}}</span>
                       <span class="event-item-text">收藏人数</span>
               </li>
-              <li class="event-item">
+              <li class="event-item" v-if="data.store_info.store_credit.length>1">
                       <ul class="logis-list">
                           <li>
                               <span>{{data.store_info.store_credit.store_deliverycredit.text}}评价</span>
@@ -220,7 +220,13 @@ export default {
 
     },
     gohome() {
-      this.$router.push('/home')
+        this.$router.push('/home')
+//        console.log('History.previous=',history.length,history.previous)
+//        if(history.length>2){
+//            this.$router.go(-1)
+//        }else{
+//            this.$router.push('/home')
+//        }
     },
       gocart() {
           this.$router.push('/cart')
