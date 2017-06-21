@@ -257,7 +257,7 @@ export default {
           $roter.go(-1)
         }
       }, error => {
-        console.log(error);
+        $roter.back()
         $toast.show("支付失败")
       })
     }
