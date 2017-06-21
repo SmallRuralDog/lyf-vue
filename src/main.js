@@ -34,6 +34,7 @@ const order_buynow = resolve => require(['./components/page/order/buy-now.vue'],
 const order_list = resolve => require(['./components/page/order/order-list.vue'], resolve)
 const order_detail = resolve => require(['./components/page/order/order-detail.vue'], resolve)
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
+const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -95,6 +96,11 @@ const routes = [{
         path: '/order-logistics/:order_id',
         name: 'order_logistics',
         component: order_logistics
+      },
+      {
+        path: '/order-rate/:order_id',
+        name: 'order_rate',
+        component: order_rate
       },
     ]
 
