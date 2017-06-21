@@ -1,5 +1,4 @@
 <style lang="scss">
-
 .top-fixed {
     position: fixed;
     top: 0;
@@ -30,7 +29,6 @@
     box-sizing: border-box;
     color: #ea5a49;
 }
-
 </style>
 
 <template lang="html">
@@ -103,11 +101,12 @@
                         <div class="module orderop" v-if="order.order_state !=20">
                             <div class="o-tab-btn">
                                 <ul>
-                                    <li class="h" v-if="order.order_state==30"> 确认收货 </li>
+                                    <li class="h" v-if="order.order_state==30" @click="order_receive(order.order_id)"> 确认收货 </li>
                                     <li class="" v-if="order.order_state==30"> 查看物流 </li>
                                     <li class="h" v-if="order.order_state==10"> 立即付款 </li>
-                                    <li class="" v-if="order.order_state==10"> 取消订单 </li>
+                                    <li class="" v-if="order.order_state==10" @click="order_cancel(order.order_id)"> 取消订单 </li>
                                     <li class="" v-if="order.order_state==0"> 删除订单 </li>
+                                    <li class="h" v-if="order.order_state==40"> 评价订单 </li>
                                 </ul>
                             </div>
                         </div>
@@ -121,81 +120,151 @@
 </template>
 
 <script>
-
 import "../../../assets/order.scss"
 export default {
-    name: "order_list",
-    data() {
-        return {
-            order_list: [],
-            page: 1,
-            load_more: true
-        }
-    },
-    mounted() {
-        $loading.show()
-        this.getData(() => {
-
-        })
-    },
-    methods: {
-        getData(done) {
-                this.$api.userAuthGet("order_list?page=" + this.page, res => {
-                    console.log(res);
-                    if (res.data.status_code == 1) {
-                        if (this.page == 1) {
-                            this.order_list = res.data.data.data
-                        } else {
-
-                        }
-                    }
-                    this.$nextTick(() => {
-                        $loading.hide()
-                        done()
-                    })
-                }, error => {
-
-                })
-            },
-            onRefresh(done) {
-                if (this.is_load) return;
-                this.page = 1
-                this.load_more = true
-                this.getData(done)
-            },
-            go_order_detail(order_id) {
-                $router.push({
-                    name: "order_detail",
-                    params: {
-                        order_id: order_id
-                    }
-                })
-            }
-    },
-    filters: {
-        order_stae(val, typr = 1) {
-            let text = '';
-            let class_name = '';
-            switch (val) {
-                case 0:
-                    text = '交易关闭'
-                    break;
-                case 10:
-                    text = '等待买家付款'
-                    break;
-                case 20:
-                    text = '等待卖家发货'
-                    break;
-                case 30:
-                    text = '卖家已发货'
-                    break;
-                case 40:
-                    text = '交易成功'
-                    break;
-            }
-            return text
-        }
+  name: "order_list",
+  data() {
+    return {
+      order_list: [],
+      page: 1,
+      load_more: true
     }
-}
+  },
+  mounted() {
+    $loading.show()
+    this.getData(() => {
 
+    })
+  },
+  methods: {
+    getData(done) {
+      this.$api.userAuthGet("order_list?page=" + this.page, res => {
+        console.log(res);
+        if (res.data.status_code == 1) {
+          if (this.page == 1) {
+            this.order_list = res.data.data.data
+          } else {
+
+          }
+        }
+        this.$nextTick(() => {
+          $loading.hide()
+          done()
+        })
+      }, error => {
+
+      })
+    },
+    onRefresh(done) {
+      if (this.is_load) return;
+      this.page = 1
+      this.load_more = true
+      this.getData(done)
+    },
+    go_order_detail(order_id) {
+      $router.push({
+        name: "order_detail",
+        params: {
+          order_id: order_id
+        }
+      })
+    },
+    order_cancel(order_id, text = '', show = true) { //取消订单
+      if (show) {
+        $actionSheet.show({
+          theme: 'weixin',
+          title: '请点击取消理由',
+          cancelText: '取消',
+          buttons: {
+            '我不想买了': () => {
+              this.order_cancel(order_id, '我不想买了', false)
+            },
+            '信息填写错误，重新拍': () => {
+              this.order_cancel(order_id, '信息填写错误，重新拍', false)
+            },
+            '卖家缺货': () => {
+              this.order_cancel(order_id, '卖家缺货', false)
+            },
+            '同城见面交易': () => {
+              this.order_cancel(order_id, '同城见面交易', false)
+            },
+            '其他原因': () => {
+              this.order_cancel(order_id, '其他原因', false)
+            }
+          }
+        })
+      } else {
+        $actionSheet.hide()
+        $loading.show()
+        this.$api.userAuthPost("order_cancel", {
+          order_id: order_id,
+          msg: text
+        }, res => {
+          if (res.data.status_code == 1) {
+            $loading.hide()
+            this.order_list.filter(a => {
+              return a.order_id == order_id
+            }).map(a => {
+              a.order_state = 0
+            })
+          } else {
+            $toast.show(res.data.message)
+          }
+        }, error => {
+          $toast.show(error.message)
+        })
+      }
+    },
+    order_receive(order_id) { //确认收货
+      $dialog.confirm({
+        theme: 'ios',
+        title: '确认收货?',
+        cancelText: '取消',
+        okText: '确定'
+      }).then((res) => {
+        if (res) {
+          $loading.show()
+          this.$api.userAuthGet("order_receive?order_id=" + order_id, res => {
+            if (res.data.status_code == 1) {
+              $loading.hide()
+              this.order_list.filter(a => {
+                return a.order_id == order_id
+              }).map(a => {
+                a.order_state = 40
+              })
+            } else {
+              $toast.show(res.data.message)
+            }
+          }, error => {
+            $toast.show(error.message)
+          })
+        }
+      })
+    }
+  },
+  filters: {
+    order_stae(val, typr = 1) {
+      let text = '';
+      let class_name = '';
+      switch (val) {
+        case 0:
+          text = '交易关闭'
+          break;
+        case 10:
+          text = '等待买家付款'
+          break;
+        case 20:
+          text = '等待卖家发货'
+          break;
+        case 30:
+          text = '卖家已发货'
+          break;
+        case 40:
+          text = '交易成功'
+          break;
+      }
+      return text
+    }
+  }
+}
 </script>
