@@ -79,14 +79,13 @@
               <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
           <!--</item>-->
 
-        <div class="hm-flex" style="justify-content: space-between;background: #fff;padding: 15px 15px 0;align-items: center;">
-            <div class="text-14">{{data.store_info.store_name}}</div>
-
-
+        <div class="hm-flex" @click="go_store(data.store_info.store_id)" style="justify-content: space-between;background: #fff;padding: 15px 15px 0;align-items: center;">
+            <img  src="http://b1.hucdn.com/upload/brand/1702/17/99795606587083_200x200.jpg" style="width:40px;" class="aui-border">
+            <div class="text-14" style="flex:1">{{data.store_info.store_name}}</div>
             <div class="aui-label aui-label-outlined" style="color: #555;"> 进入店铺</div>
         </div>
 
-          <ul class="event-list">
+          <ul class="event-list hm-margin-b">
               <li class="event-item aui-border-r">
                       <span class="event-item-num">{{data.store_info.goods_count}}件</span>
                       <span class="event-item-text">全部商品</span>
@@ -120,6 +119,50 @@
               </li>
           </ul>
 
+
+        <div class="text-14" style="background: #fff;padding: 10px 10px 6px;">大家还买了</div>
+        <div style="background: #fff;">
+        <swiper :options="swiperOption2"  style="position: relative;z-index: 1;" v-bind:style="{height: swipe2_height+'px'}"><!---->
+          <swiper-slide>
+          <div class="hm-flex">
+          <template v-for="slide in recom_items1">
+            <div class="hm-flex-1">
+              <div style="margin:1.6%;">
+              <img :src="slide.img" style="background-color:#ffffff; width:100%;">
+              <p class="aui-ellipsis-2">{{slide.title}}</p>
+              </div>
+            </div>
+          </template>
+          </div>
+          </swiper-slide>
+          <swiper-slide>
+            <div class="hm-flex">
+              <template v-for="slide in recom_items2">
+                <div class="hm-flex-1">
+                  <div style="margin:1.6%;">
+                    <img :src="slide.img" style="background-color:#ffffff; width:100%;">
+                    <p class="aui-ellipsis-2">{{slide.title}}</p>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </swiper-slide>
+          <swiper-slide>
+            <div class="hm-flex">
+              <template v-for="slide in recom_items3">
+                <div class="hm-flex-1">
+                  <div style="margin:1.6%;">
+                    <img :src="slide.img" style="background-color:#ffffff; width:100%;">
+                    <p class="aui-ellipsis-2">{{slide.title}}</p>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper>
+        </div>
+
         <div v-html="data.goods_info.mobile_body">
 
         </div>
@@ -131,14 +174,14 @@
             <div class="hm-center hm-flex"  style="padding: 0;margin: 0;height:100%;">
                 <div style="flex:0.1"></div>
                 <div class="hm-flex-1 icon-align" @click="gohome">
-                    <i class="iconfont icon-shouye"></i>
+                    <i class="iconfont icon-shouye-shouye"></i>
                 </div>
                 <div class="hm-flex-1 icon-align hm-border-l"  @click="collect">
-                    <i class="iconfont icon-shouye"></i>
+                    <i class="iconfont icon-favorite"></i>
 
                 </div>
                 <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
-                    <i class="iconfont icon-fahuo"></i>
+                    <i class="iconfont icon-gouwuchexiantiao"></i>
                     <div v-show="cartNumber>0" class="cart-badge">{{cartNumber}}</div>
 
                 </div>
@@ -192,10 +235,219 @@ function dataInit() {
     cartNumber: 5,
     swiperOption: {
       autoplay: 4000,
-      initialSlide: 1,
+      initialSlide: 0,
       loop: true,
       pagination: '.swiper-pagination'
     },
+    swiperOption2: {
+//      autoplay: 4000,
+      initialSlide: 0,
+      loop: true,
+      pagination: '.swiper-pagination',
+//      slidesPerView: 3,
+//      spaceBetween: 20
+    },
+    recom_items1: [
+      {
+        "price_ori": 5000,
+        "img": "http://b1.hucdn.com/upload/item/1701/04/11007582681203_800x800.jpg",
+        "iid": 17103226,
+        "sale_num": 3153,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "3153人已团",
+        "discount": 62,
+        "ads_tag": "",
+        "title": "10条装活力鸭 6层婴儿纱布口水巾宝宝纯棉小方巾",
+        "his_product_sold_cnt": 3153,
+        "vid": 15,
+        "event_id": 600015913,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 3100,
+        "product_id": 2265437,
+        "stock": 10074,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 8800,
+        "img": "http://b1.hucdn.com/upload/item/1704/28/54964729637083_800x800.jpg",
+        "iid": 20570576,
+        "sale_num": 1688,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "1688人已团",
+        "discount": 21,
+        "ads_tag": "",
+        "title": "5条装   贝吉宝婴儿口水巾新生儿洗脸巾纯棉小方巾超柔宝宝儿童手帕手绢",
+        "his_product_sold_cnt": 1688,
+        "vid": 15,
+        "event_id": 600003198,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 1789,
+        "product_id": 2972477,
+        "stock": 4992,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 3990,
+        "img": "http://b1.hucdn.com/upload/item/1611/29/00200816563322_800x800.jpg",
+        "iid": 16324824,
+        "sale_num": 593,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "593人已团",
+        "discount": 31,
+        "ads_tag": "",
+        "title": "贝比熊 棉质柔软6层纱布巾婴儿口水巾2条装",
+        "his_product_sold_cnt": 593,
+        "vid": 15,
+        "event_id": 600014918,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 1200,
+        "product_id": 2212280,
+        "stock": 987,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      }],
+    recom_items2: [
+      {
+        "price_ori": 6200,
+        "img": "http://b1.hucdn.com/upload/item/1704/03/93963615297083_800x800.jpg",
+        "iid": 20063120,
+        "sale_num": 956,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "956人已团",
+        "discount": 26,
+        "ads_tag": "",
+        "title": "【5条装】婴儿双层纱布口水巾围嘴",
+        "his_product_sold_cnt": 956,
+        "vid": 15,
+        "event_id": 600003198,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 1600,
+        "product_id": 2801944,
+        "stock": 799,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 19500,
+        "img": "http://b1.hucdn.com/upload/item/1703/23/65252644291311_800x800.jpg",
+        "iid": 14944478,
+        "sale_num": 1269,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "1269人已团",
+        "discount": 18,
+        "ads_tag": "",
+        "title": "HHTU高密度5条装婴儿纯棉6层纱布巾宝宝口水巾",
+        "his_product_sold_cnt": 1269,
+        "vid": 15,
+        "event_id": 600002893,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 3490,
+        "product_id": 1754037,
+        "stock": 3973,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 5800,
+        "img": "http://b1.hucdn.com/upload/item/1703/15/52853905321583_800x800.jpg",
+        "iid": 5283805,
+        "sale_num": 2231,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "2231人已团",
+        "discount": 48,
+        "ads_tag": "",
+        "title": "威尔贝鲁 婴儿纱布口水巾 宝宝毛巾小方巾",
+        "his_product_sold_cnt": 2231,
+        "vid": 462,
+        "event_id": 600002134,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 2760,
+        "product_id": 300739,
+        "stock": 10767,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      }],
+    recom_items3: [{
+        "price_ori": 12800,
+        "img": "http://b1.hucdn.com/upload/item/1703/03/03088614807083_800x800.jpg",
+        "iid": 14017389,
+        "sale_num": 1129,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "1129人已团",
+        "discount": 29,
+        "ads_tag": "",
+        "title": "贝吉宝【10条装】30*30cm六层纯棉纱布方巾纱布毛巾",
+        "his_product_sold_cnt": 1129,
+        "vid": 15,
+        "event_id": 600003198,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 3590,
+        "product_id": 1969395,
+        "stock": 488,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 3800,
+        "img": "http://b1.hucdn.com/upload/item/1702/15/48301285777083_800x800.jpg",
+        "iid": 15589366,
+        "sale_num": 1385,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "1385人已团",
+        "discount": 38,
+        "ads_tag": "",
+        "title": "【4条装】贝吉宝 纯棉双面可用带按扣三角巾",
+        "his_product_sold_cnt": 1385,
+        "vid": 15,
+        "event_id": 600003198,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 1440,
+        "product_id": 2154466,
+        "stock": 755,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      },
+      {
+        "price_ori": 7600,
+        "img": "http://b1.hucdn.com/upload/item/1701/05/97632143352550_800x800.jpg",
+        "iid": 17734562,
+        "sale_num": 684,
+        "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
+        "sale_tip": "684人已团",
+        "discount": 37,
+        "ads_tag": "",
+        "title": "蓓贝婴 4条婴儿纱布口水巾全棉宝宝纱布方巾",
+        "his_product_sold_cnt": 684,
+        "vid": 462,
+        "event_id": 600016115,
+        "event_type": "mall",
+        "is_ads": false,
+        "price": 2800,
+        "product_id": 2337881,
+        "stock": 75,
+        "country_circle_icon": "",
+        "status": 1,
+        "ico_label": ""
+      }
+    ],
 
   }
 }
@@ -249,6 +501,14 @@ export default {
 //        }else{
 //            this.$router.push('/home')
 //        }
+    },
+    go_store(id) {
+      $router.push({
+        name:'store_home',
+        params:{
+          store_id:id
+        }
+      })
     },
       gocart() {
           this.$router.push('/cart')
@@ -336,6 +596,9 @@ export default {
         //            console.log('spec_arr=',spec_arr)
             return spec_arr
         },
+        swipe2_height(){
+            return this.swipe_height/3+80
+        }
 
     },
   watch: {
@@ -426,12 +689,10 @@ $color-theme: #e02e24;
     justify-content: center;
 }
 .submit-order .hm-flex-1 {
-    color: #888;
-    // padding: 10px 0;
+    color: #666;
 }
 .submit-order .hm-flex-1 .iconfont {
-    font-size: 20px;
-    // line-height: 1.5;
+    font-size: 22px;
 }
 .cart-badge{
     background: lighten($color-theme,10%);

@@ -35,6 +35,7 @@ const order_list = resolve => require(['./components/page/order/order-list.vue']
 const order_detail = resolve => require(['./components/page/order/order-detail.vue'], resolve)
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
+const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -102,14 +103,15 @@ const routes = [{
         name: 'order_rate',
         component: order_rate
       },
+      {
+        path: '/store/:store_id',
+        name: 'store_home',
+        component: store_home
+      },
     ]
 
   },
-  // {
-  //   path: '/goods/:id',
-  //   name: 'goods_detail',
-  //   component: goods_detail
-  // },
+
 ]
 //******************************//
 import sess from './api/sess'

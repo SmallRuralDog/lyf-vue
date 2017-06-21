@@ -187,10 +187,11 @@ export default {
 
       },
       add_cart(){
-          $loading.show("");
+          $loading.show("提交中");
+          this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
           this.$api.userGet('add_cart?goods_id=' + this.goodsid_choose+'&quantity='+this.quantity, res => {
               console.log(JSON.stringify(res.data));
-              this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
+//              this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
 //              $loading.hide()
               $toast.show('加入购物车成功', 3000)
               this.$store.commit('UPDATE_COMMON_DATA', {
@@ -203,7 +204,8 @@ export default {
           })
       },
       buy_now(){
-          $loading.show("");
+          $loading.show("提交中");
+          this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
           this.$api.userAuthPost('buy_step1',{cart_id:this.goodsid_choose+'|'+this.quantity,ifcart:0,address_id:0}, res => {
               console.log(JSON.stringify(res.data));
                 $router.push({
