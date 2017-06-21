@@ -102,11 +102,12 @@
                             <div class="o-tab-btn">
                                 <ul>
                                     <li class="h" v-if="order.order_state==30" @click="order_receive(order.order_id)"> 确认收货 </li>
-                                    <li class="" v-if="order.order_state==30"> 查看物流 </li>
-                                    <li class="h" v-if="order.order_state==10"> 立即付款 </li>
+                                    <li class="h" v-if="order.order_state==40"> 评价订单 </li>
+                                    <li class="" v-if="order.order_state==30 || order.order_state==40" @click="$router.push({name:''})"> 查看物流 </li>
+                                    <!--li class="h" v-if="order.order_state==10"> 立即付款 </li-->
                                     <li class="" v-if="order.order_state==10" @click="order_cancel(order.order_id)"> 取消订单 </li>
                                     <li class="" v-if="order.order_state==0"> 删除订单 </li>
-                                    <li class="h" v-if="order.order_state==40"> 评价订单 </li>
+
                                 </ul>
                             </div>
                         </div>

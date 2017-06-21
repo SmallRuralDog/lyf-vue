@@ -33,6 +33,7 @@ const address = resolve => require(['./components/page/user/addresses.vue'], res
 const order_buynow = resolve => require(['./components/page/order/buy-now.vue'], resolve)
 const order_list = resolve => require(['./components/page/order/order-list.vue'], resolve)
 const order_detail = resolve => require(['./components/page/order/order-detail.vue'], resolve)
+const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -89,6 +90,11 @@ const routes = [{
         path: '/order-detail/:order_id',
         name: 'order_detail',
         component: order_detail
+      },
+      {
+        path: '/order-logistics/:order_id',
+        name: 'order_logistics',
+        component: order_logistics
       },
     ]
 
