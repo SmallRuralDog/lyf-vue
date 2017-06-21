@@ -1,6 +1,6 @@
 const state = {
     showpicksheet :false,
-    fisrtTimeOpenSheet:false,
+    firstTimeOpenSheet:false,
     cur_specx:[],
     cur_spec_namex:[],
 
