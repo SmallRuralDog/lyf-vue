@@ -1,6 +1,6 @@
 <template lang="html">
 <div class="">
-    <ul class="footer">
+    <ul class="footer aui-border-t">
       <li @click="setTab('/home')" class="fb-move-bottom" ><a class="nav-controller" :class="{'active':index==0}"><i class="fb fb-home"></i>首页</a></li>
       <li @click="setTab('/new_arrivals')"><a class="nav-controller" :class="{'active':index==1}"><i class="fb fb-rank"></i>新品</a></li>
       <li @click="setTab('/class_all')"><a class="nav-controller" :class="{'active':index==2}"><i class="fb fb-class"></i>搜索</a></li>
@@ -49,7 +49,7 @@ export default {
     -webkit-transform: translate3d(-50%,0,0);
     background-color: #fff;
     z-index: 10!important;
-    border-top: 0.025rem solid #e0e0e0;
+    /*border-top: 0.025rem solid #e0e0e0;*/
 }
 
 /*.footer:before {

@@ -2,12 +2,12 @@
     <div class="page has-tabbar">
         <div class="">
             <div class="topbar">
-                <div ref="top_menu" class="top-menu">
+                <div ref="top_menu" class="top-menu aui-border-b">
                     <ul ref="top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
                         <li ref="top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index)">{{item.gc_name}}</li>
                     </ul>
                 </div>
-                <a class="search-btn J_search-btn" @click="go_search()"><i class="ion-search"></i></a>
+                <a class="search-btn J_search-btn  aui-border-b" @click="go_search()"><i class="ion-search"></i></a>
             </div>
             <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="360" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->

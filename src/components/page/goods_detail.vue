@@ -17,20 +17,21 @@
         </swiper>
 
           <div class="infos hm-margin-b">
-              <div class="area">
-                  <div class="prices flex-center align-bottom">
-                      <p class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price}}</i></p>
-                      <p class="price-old">¥268</p>
-                      <p class="sale-tag-wrapper">
+              <div class="area" >
+                  <div class="prices " style="display: flex;align-items: center;"><!--flex-center align-bottom-->
+                      <div class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price}}</i></div>
+                      <div class="price-old">¥268</div>
+                      <div class="sale-tag-wrapper">
 
-                          <span class="sale-tag">拼团价</span>
+                          <!--<span class="sale-tag">拼团价</span>-->
+                          <!--<span class="sale-tag">包邮</span>-->
+                      <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;margin:0 5px;">拼团价</div>
+                      <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;">包邮</div>
 
-                          <span class="sale-tag">包邮</span>
-
-                      </p>
+                      </div>
                   </div>
               </div>
-              <div class="product">
+              <div class="product" style="margin-top: 6px">
                   <h3>
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
@@ -48,28 +49,49 @@
             <!--</div>-->
 
 
-          <item class="item-icon-right hm-margin-b" @click.native="add">
-              已选
-              <template v-if="data.goods_info.goods_spec">
-              <template v-for="value in cur_spec_namex"><!--data.goods_info.goods_spec-->
-                  "{{value}}"
-              </template>
-              </template>
-              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
-          </item>
+          <!--<item class="item-icon-right hm-margin-b" @click.native="add">-->
+              <!--已选-->
+              <!--<template v-if="data.goods_info.goods_spec">-->
+              <!--<template v-for="value in cur_spec_namex">&lt;!&ndash;data.goods_info.goods_spec&ndash;&gt;-->
+                  <!--"{{value}}"-->
+              <!--</template>-->
+              <!--</template>-->
+              <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
+          <!--</item>-->
 
-          <item class="item-icon-right">
-              {{data.store_info.store_name}}
-              <span style="float:right;font-size: 12px;color: #888;">进入店铺</span>
-              <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
-          </item>
+          <ul class="aui-list hm-margin-b" @click="add"  style="border: none;">
+              <li class="aui-list-item aui-list-item-middle" style="border-top: none;">
+                  <div class="aui-list-item-inner ">
+                      已选
+                      <template v-if="data.goods_info.goods_spec">
+                          <template v-for="value in cur_spec_namex"><!--data.goods_info.goods_spec-->
+                              "{{value}}"
+                          </template>
+                      </template>
+                      <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+                  </div>
+              </li>
+          </ul>
+
+          <!--<item class="item-icon-right">-->
+              <!--{{data.store_info.store_name}}-->
+              <!--<span style="float:right;font-size: 12px;color: #888;">进入店铺</span>-->
+              <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
+          <!--</item>-->
+
+        <div class="hm-flex" style="justify-content: space-between;background: #fff;padding: 15px 15px 0;align-items: center;">
+            <div class="text-14">{{data.store_info.store_name}}</div>
+
+
+            <div class="aui-label aui-label-outlined" style="color: #555;"> 进入店铺</div>
+        </div>
 
           <ul class="event-list">
-              <li class="event-item">
+              <li class="event-item aui-border-r">
                       <span class="event-item-num">{{data.store_info.goods_count}}件</span>
                       <span class="event-item-text">全部商品</span>
               </li>
-              <li class="event-item">
+              <li class="event-item aui-border-r">
                       <span class="event-item-num">{{data.store_info.buy_count}}</span>
                       <span class="event-item-text">购买人数</span>
               </li>
@@ -77,7 +99,7 @@
                       <span class="event-item-num">{{data.store_info.collect_count}}</span>
                       <span class="event-item-text">收藏人数</span>
               </li>
-              <li class="event-item" v-if="data.store_info.store_credit.length>1">
+              <li class="event-item  aui-border-l" style="flex:1.5;" v-if="data.store_info.store_credit.length>1">
                       <ul class="logis-list">
                           <li>
                               <span>{{data.store_info.store_credit.store_deliverycredit.text}}评价</span>
@@ -542,10 +564,15 @@ $color-theme: #e02e24;
     flex-direction:column;
     align-items:center;
     justify-content: center;
-    border-right: 1px #fafafa solid;
+    /*border-right: 1px #fafafa solid;*/
 }
-.event-item:last-child{
-    flex:1.5;
+/*.event-item:last-child{*/
+    /*flex:1.5;*/
+/*}*/
+.event-item-num{
+    font-size:14px ;
 }
-    
+.event-item-text{
+    color: #8f8f8f;
+}
 </style>
