@@ -2,7 +2,7 @@
 <div class="page">
   <!--固定不动的元素 要放到page-content的外面-->
   <div class="download-app">
-    <i class="iconfont icon-zuo4" @click="gohome"></i>
+    <i class="iconfont icon-zuo4" @click="goback"></i>
   </div>
   <div class="page-content" v-show="init" style="padding-bottom: 70px;">
     <!-- 页面内容 -->
@@ -136,7 +136,7 @@
         <div class="hm-flex" @click="go_store(data.store_info.store_id)" style="justify-content: space-between;background: #fff;padding: 15px 15px 0;align-items: center;">
             <img  src="http://b1.hucdn.com/upload/brand/1702/17/99795606587083_200x200.jpg" style="width:40px;" class="aui-border">
             <div class="text-14" style="flex:1">{{data.store_info.store_name}}</div>
-            <div class="aui-label aui-label-outlined" style="color: #555;"> 进入店铺</div>
+            <div class="aui-label aui-label-outlined instore" id="instore" style="color: #333;padding: 0px 10px;"> 进入店铺</div>
         </div>
 
           <ul class="event-list hm-margin-b">
@@ -546,8 +546,13 @@ export default {
     collect() {
 
     },
+    goback(){
+      this.$router.go(-1)
+    },
     gohome() {
-        this.$router.push('/home')
+      this.$router.push('/home')
+//        this.$router.push('/home')
+
 //        console.log('History.previous=',history.length,history.previous)
 //        if(history.length>2){
 //            this.$router.go(-1)
@@ -928,4 +933,21 @@ $color-theme: #F23030;//#e02e24;
 .event-item-text{
     color: #8f8f8f;
 }
+
+  .instore.aui-label-outlined:after {
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    height: 200%;
+    content: '';
+    width: 200%;
+    border: 1px solid $color-theme;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    z-index: 1;
+  }
 </style>
