@@ -695,7 +695,7 @@ export default {
 </script>
 <style lang="scss">
 // 主题色
-$color-theme: #e02e24;
+$color-theme: #F23030;//#e02e24;
 .submit-order {
     position: fixed;
     bottom: 0;

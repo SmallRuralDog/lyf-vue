@@ -2,28 +2,51 @@
 <div class="page">
     <div class="page-content">
 
-      <section class="brand J_brand">
-        <div class="wrapper-main">
-          <div class="wrapper-sub">
-            <div class="brand-img">
-              <img src="//b1.hucdn.com/upload/brand/1701/18/38161614044120_200x200.jpg!200.webp" />
-            </div>
-            <div class="brand-name">
-              皇朵/HUANGDUO
-            </div>
-            <div class="collect-num">
-              7021人已团
-            </div>
-            <div class="collect-btn" favor-event="" eid="318711">
-              <div class="collect-icon iconfont"></div>
-              <div class="collect-text">
-                <span>收藏键</span>
+      <div class="hm-flex" style="padding: 20px;background: #fff;margin-bottom:2px; ">
+        <div style="padding-right: 15px;">
+          <img src="//b1.hucdn.com/upload/brand/1701/18/38161614044120_200x200.jpg!200.webp" class="brand-img"/>
+        </div>
+        <div class="hm-flex-1">
+          <div class="brand-name">
+            皇朵/HUANGDUO
+          </div>
+          <div class="collect-num">
+            7021人已团
+          </div>
+        </div>
+        <div class="hm-flex" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
+          <i class="iconfont icon-favorite" style="font-size: 22px;"></i>
+          收藏
+        </div>
+
+      </div>
+
+
+      <div class="goods-list clear">
+        <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
+          <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in data">
+            <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
+              <div class="hm-list-inner" style="padding:0">
+                <img v-lazy="item.goods_image" style="width: 100%;">
+                <div  style="padding:.13rem .08rem .13rem .08rem;">
+                  <div class="hm-list-title-2 goods-name aui-ellipsis-2" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
+                  <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
+                    <div class="" style="color: #ee2e3a;font-weight: 700;">
+                      <span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>
+                    </div>
+                    <div class="hm-color-gray" style="color:#9c9c9c;">
+                      <small>已售</small>{{item.goods_salenum}}<small>件</small>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <p class="promotion-info"></p>
         </div>
-      </section>
+      </div>
+
+
+
 
 
 
@@ -51,6 +74,7 @@ export default {
       menu_len: 0,
       active: 0,
       step_width: 0,
+      data:{}
 
     }
   },
@@ -72,6 +96,17 @@ export default {
   }),
   mounted() {
 
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('to:'+to.path, 'from:'+from.path)
+    next(vm => {
+//        let id = vm.$route.params.id;
+//      //            vm.data=dataInit()
+//      console.log('beforeRouteEnter id=', id)
+//      vm.goods_id = id;
+      vm.getData();
+
+    })
   },
   methods: {
 
@@ -108,6 +143,15 @@ export default {
 
         })
       }
+    },
+    getData(){
+      this.$api.userGet('index?page=1&gc_id=1',res=>{
+        console.log(res)
+        this.data=res.data.data.goods_list.data
+
+      },err=>{
+
+      })
     },
     goodsClick(id) {
       $router.push({
@@ -160,5 +204,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.brand-img{
+  width:60px;
+}
 </style>
