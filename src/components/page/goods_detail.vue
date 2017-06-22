@@ -31,10 +31,14 @@
                       </div>
                   </div>
               </div>
-              <div class="product" style="margin-top: 6px">
-                  <h3>
+              <div class="product hm-flex" style="padding-top: 6px;">
+                  <h3 class="hm-flex-1" style="font-weight: bold;">
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
+                  <div class="hm-flex" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
+                    <i class="iconfont icon-favorite" style="font-size: 22px;"></i>
+                    收藏
+                  </div>
               </div>
           </div>
 
@@ -59,8 +63,8 @@
               <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
           <!--</item>-->
 
-          <ul class="aui-list hm-margin-b" @click="add"  style="border: none;">
-              <li class="aui-list-item aui-list-item-middle" style="border-top: none;">
+          <ul class="aui-list hm-margin-b" @click="add">
+              <li class="aui-list-item aui-list-item-middle">
                   <div class="aui-list-item-inner ">
                       已选
                       <template v-if="data.goods_info.goods_spec">
@@ -72,6 +76,56 @@
                   </div>
               </li>
           </ul>
+
+          <ul class="aui-list">
+            <li class="aui-list-item aui-list-item-middle">
+              <div class="aui-list-item-inner ">
+                买家口碑
+                <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+              </div>
+            </li>
+          </ul>
+
+          <div class="reviews hm-margin-b">
+          <ul class="review-list">
+            <li class="review-item aui-border-b">
+              <p style="margin-bottom: 0;">
+                <img src="//h0.hucdn.com/open/201724/21d777a959c51877_225x225.png" class="head-img lazyimg b-lazy b-loaded">
+                <span class="nick">134****5675</span>
+                <!--<span class="join-time">在贝贝47天</span>-->
+                    <span class="score">
+                      <i class="icon-score active"></i><i class="icon-score active"></i><i class="icon-score active"></i><i class="icon-score active"></i><i class="icon-score active"></i>
+                    </span>
+              </p>
+
+              <p class="content">跟图片一致，收到之后很惊喜，网眼很大，很透气，宝宝每天穿着在地上跑来跑去，还没有气球，简直出乎我的意料，满意！</p>
+
+              <p class="sku-info">
+                <span>颜色：五双礼盒装 袜子尺码：6-12个月（袜底长约10cm） 宝宝1岁1个月</span>
+              </p>
+            </li>
+
+            <li class="review-item aui-border-b">
+              <p style="margin-bottom: 0;">
+                <img src="//h0.hucdn.com/open/201724/b45f79169d677edf_225x225.png" class="head-img lazyimg b-lazy b-loaded">
+                <span class="nick">159****6354</span>
+                <!--<span class="join-time">在贝贝188天</span>-->
+                    <span class="score">
+                      <i class="iconfont icon-favorite active"></i><i class="icon-score active"></i><i class="icon-score active"></i><i class="icon-score active"></i><i class="icon-score active"></i>
+                    </span>
+              </p>
+
+              <p class="content">袜子不错，这个天气穿刚好。造型可爱线头不多，有一个一个的洞洞，很透气，整体满意！！</p>
+
+              <p class="sku-info">
+                <span>颜色：五双礼盒装 袜子尺码：6-12个月（袜底长约10cm） 宝宝5个月</span>
+              </p>
+            </li>
+
+          </ul>
+          </div>
+
+
 
           <!--<item class="item-icon-right">-->
               <!--{{data.store_info.store_name}}-->
@@ -172,20 +226,19 @@
         <!--固定不动的元素 要放到page-content的外面-->
         <div class="submit-order">
             <div class="hm-center hm-flex"  style="padding: 0;margin: 0;height:100%;">
-                <div style="flex:0.1"></div>
+                <div style="flex:0.15"></div>
                 <div class="hm-flex-1 icon-align" @click="gohome">
                     <i class="iconfont icon-shouye-shouye"></i>
                 </div>
-                <div class="hm-flex-1 icon-align hm-border-l"  @click="collect">
-                    <i class="iconfont icon-favorite"></i>
-
-                </div>
+                <!--<div class="hm-flex-1 icon-align hm-border-l"  @click="collect">-->
+                    <!--<i class="iconfont icon-favorite"></i>-->
+                <!--</div>-->
                 <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
                     <i class="iconfont icon-gouwuchexiantiao"></i>
                     <div v-show="cartNumber>0" class="cart-badge">{{cartNumber}}</div>
 
                 </div>
-                <div style="flex:0.1"></div>
+                <div style="flex:0.15"></div>
                 <div class="hm-flex-2 buy-align cart" style="flex:2.5" @click="add">
                     <span>加入购物车</span>
                 </div>
@@ -812,6 +865,45 @@ $color-theme: #e02e24;
 .infos .product h3 {
     font-size: 15px;
     line-height:1.5;
+}
+/*评价列表样式*/
+.reviews{
+  background: #fff;
+}
+.reviews .review-item {
+  padding: 10px;
+
+}
+.reviews .content {
+  margin: 0px 0 5px;
+  color: #3d3d3d;
+  font-size: 13px;
+  line-height: 1.5;
+  padding-left:40px;
+}
+.reviews .head-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #e4e4e4;
+  display: inline-block;
+  vertical-align: top;
+}
+.reviews .sku-info span {
+  /*margin-right: .384rem;*/
+  font-size: 12px;
+  line-height: 1.5;
+  color: #999;
+  padding-left:40px;
+}
+.reviews .review-item span {
+  display: inline-block;
+  vertical-align: top;
+}
+.reviews .icon-score.active {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAMAAADto6y6AAAAVFBMV…Chy0apPDoqGE5MP6J24oQpQTN7/Tw9sy6hXWH1am3v8QcfsRf3W4ketwAAAABJRU5ErkJggg==) no-repeat 50%;
+  background-size: .46933333rem .46933333rem;
 }
 /*===========*/
 .event-list{
