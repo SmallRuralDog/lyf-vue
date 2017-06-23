@@ -2,7 +2,7 @@
     <div class="page has-tabbar">
         <div class="">
             <div class="topbar">
-                <div ref="top_menu" class="top-menu aui-border-b">
+                <div ref="top_menu" class="top-menu aui-border-b hm-flex-1">
                     <ul ref="top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
                         <li ref="top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index)">{{item.gc_name}}</li>
                     </ul>
