@@ -107,7 +107,6 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 }
 .top-menu {
   overflow: hidden;
-  // padding-left: 0.27rem;
 }
 
 .top-menu-list {
@@ -118,9 +117,8 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 
 .top-menu-item {
   min-width: 1.33rem;
-  // font-weight: bold;
   height: 100%;
-  font-size: 0.37rem;
+  font-size: 14px;
   text-align: center;
   line-height: 1.07rem;
 }
@@ -129,11 +127,10 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 }
 
 .top-menu-list .active {
-  color: #ea5a49;
-  border-bottom: 0.08rem solid #ea5a49;
+  color: $color-theme;
+  border-bottom: 1px solid $color-theme;
   font-weight: bold;
 }
-
 //弹性盒子
 
 .hm-flex {

@@ -10,6 +10,7 @@ import page_load_state from './modules/page_load_state'
 
 
 
+
 Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     class_index,
     actionsheet,
     common,
-    page_load_state
+    page_load_state,
+
   },
   strict: debug
 })

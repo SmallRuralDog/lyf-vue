@@ -48,6 +48,7 @@ const routes = [{
       },
       {
         path: 'new_arrivals',
+        name: 'new_arrivals',
         component: new_arrivals
       },
       {
@@ -57,10 +58,12 @@ const routes = [{
       },
       {
         path: 'cart',
+        name: 'cart',
         component: Cart
       },
       {
         path: 'user',
+        name: 'user',
         component: User
       },
       {
@@ -151,8 +154,13 @@ Vonic.app.setConfig('afterEach', afterEach)
 //注册全局方法
 import api from './api/methods'
 Vue.prototype.$api = api;
+
+//过滤器
+import filters from './api/filter'
+
 import store from './store'
 Vue.use(Vonic.app, {
   store: store,
   routes: routes,
+
 })

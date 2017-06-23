@@ -16,31 +16,31 @@
             </div>
             <div class="personal-wrapper-1">
                 <div class="p-wrapper-1-item" @click="go_orderlist(0)">
-                    <div class="p-unpaid"><i class="ion-help-buoy"></i></div>
+                    <div class="p-unpaid"><i class="iconfont icon-daifukuan"></i></div>
                     <p class="p-wrap-1-title">
                         待付款
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(1)">
-                    <div class="p-grouping"><i class="ion-compass"></i></div>
+                    <div class="p-grouping"><i class="iconfont icon-yichengtuan"></i></div>
                     <p class="p-wrap-1-title">
                         待成团
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(2)">
-                    <div class="p-unshipping"><i class="ion-at"></i></div>
+                    <div class="p-unshipping"><i class="iconfont icon-wuliu"></i></div>
                     <p class="p-wrap-1-title">
                         待发货
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(3)">
-                    <div class="p-unreceived"><i class="ion-power"></i></div>
+                    <div class="p-unreceived"><i class="iconfont icon-daishouhuo"></i></div>
                     <p class="p-wrap-1-title">
                         待收货
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(4)">
-                    <div class="p-unrated"><i class="ion-wifi"></i></div>
+                    <div class="p-unrated"><i class="iconfont icon-daipingjia"></i></div>
                     <p class="p-wrap-1-title">
                         待评价
                     </p>
@@ -69,26 +69,29 @@
                 <div class="item item-divider">
                     必备工具
                 </div>
-                <item class="item-icon-left item-icon-right" @click.native='this.$router.push({name:"address"})'>
-                    <i class="icon ion-ios-navigate dark"></i> 收货地址
+                <item class="item-icon-left item-icon-right" style="padding-left: 11px;" @click.native='this.$router.push({name:"address"})'>
+                    <i class="iconfont icon-dizhi"></i> 收货地址
                     <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
                 </item>
-                <item class="item-icon-left item-icon-right">
-                    <i class="icon ion-ios-gear dark"></i> 设置
+                <item class="item-icon-left item-icon-right" style="padding-left: 11px;">
+                    <i class="iconfont icon-shezhi"></i> 设置
                     <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
                 </item>
 
             </div>
         </div>
-        <lyf-tab-bar :index="4"></lyf-tab-bar>
+        <!--<lyf-tab-bar :index="4"></lyf-tab-bar>-->
+      <footnav :active="4"></footnav>
     </div>
 </template>
 
 <script>
-import LyfTabBar from '../../layout/lyf-tab-bar';
+//import LyfTabBar from '../../layout/lyf-tab-bar';
+import footnav from '../../layout/footnav';
 export default {
   components: {
-    LyfTabBar
+//    LyfTabBar,
+    footnav
   },
   data() {
     return {

@@ -107,12 +107,14 @@
     </div>
 </div>
 
-        <lyf-tab-bar :index="2"></lyf-tab-bar>
+        <!--<lyf-tab-bar :index="2"></lyf-tab-bar>-->
+        <footnav :active="2"></footnav>
     </div>
 </template>
 
 <script>
-import LyfTabBar from '../../layout/lyf-tab-bar';
+//import LyfTabBar from '../../layout/lyf-tab-bar';
+import footnav from '../../layout/footnav';
 import {
   mapState,
   mapActions
@@ -121,7 +123,8 @@ import BScroll from 'better-scroll'
 export default {
   name:"class_all",
   components: {
-    LyfTabBar
+//    LyfTabBar,
+    footnav
   },
   data() {
     return {

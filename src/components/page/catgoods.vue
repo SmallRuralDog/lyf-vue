@@ -192,43 +192,7 @@ export default {
 </script>
 
 <style lang="scss">
-.topbar {
-    height: 1.07rem;
-    background: #ffffff;
-    z-index: 2000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    color: #333;
-}
-.top-menu {
-    overflow: hidden;
-    // padding-left: 0.27rem;
-}
 
-.top-menu-list {
-    height: 1.07rem;
-    width: 100%;
-    display: flex;
-}
-
-.top-menu-item {
-    padding: 0 0.27rem;
-    height: 100%;
-    font-size: 0.37rem;
-    text-align: center;
-    line-height: 1.07rem;
-    flex-grow: 1;
-    flex-shrink: 0;
-}
-
-.top-menu-list .active {
-    color: #ea5a49;
-    border-bottom: 0.08rem solid #ea5a49;
-    font-weight: bold;
-}
 .goods-list {
     width: 10rem;
 }

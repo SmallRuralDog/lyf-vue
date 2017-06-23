@@ -99,7 +99,8 @@ const mutations = {
 
     },
     ['UPDATE_HOME_LIST_SCROLL'](state, payload){
-      state.list_scroll[payload.active].scroll = payload.scrol
+      state.list[payload.active].scroll = payload.scrol
+      //state.list_scroll
     }
 }
 export default {

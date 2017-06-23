@@ -7,7 +7,7 @@
                         <li ref="top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index)">{{item.gc_name}}</li>
                     </ul>
                 </div>
-                <a class="search-btn J_search-btn  aui-border-b" @click="go_search()"><i class="ion-search"></i></a>
+                <a class="search-btn J_search-btn  aui-border-b" @click="go_search()"><i class="iconfont icon-sousuo"></i></a><!--ion-search-->
             </div>
             <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="360" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->
@@ -66,7 +66,7 @@
                                         <div class="hm-list-title-2 goods-name aui-ellipsis-2" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
                                         <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
                                             <div class="" style="color: #ee2e3a;font-weight: 700;">
-                                                <span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>
+                                                <span>￥<b><big style="font-size:.48rem;">{{item.goods_price|price_yuan}}</big></b>{{item.goods_price|price_jiao}}</span>
                                             </div>
                                             <div class="hm-color-gray" style="color:#9c9c9c;">
                                                 <small>已售</small>{{item.goods_salenum}}<small>件</small>
@@ -82,13 +82,15 @@
                 <div v-if="!load_more" slot="infinite" @click="goLoad" class="text-center">{{more_data}}</div>
             </scroll>
             <div @click="goTop()" :class="{'top-button-show':page>1}" class="go-top"><span>顶部</span></div>
-            <lyf-tab-bar :index="0"></lyf-tab-bar>
+            <!--<lyf-tab-bar :index="0"></lyf-tab-bar>-->
+            <footnav :active="0"></footnav>
         </div>
     </div>
 </template>
 
 <script>
-import LyfTabBar from '../../layout/lyf-tab-bar';
+//import LyfTabBar from '../../layout/lyf-tab-bar';
+import footnav from '../../layout/footnav';
 import scroll from '../../layout/scroll';
 import {
   mapState,
@@ -99,10 +101,11 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: "home",
   components: {
-    LyfTabBar,
+//    LyfTabBar,
     scroll,
     swiper,
-    swiperSlide
+    swiperSlide,
+    footnav
   },
   data() {
     return {
@@ -124,10 +127,8 @@ export default {
     swiper_data: state => state.home.swiper_data,
     list: state => state.home.list,
     init_load: state => state.home.init_load,
-
-    //goods: state => state.home.list[state.home.active].goods,
     goods: state => state.home.list,
-    list_scroll: state => state.home.list_scroll[state.home.active].scroll,
+    list_scroll: state => state.home.list[state.home.active].scroll,
     subclass: state => state.home.list[state.home.active].subclass,
     page: state => state.home.list[state.home.active].page,
     is_load: state => state.home.list[state.home.active].is_load,
@@ -182,10 +183,11 @@ export default {
       })
     },
     changeMenu(index) {
-      //设置当前滚动距离(不准确)
+      //设置当前滚动距离
       let o_scrol = this.$refs.lyf_scroll.$el.scrollTop;
       let o_active = this.active;
-      //this.$store.commit('UPDATE_HOME_LIST_SCROLL', {active:o_active,scrol:o_scrol})
+//      console.log('o_active=',o_active,'o_scrol=',o_scrol)
+      this.$store.commit('UPDATE_HOME_LIST_SCROLL', {active:o_active,scrol:o_scrol})
 
       //移动menu
       this.active = index;
@@ -200,15 +202,14 @@ export default {
       if (this.list[this.active].init == false) {
         this.$store.dispatch('getData', res => {
           this.$nextTick(() => {
-            //this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
-            this.$refs.lyf_scroll.setscrollTop(0)
+            this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
             this.$refs.lyf_scroll.infiniteDone()
           })
         })
       } else {
         this.$nextTick(() => {
-          //console.log(this.list_scroll);
-          this.$refs.lyf_scroll.setscrollTop(0)
+//          console.log(this.active,this.list_scroll);
+          this.$refs.lyf_scroll.setscrollTop(this.list_scroll)
           this.$refs.lyf_scroll.infiniteDone()
 
         })
@@ -279,46 +280,7 @@ export default {
 </script>
 
 <style lang="scss">
-.topbar {
-    height: 1.07rem;
-    background: #ffffff;
-    z-index: 2000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    color: #333;
-}
-.top-menu {
-    overflow: hidden;
-    // padding-left: 0.27rem;
-}
-
-.top-menu-list {
-    height: 1.07rem;
-    width: 100%;
-    display: flex;
-}
-
-.top-menu-item {
-    min-width: 1.33rem;
-    // font-weight: bold;
-    height: 100%;
-    font-size: 0.37rem;
-    text-align: center;
-    line-height: 1.07rem;
-}
-.top-menu-item:first {
-    padding-left: 0.53rem;
-}
-
-.top-menu-list .active {
-    color: #ea5a49;
-    border-bottom: 0.08rem solid #ea5a49;
-    font-weight: bold;
-}
-
+$color-theme: #F23030;
 .search-btn {
     line-height: 1.07rem;
     padding: 0 0.27rem;
@@ -375,8 +337,9 @@ export default {
 .category {
     overflow: hidden;
     background: #fff;
+    padding-bottom:0.27rem;
     li {
-        padding: 0.27rem 0;
+        padding: 0.27rem 0 0;
         box-sizing: border-box;
         text-align: center;
         font-size: 0.32rem;

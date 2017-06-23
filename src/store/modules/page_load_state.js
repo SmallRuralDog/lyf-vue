@@ -5,6 +5,7 @@
 const state = {
   home: false,
   cart: false,
+  new_arrivals:false,
   class_all: false,
   user: false
 }

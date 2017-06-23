@@ -19,7 +19,7 @@
           <div class="infos hm-margin-b">
               <div class="area" >
                   <div class="prices " style="display: flex;align-items: center;"><!--flex-center align-bottom-->
-                      <div class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price}}</i></div>
+                      <div class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price|price_yuan}}</i><b><big>{{data.goods_info.goods_price|price_jiao}}</big></b></div>
                       <div class="price-old">¥268</div>
                       <div class="sale-tag-wrapper">
 
@@ -32,7 +32,7 @@
                   </div>
               </div>
               <div class="product hm-flex" style="padding-top: 6px;">
-                  <h3 class="hm-flex-1" style="font-weight: bold;">
+                  <h3 class="hm-flex-1">
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
                   <div class="hm-flex" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
@@ -857,7 +857,8 @@ $color-theme: #F23030;//#e02e24;
 .infos .area .prices .price i {
     font-size: 24px;
     /*line-height: 1.024rem;*/
-    margin: 0 .064rem;
+    margin-left:.064rem;
+   font-weight:bold;
 }
 .infos .area .prices .price-old {
     margin-left: .256rem;
