@@ -74,7 +74,7 @@
                                         <p class="nums">x{{goods.goods_num}}</p>
                                     </div>
                                     <div class="item-pay-btn">
-                                      <a class="h" v-if="order_info.order_state==20"> 退款 </a>
+                                      <a class="h" v-if="order_info.order_state==20" @click="go_refund(order_info.order_id,goods.goods_id)"> 退款 </a>
                                       <a class="h" v-if="order_info.order_state==30"> 退货 </a>
                                     </div>
                                 </div>
@@ -145,7 +145,7 @@ export default {
     return {
       order_info: [],
       order_id: 63,
-      page_show:false
+      page_show: false
     }
   },
   mounted() {
@@ -165,6 +165,15 @@ export default {
       }, error => {
         $loading.hide()
       })
+    },
+    go_refund(order_id, goods_id) {
+      $router.push({
+        name: "order_refund",
+        params: {
+          order_id: order_id,
+          goods_id: goods_id
+        }
+      });
     }
   }
 }
