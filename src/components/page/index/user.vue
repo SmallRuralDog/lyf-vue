@@ -65,32 +65,56 @@
                     <p class="p-wrap-2-title">退款/售后</p>
                 </div>
             </div>
-            <div class="" style="margin-bottom:.8rem;">
-                <div class="item item-divider">
-                    必备工具
-                </div>
-                <item class="item-icon-left item-icon-right" style="padding-left: 11px;" @click.native='this.$router.push({name:"address"})'>
-                    <i class="iconfont icon-dizhi"></i> 收货地址
-                    <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
-                </item>
-                <item class="item-icon-left item-icon-right" style="padding-left: 11px;">
-                    <i class="iconfont icon-shezhi"></i> 设置
-                    <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
-                </item>
+            <!--<div class="" style="margin-bottom:.8rem;">-->
+                <!--<div class="item item-divider">-->
+                    <!--必备工具-->
+                <!--</div>-->
+                <!--<item class="item-icon-left item-icon-right" style="padding-left: 11px;" @click.native='this.$router.push({name:"address"})'>-->
+                    <!--<i class="iconfont icon-dizhi"></i> 收货地址-->
+                    <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
+                <!--</item>-->
+                <!--<item class="item-icon-left item-icon-right" style="padding-left: 11px;">-->
+                    <!--<i class="iconfont icon-shezhi"></i> 设置-->
+                    <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
+                <!--</item>-->
 
-            </div>
+            <!--</div>-->
+
+          <div class="item item-divider">
+          必备工具
+          </div>
+
+          <ul class="aui-list hm-margin-b"  style="margin-bottom:.8rem;"><!--@click="add"-->
+            <li class="aui-list-item aui-list-item-middle" @click='this.$router.push({name:"address"})'>
+              <div class="aui-list-item-label-icon">
+                <i class="iconfont icon-dizhi"></i>
+              </div>
+              <div class="aui-list-item-inner ">
+                收货地址
+                <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+              </div>
+            </li>
+            <li class="aui-list-item aui-list-item-middle">
+              <div class="aui-list-item-label-icon">
+                <i class="iconfont icon-shezhi"></i>
+              </div>
+              <div class="aui-list-item-inner ">
+                设置
+                <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+              </div>
+            </li>
+          </ul>
+
         </div>
-        <!--<lyf-tab-bar :index="4"></lyf-tab-bar>-->
       <footnav :active="4"></footnav>
     </div>
 </template>
 
 <script>
-//import LyfTabBar from '../../layout/lyf-tab-bar';
 import footnav from '../../layout/footnav';
 export default {
   components: {
-//    LyfTabBar,
+
     footnav
   },
   data() {

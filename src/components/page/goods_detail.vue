@@ -53,16 +53,6 @@
             <!--</div>-->
 
 
-          <!--<item class="item-icon-right hm-margin-b" @click.native="add">-->
-              <!--已选-->
-              <!--<template v-if="data.goods_info.goods_spec">-->
-              <!--<template v-for="value in cur_spec_namex">&lt;!&ndash;data.goods_info.goods_spec&ndash;&gt;-->
-                  <!--"{{value}}"-->
-              <!--</template>-->
-              <!--</template>-->
-              <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
-          <!--</item>-->
-
           <ul class="aui-list hm-margin-b" @click="add">
               <li class="aui-list-item aui-list-item-middle">
                   <div class="aui-list-item-inner ">

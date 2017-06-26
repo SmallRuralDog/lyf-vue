@@ -526,10 +526,10 @@ button, .aui-btn {
   margin-right: 15px;
 }
 .aui-list .aui-list-item-media {
-  width: 4.5rem;
+  width: 90px;
   position: relative;
-  padding: 0.5rem 0;
-  padding-right: 0.75rem;
+  padding:10px 0;
+  padding-right: 15px;
   display: inherit;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
@@ -544,7 +544,7 @@ button, .aui-btn {
   display: block;
 }
 .aui-list .aui-list-item-media-list {
-  margin-top: 0.25rem;
+  margin-top: 5px;
   padding-right: 0;
   display: block;
 }
@@ -574,11 +574,11 @@ button, .aui-btn {
 .aui-list .aui-list-item i {
   -webkit-align-self: center;
   align-self: center;
-  font-size: 24px;
+  font-size: 16px;
 }
 .aui-list-item-inner.aui-list-item-arrow {
   overflow: hidden;
-  padding-right: 1.5rem;
+  padding-right: 30px;
 }
 .aui-list-item-arrow:before {
   content: '';
@@ -617,11 +617,11 @@ button, .aui-btn {
 .aui-list .aui-list-item-label-icon {
   color: #212121;
   width: 35%;
-  min-width: 1.5rem;
+  min-width: 30px;
   margin: 0;
   padding: 0;
-  padding-right: 0.25rem;
-  line-height: 2.2rem;
+  padding-right: 5px;
+  line-height: 44px;
   position: relative;
   overflow: hidden;
   white-space: nowrap;
@@ -636,12 +636,12 @@ button, .aui-btn {
 }
 .aui-list .aui-list-item-label-icon {
   width: auto;
-  padding-right: 0.75rem;
+  padding-right: 0px;
 }
 .aui-list .aui-list-item-input {
   width: 100%;
   padding: 0;
-  padding-right: 0.75rem;
+  padding-right: 15px;
   -webkit-box-flex: 1;
   box-flex: 1;
   -webkit-flex-shrink: 1;
@@ -650,8 +650,8 @@ button, .aui-btn {
 
 .aui-list.aui-select-list .aui-list-item-inner {
   display: block;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
   -webkit-align-self: stretch;
   align-self: stretch;
 }

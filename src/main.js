@@ -20,6 +20,8 @@ Vue.use(VueLazyload, {
   preLoad: 1.3,
   try: 3,
 })
+
+//路由 懒加载
 // Page Components
 const Index = resolve => require(['./components/Index'], resolve)
 const Home = resolve => require(['./components/page/index/home.vue'], resolve)

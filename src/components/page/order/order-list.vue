@@ -40,15 +40,13 @@
         <div class="top-fixed">
             <div class="nav-tab-top">
                 <ul>
-                    <li class="cur">全部</li>
-                    <li class="">待付款</li>
-                    <li class="">待发货</li>
-                    <li class="">待收货</li>
-                    <li class="">待评价</li>
+                  <template v-for="(item,index) in tabs">
+                    <li :class="{'cur':index==active}" @click="go_orderlist(index)">{{item}}</li>
+                  </template>
                 </ul>
             </div>
         </div>
-        <scroll class="page-content" :on-refresh="onRefresh">
+        <scroll class="page-content" :on-refresh="onRefresh" :on-infinite="onInfinite" v-show="!loading">
             <div class="">
                 <ul class="order-list">
                     <li v-for="order in order_list" style="margin-bottom:.27rem;">
@@ -74,7 +72,7 @@
                         <div class="module" @click="go_order_detail(order.order_id)" v-for="goods in order.order_goods" style="border-bottom:1px solid #ffffff;">
                             <div class="item-list o-t-item">
                                 <div class="item-img">
-                                    <p> <img class="" v-lazy="goods.goods_image_url"> </p>
+                                    <p> <img class="" :src="goods.goods_image_url"> </p>
                                 </div>
                                 <div class="item-info">
                                     <h3 class="title">{{goods.goods_name}}</h3>
@@ -126,28 +124,53 @@ export default {
   name: "order_list",
   data() {
     return {
+      tabs:['全部','待付款','待发货','待收货','待评价'],
+      state_type:['all','dfk','dfh','dsh','dpj'],
+      active:0,
       order_list: [],
       page: 1,
-      load_more: true
+      pages:[1,1,1,1,1],
+      load_more: [true,true,true,true,true],
+      loading:false
     }
   },
-  mounted() {
-    $loading.show()
-    this.getData(() => {
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      vm.active=vm.$route.params.type
+      vm.loading=true
+      vm.getData(() => {
+      })
+
 
     })
   },
+  mounted() {
+    $loading.show()
+//    this.getData(() => {
+//
+//    })
+  },
+
   methods: {
     getData(done) {
-      this.$api.userAuthGet("order_list?page=" + this.page, res => {
+      console.log(!this.load_more[this.active],this.loading)
+      if(!this.load_more[this.active]) return;
+      $loading.show()
+      let condition='&state_type='+this.state_type[this.active];
+      console.log('this.active=',this.active,'condition=',condition)
+      this.$api.userAuthGet("order_list?page=" + this.pages[this.active]+condition, res => {
         console.log(res);
         if (res.data.status_code == 1) {
           if (this.page == 1) {
             this.order_list = res.data.data.data
           } else {
+            for(var i in res.data.data.data){
+              this.order_list.push(res.data.data.data[i])
+            }
 
           }
         }
+        this.loading=false
         this.$nextTick(() => {
           $loading.hide()
           done()
@@ -155,12 +178,20 @@ export default {
       }, error => {
 
       })
+
     },
     onRefresh(done) {
-      if (this.is_load) return;
-      this.page = 1
-      this.load_more = true
+      if (this.loading) return;
+      this.pages[this.active] = 1
+      this.load_more[this.active] = true
       this.getData(done)
+    },
+    onInfinite(){
+      this.$set(this.pages,this.active,this.pages[this.active]+1)
+      console.log(this.pages[this.active])
+      this.getData(()=>{
+
+      })
     },
     go_order_detail(order_id) {
       $router.push({
@@ -240,6 +271,17 @@ export default {
             $toast.show(error.message)
           })
         }
+      })
+    },
+    go_orderlist(id) {
+      this.active=id
+    }
+  },
+  watch:{
+
+    active(val,oldVal){
+      this.loading=true
+      this.getData(() => {
       })
     }
   },
