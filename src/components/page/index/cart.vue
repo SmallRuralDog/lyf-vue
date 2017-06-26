@@ -20,7 +20,7 @@ export default {
     footnav
   },
   mounted() {
-    $loading.hide()
+    //$loading.hide()
     this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
       cart: true,
     })

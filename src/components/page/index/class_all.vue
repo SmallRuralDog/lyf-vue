@@ -156,7 +156,7 @@ export default {
     }
   },
   mounted() {
-    $loading.hide()
+    //$loading.hide()
     this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
       class_all:true,
     })

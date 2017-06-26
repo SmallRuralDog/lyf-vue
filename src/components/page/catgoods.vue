@@ -7,7 +7,7 @@
           </ul>
       </div>
       </div>
-      <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite">
+      <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" v-show="page_show">
         <div class="goods-list clear">
           <div class="hm-list hm-flex" style="flex-wrap:wrap">
             <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods">
@@ -57,6 +57,7 @@ export default {
       is_load: false,
       load_more: true,
       more_data: '-- 没有更多了 --',
+      page_show:false
     }
   },
   computed: {
@@ -72,7 +73,9 @@ export default {
         this.page = 1
         this.m_w = 0
         this.load_more = true
+        this.page_show = false
         this.$refs.lyf_scroll.setscrollTop(0)
+        $loading.show()
         this.getData(() => {
 
         })
@@ -98,6 +101,8 @@ export default {
             this.goods_class = res.data.data.goods_class
           }
           this.goods = res.data.data.goods_list.data
+
+
         } else {
           for (var index in res.data.data.goods_list.data) {
             this.goods.push(res.data.data.goods_list.data[index])
@@ -115,9 +120,11 @@ export default {
               cat_goods_list_class_init_menu: true
             })
           }
+          $loading.hide()
           done()
           this.$refs.lyf_scroll.infiniteDone()
           this.is_load = false
+          this.page_show = true
         })
       }, error => {
         $toast.show(error.message)
