@@ -38,6 +38,8 @@ const order_detail = resolve => require(['./components/page/order/order-detail.v
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
+
+const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
 // Routes
 const routes = [{
     path: '/',
@@ -107,6 +109,11 @@ const routes = [{
         path: '/order-rate/:order_id',
         name: 'order_rate',
         component: order_rate
+      },
+      {
+        path: '/order-refund/:order_id/:goods_id',
+        name: 'order_refund',
+        component: order_refund
       },
       {
         path: '/store/:store_id',

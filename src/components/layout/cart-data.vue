@@ -1,8 +1,6 @@
 <style lang="css">
 
-.cartbuy .c_fb {
-    bottom: 1.31rem;
-}
+
 
 </style>
 
@@ -170,7 +168,7 @@
     </div>
     <div class="cartbuy" v-if="cart_count > 0">
         <div class="footer" :class="{'c_fb':show_footer}">
-            <div class="f-fx">
+            <div :class="{'c_fb':show_footer}" class="f-fx">
                 <div>
                     <div class="ft-cb">
                         <p>
