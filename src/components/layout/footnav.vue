@@ -53,10 +53,10 @@
 <style lang="scss">
   // 导航底
   $color-theme:#F23030;
-  $nav-foot-height     : 50px !default;
-  $nav-foot-fontsize   : 10px !default;
-  $nav-foot-iconsize   : 24px !default;
-  /*$nav-foot-padding    : 4px !default;*/
+  $nav-foot-height     : 1.33rem !default;
+  $nav-foot-fontsize   : .27rem !default;
+  $nav-foot-iconsize   : .64rem !default;
+  /*$nav-foot-padding    : .11rem !default;*/
   $nav-foot-bg         : #fff !default;
   $nav-foot-color      : #999 !default;
   $nav-foot-btn-active : $color-theme !default;
@@ -72,9 +72,9 @@
       justify-content:center;
     }/*padding:$nav-foot-padding 0;*/
     .hm-nav-item.active {color:$nav-foot-btn-active;}
-    i {font-size:$nav-foot-iconsize; padding-top: 8px;
-      padding-bottom:2px;}
-  /*margin-bottom:2px; display:inline-block;padding-bottom:2px; */
+    i {font-size:$nav-foot-iconsize; padding-top: .21rem;
+      padding-bottom:.05rem;}
+  /*margin-bottom:.05rem; display:inline-block;padding-bottom:.05rem; */
 
     /*span {display:block;}*/
   }

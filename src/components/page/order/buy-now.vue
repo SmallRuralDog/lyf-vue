@@ -11,7 +11,7 @@
                 <div class="cell fixed align-center">
                     <div class="icon"></div>
                 </div>
-                <div class="cell content">
+                <div class="cell content" v-if="address_info != null">
                     <div class="info">
                         <span>收货人：  </span>
                         <span>{{address_info.true_name}}</span>
@@ -23,6 +23,9 @@
                         <span>{{address_info.area_info}} </span>
                         <span>{{address_info.address}} </span>
                     </div>
+                </div>
+                <div class="cell content" v-else>
+                  添加收货地址
                 </div>
                 <div class="cell fixed align-center">
                     <div class="nav"></div>
@@ -54,7 +57,7 @@
             <div class="scb-list" id="scbList" style="display: block;">
                 <!--入仓商品列表-->
                 <div class="scb-content" v-for="(store,key,index) in store_cart_list">
-                  <p class="seller">
+                  <p class="seller" v-if="address_info != null">
                       <i class="iconfont ion-ios-cart"></i><font color="#4a4a4a">  {{store.store_name}}</font> 发货
                       <span v-if="address_api.content[key] > 0" style="color:#ff464e">运费：￥{{address_api.content[key]}}</span>
                       <span v-else>运费：包邮</span>
@@ -170,7 +173,11 @@ export default {
       this.modal = modal
     })
     bus.$on("onChangeAddress", address => {
-      this.address_info = address
+      if(this.address_info == null){
+        this.getData()
+      }else{
+        this.address_info = address
+      }
       this.modal.hide();
     })
   },
@@ -234,6 +241,10 @@ export default {
       this.modal.show()
     },
     go_pay() {
+      if(this.address_info == '' || this.address_info == null){
+        $toast.show("请选择收货地址")
+        return
+      }
       let msg = [];
       for (var store_id in this.pay_massage) {
         let c_p = store_id + '|' + this.pay_massage[store_id]
@@ -246,19 +257,23 @@ export default {
         address_id: this.address_info.address_id,
         pay_message: msg.join(",")
       }, res => {
-        $loading.hide()
         this.$store.commit('UPDATE_COMMON_DATA', {
           cart_view_data_reload: true
         })
         if (res.data.status_code == 1) {
+          $loading.hide()
           window.location.href = res.data.data
         } else {
           $toast.show(res.data.message)
-          $roter.go(-1)
+          setTimeout(function(){
+            $router.go(-1)
+          },1500);
         }
       }, error => {
-        $roter.back()
         $toast.show("支付失败")
+        setTimeout(function(){
+          $router.go(-1)
+        },1500);
       })
     }
   }
