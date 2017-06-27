@@ -35,7 +35,7 @@
                   <h3 class="hm-flex-1">
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
-                  <div class="hm-flex" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
+                  <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
                     <i class="iconfont icon-favorite" style="font-size: 22px;"></i>
                     收藏
                   </div>
@@ -533,8 +533,12 @@ export default {
               //$toast(err)
           })
       },
-    collect() {
-
+    collect(id) {
+      this.$api.userAuthGet('favorites_add_goods?goods_id=' + id, res => {
+        $toast('收藏成功')
+      }, err => {
+          //$toast(err)
+      })
     },
     goback(){
       this.$router.go(-1)

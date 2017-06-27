@@ -38,6 +38,7 @@ const order_detail = resolve => require(['./components/page/order/order-detail.v
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
+const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
 const login = resolve => require(['./components/page/login.vue'], resolve)
@@ -133,6 +134,11 @@ const routes = [{
         path: '/auth/:token',
         name: 'auth',
         component: auth
+      },
+      {
+        path: '/favorite',
+        name: 'favorite',
+        component: favorite
       },
     ]
 

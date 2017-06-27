@@ -14,9 +14,9 @@ for (var i=0;i<catLen;i++){
         load_more: true,
         more_data: '--- 到底了 ---',
     })
-    list_scroll.push({
-      scroll:0,
-    })
+    //list_scroll.push({
+    //  scroll:0,
+    //})
 }
 
 const state = {
@@ -29,7 +29,7 @@ const state = {
     //load_more: true,
     //more_data: '--- 到底了 ---',
     list,
-    list_scroll,
+    //list_scroll,
     active:0,
     init_load:false
 }

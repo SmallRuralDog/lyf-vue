@@ -56,7 +56,7 @@
                     <div class="p-coupons"><i class="ion-help-buoy color-positive"></i></div>
                     <p class="p-wrap-2-title">我的优惠券</p>
                 </div>
-                <div class="p-wrapper-2-item">
+                <div class="p-wrapper-2-item" @click='this.$router.push({name:"favorite"})'>
                     <div class="p-likes"><i class="ion-help-buoy color-calm"></i></div>
                     <p class="p-wrap-2-title">我的收藏</p>
                 </div>

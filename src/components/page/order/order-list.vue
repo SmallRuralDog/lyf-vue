@@ -1,42 +1,6 @@
-<style lang="scss">
-.top-fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9;
-}
-
-.order-manage .nav-tab-top ul {
-    display: flex;
-    background: #fff;
-    border-bottom: 0.01rem solid #e7e7e7;
-}
-
-.order-manage .nav-tab-top ul li {
-    height: 1.067rem;
-    line-height: 1.067rem;
-    margin-bottom: -0.01rem;
-    text-align: center;
-    font-size: 0.37rem;
-    font-weight: 400;
-    flex-grow: 1;
-    flex-shrink: 0;
-}
-
-.order-manage .nav-tab-top ul .cur {
-    border-bottom: 0.08rem solid #ea5a49;
-    box-sizing: border-box;
-    color: #ea5a49;
-}
-</style>
-
 <template lang="html">
-
 <div class="page">
     <div class="order-manage list">
-
-
         <div class="top-fixed">
             <div class="nav-tab-top">
                 <ul>
@@ -46,7 +10,7 @@
                 </ul>
             </div>
         </div>
-        <scroll class="page-content" :on-refresh="onRefresh" :on-infinite="onInfinite" v-show="!loading">
+        <scroll class="page-content" ref="lyf_scroll" :on-refresh="onRefresh" :on-infinite="onInfinite">
             <div class="">
                 <ul class="order-list">
                     <li v-for="order in order_list" style="margin-bottom:.27rem;">
@@ -111,7 +75,9 @@
                         </div>
                     </li>
                 </ul>
+
             </div>
+          <div v-if="!load_more" slot="infinite" class="text-center">没有更多数据</div><!--要放在scroll内最外层-->
         </scroll>
     </div>
 </div>
@@ -119,6 +85,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import "../../../assets/order.scss"
 export default {
   name: "order_list",
@@ -126,12 +93,12 @@ export default {
     return {
       tabs:['全部','待付款','待发货','待收货','待评价'],
       state_type:['all','dfk','dfh','dsh','dpj'],
-      active:0,
-      order_list: [],
-      page: 1,
-      pages:[1,1,1,1,1],
-      load_more: [true,true,true,true,true],
-      loading:false
+//      active:0,
+//      order_list: [],
+//      pages:[1,1,1,1,1],
+//      load_more: [true,true,true,true,true],
+      loading:false,
+//      st:0,
     }
   },
   beforeRouteEnter(to,from,next){
@@ -139,36 +106,55 @@ export default {
       vm.active=vm.$route.params.type
       vm.loading=true
       vm.getData(() => {
+        //vm.$refs.lyf_scroll.infiniteDone()
       })
 
 
     })
   },
   mounted() {
-    $loading.show()
-//    this.getData(() => {
-//
-//    })
+//    $loading.show()
+  },
+  computed:{
+    ...mapState({
+        active: state => state.orderlist.active,
+        order_list: state => state.orderlist.list[state.orderlist.active].order_list,
+        page: state => state.orderlist.list[state.orderlist.active].page,
+        load_more:state => state.orderlist.list[state.orderlist.active].load_more,
+        init:state => state.orderlist.list[state.orderlist.active].init,
+
+    })
   },
 
   methods: {
     getData(done) {
-      console.log(!this.load_more[this.active],this.loading)
-      if(!this.load_more[this.active]) return;
-      $loading.show()
-      let condition='&state_type='+this.state_type[this.active];
-      console.log('this.active=',this.active,'condition=',condition)
-      this.$api.userAuthGet("order_list?page=" + this.pages[this.active]+condition, res => {
-        console.log(res);
-        if (res.data.status_code == 1) {
-          if (this.page == 1) {
-            this.order_list = res.data.data.data
-          } else {
-            for(var i in res.data.data.data){
-              this.order_list.push(res.data.data.data[i])
-            }
 
-          }
+      if(!this.load_more) return;
+      console.log('!load_more=',!this.load_more,'loading=',this.loading,'pages=',this.page)
+//      if (this.page == 1) {
+//        $loading.show()
+//      }
+
+      let condition='&state_type='+this.state_type[this.active];
+      //console.log('this.active=',this.active,'condition=',condition)
+      this.$api.userAuthGet("order_list?page=" + this.page+condition, res => {
+        console.log(res);
+
+        if (res.data.status_code == 1) {
+          this.$store.commit('ORDERLIST_GETDATA_CALLBACK',{ret:res})
+//          if (this.page == 1) {
+//            this.order_list = res.data.data.data
+//          } else {
+//            for(var i in res.data.data.data){
+//              this.order_list.push(res.data.data.data[i])
+//            }
+//
+//          }
+//          if(res.data.data.last_page==res.data.data.current_page){
+//            this.$set(this.load_more,this.active,false)
+//          }else{
+//            this.$set(this.load_more,this.active,true)
+//          }
         }
         this.loading=false
         this.$nextTick(() => {
@@ -182,17 +168,26 @@ export default {
     },
     onRefresh(done) {
       if (this.loading) return;
-      this.pages[this.active] = 1
-      this.load_more[this.active] = true
+//      this.page = 1
+//      this.load_more = true
+      this.$store.commit('ORDERLIST_UPDATE_LIST',{load_more:true})
       this.getData(done)
     },
     onInfinite(){
-      this.$set(this.pages,this.active,this.pages[this.active]+1)
-      console.log(this.pages[this.active])
-      this.getData(()=>{
+//      this.$set(this.pages,this.active,this.page+1)
+      this.$store.commit('ORDERLIST_UPDATE_LIST',{page:this.page+1})
 
-      })
+      console.log('pages=',this.page,'load_more=',this.load_more)
+      if(this.load_more){
+        this.getData(()=>{
+          //this.$refs.lyf_scroll.infiniteDone()
+        })
+      }
+
     },
+//    onScrollListener(res) {
+//      this.st = res
+//    },
     go_order_detail(order_id) {
       $router.push({
         name: "order_detail",
@@ -274,15 +269,28 @@ export default {
       })
     },
     go_orderlist(id) {
-      this.active=id
-    }
+      //this.active=id
+      this.$store.commit('ORDERLIST_UPDATE',{active:id})
+    },
+//    go_orderlist(id) {
+//      $router.push({
+//        name: 'order_list',
+//        params: {
+//          type: id
+//        }
+//      })
+//    }
   },
   watch:{
 
     active(val,oldVal){
       this.loading=true
-      this.getData(() => {
-      })
+      if(!this.init){
+        this.getData(() => {
+          //this.$refs.lyf_scroll.infiniteDone()
+        })
+      }
+
     }
   },
   filters: {
@@ -311,3 +319,35 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .top-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+  }
+
+  .order-manage .nav-tab-top ul {
+    display: flex;
+    background: #fff;
+    border-bottom: 0.01rem solid #e7e7e7;
+  }
+
+  .order-manage .nav-tab-top ul li {
+    height: 1.067rem;
+    line-height: 1.067rem;
+    margin-bottom: -0.01rem;
+    text-align: center;
+    font-size: 0.37rem;
+    font-weight: 400;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  .order-manage .nav-tab-top ul .cur {
+    border-bottom: 0.08rem solid #ea5a49;
+    box-sizing: border-box;
+    color: #ea5a49;
+  }
+</style>

@@ -189,7 +189,7 @@ export default {
       add_cart(){
           $loading.show("提交中");
           this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
-          this.$api.userGet('add_cart?goods_id=' + this.goodsid_choose+'&quantity='+this.quantity, res => {
+          this.$api.userAuthGet('add_cart?goods_id=' + this.goodsid_choose+'&quantity='+this.quantity, res => {
               console.log(JSON.stringify(res.data));
 //              this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: false })
 //              $loading.hide()
