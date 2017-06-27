@@ -40,6 +40,10 @@ const order_rate = resolve => require(['./components/page/order/order-rate.vue']
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
 
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
+const login = resolve => require(['./components/page/login.vue'], resolve)
+const auth = resolve => require(['./components/page/auth.vue'], resolve)
+
+
 // Routes
 const routes = [{
     path: '/',
@@ -119,6 +123,16 @@ const routes = [{
         path: '/store/:store_id',
         name: 'store_home',
         component: store_home
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: login
+      },
+      {
+        path: '/auth/:token',
+        name: 'auth',
+        component: auth
       },
     ]
 

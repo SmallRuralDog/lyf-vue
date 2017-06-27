@@ -1,12 +1,7 @@
 import axios from 'axios'
-let TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6XC9cLzE5Mi4xNjguMTAuNTQ6ODhcL2FwaVwvdG9rZW4iLCJpYXQiOjE0OTc0OTc3ODcsImV4cCI6MTgwODUzNzc4NywibmJmIjoxNDk3NDk3Nzg3LCJqdGkiOiJUem4xUjZXeVg3TUxHTFZoIn0.u4C1hWZdnCBqSM-TheI9INQHiy5NExrzZXDPEZw8x74'
 var http = axios.create({
-  baseURL: HOST+'/api/',
-  //baseURL: 'http://192.168.10.54:88/api/',
+  baseURL: HOST + '/api/',
   timeout: 10000,
-  headers: {
-    'Authorization': 'Bearer ' + TOKEN
-  }
 });
 export default {
   //http
@@ -26,24 +21,60 @@ export default {
   },
   //判断登录的请求
   userAuthGet(url, cb, error) {
-    http.get(url).then(res => {
-      //$loading.hide()
-      cb(res)
-    }).catch(err => {
-      $loading.hide()
-      //TODO 判断是否登录
-      error(err)
-    });
+    if (this.ck_login()) {
+      var uhttp = axios.create({
+        baseURL: HOST + '/api/',
+        timeout: 10000,
+        headers: {
+          'Authorization': 'Bearer ' + this.l_get("token")
+        }
+      });
+      uhttp.get(url).then(res => {
+        cb(res)
+      }).catch(err => {
+        $loading.hide()
+        //TODO 判断是否登录
+        error(err)
+      });
+    } else {
+      $toast.show("未登录")
+      return
+    }
+
   },
-  userAuthPost(url,data, cb, error) {
-    http.post(url,data).then(res => {
-      //$loading.hide()
-      cb(res)
-    }).catch(err => {
+  userAuthPost(url, data, cb, error) {
+    if (this.ck_login()) {
+      var uhttp = axios.create({
+        baseURL: HOST + '/api/',
+        timeout: 10000,
+        headers: {
+          'Authorization': 'Bearer ' + this.l_get("token")
+        }
+      });
+      uhttp.post(url, data).then(res => {
+        cb(res)
+      }).catch(err => {
+        $loading.hide()
+        //TODO 判断是否登录
+        error(err)
+      });
+    } else {
+      $toast.show("未登录")
+      return
+    }
+  },
+  ck_login() {
+    let token = this.l_get("token");
+    if (!token) {
       $loading.hide()
-      //TODO 判断是否登录
-      error(err)
-    });
+      //记录登录前地址
+      this.set("login_back", window.location.href)
+      let login_url = "http://lyf.aoyi66.com/home/wx/login_v2?back=" + encodeURIComponent("http://" + window.location.host + "/#/auth")
+      window.location.href = login_url
+      return false
+    } else {
+      return true
+    }
   },
   //ssession
   get(name) {
@@ -58,6 +89,18 @@ export default {
   remove(name) {
     return sessionStorage.removeItem(name)
   },
+  l_get(name) {
+    let value = localStorage.getItem(name)
+    if (/^\{.*\}$/.test(value)) value = JSON.parse(value)
+    return value
+  },
+  l_set(name, value) {
+    if (typeof value === typeof {}) value = JSON.stringify(value)
+    return localStorage.setItem(name, value)
+  },
+  l_remove(name) {
+    return localStorage.removeItem(name)
+  },
   //fanction
   fmoney(s, n) {
     n = n > 0 && n <= 20 ? n : 2;
@@ -70,7 +113,7 @@ export default {
     }
     return '<span class="major" >' + t.split("").reverse().join("") + "</span><span class='point'>.</span><span class='minor'>" + r + "</span>";
   },
-  isCon(arr, val) {//检测数组是否存在某个值
+  isCon(arr, val) { //检测数组是否存在某个值
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] == val)
         return true;
