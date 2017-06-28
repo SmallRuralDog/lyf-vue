@@ -13,7 +13,7 @@
 
           <div class="input-info">
             <div class="">
-              <textarea placeholder="宝贝满足你的期待吗？说说你的使用心得，分享给想买的他们吧"></textarea>
+              <textarea v-model="goods.content" placeholder="宝贝满足你的期待吗？说说你的使用心得，分享给想买的他们吧"></textarea>
             </div>
           </div>
 
@@ -60,7 +60,7 @@
                   <span>物流服务</span>
                 </div>
                 <div class="l-b">
-                  <div class="l-b-img" v-for="(item,index) in 5">
+                  <div class="l-b-img" v-for="(item,index) in 5" @click="scores_store('d',index+1)">
                     <img :src="data.order_store.deliverycredit<index+1?xin_ck:xin_cked" alt="">
                   </div>
                 </div>
@@ -77,7 +77,7 @@
                   <span>服务态度</span>
                 </div>
                 <div class="l-b">
-                  <div class="l-b-img" v-for="(item,index) in 5">
+                  <div class="l-b-img" v-for="(item,index) in 5" @click="scores_store('s',index+1)">
                     <img :src="data.order_store.servicecredit<index+1?xin_ck:xin_cked" alt="">
                   </div>
                 </div>
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-<div class="reat-push" v-if="page_show">
+<div class="reat-push" v-if="page_show" @click="rate_push()">
   <span>发表评价</span>
 </div>
 
@@ -130,10 +130,11 @@ export default {
           this.data = res.data.data
           this.data.order_goods.map(a => {
             this.$set(a, 'nimin', true)
-            this.$set(a, 'scores', 1)
+            this.$set(a, 'scores', 5)
+            this.$set(a, 'content', "")
           })
-          this.$set(this.data.order_store, 'servicecredit', 5) //服务默认评分
-          this.$set(this.data.order_store, 'deliverycredit', 5) //物流默认评分
+          this.$set(this.data.order_store, 'servicecredit', 0) //服务默认评分
+          this.$set(this.data.order_store, 'deliverycredit', 0) //物流默认评分
           console.log(this.data.order_goods);
           this.page_show = true
           $loading.hide()
@@ -143,19 +144,40 @@ export default {
       })
     },
     nimin_goods(goods_id) {
-      this.data.order_goods.filter(a=>{
+      this.data.order_goods.filter(a => {
         return a.goods_id == goods_id
-      }).map(a=>{
+      }).map(a => {
         a.nimin = !a.nimin
       })
     },
     scores_goods(goods_id, scores) {
-      this.data.order_goods.filter(a=>{
+      this.data.order_goods.filter(a => {
         return a.goods_id == goods_id
-      }).map(a=>{
+      }).map(a => {
         a.scores = scores
       })
+    },
+    scores_store(type, scores) {
+      if (type == 's') {
+        this.$set(this.data.order_store, 'servicecredit', scores)
+      } else {
+        this.$set(this.data.order_store, 'deliverycredit', scores)
+      }
+    },
+    rate_push() {
+      let servicecredit = this.data.order_store.servicecredit
+      let deliverycredit = this.data.order_store.deliverycredit
+      if (deliverycredit <= 0 || deliverycredit > 5) {
+        $toast.show("请对物流服务评分")
+        return
+      }
+      if (servicecredit <= 0 || servicecredit > 5) {
+        $toast.show("请对服务态度评分")
+        return
+      }
+
     }
+
   },
   filters: {
     set_scores(value) {
