@@ -74,7 +74,7 @@
                                         <p class="current fr">￥{{goods.goods_price}}</p>
                                     </div>
                                     <div class="obi-second">
-                                        <p class="type fl">{{goods.goods_spec|goods_spec}}</p>
+                                        <p class="type fl">{{goods.goods_spec_text}}</p>
                                         <p class="old fr">×{{goods.goods_num}}</p>
                                     </div>
                                 </div>
