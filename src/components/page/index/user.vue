@@ -16,15 +16,15 @@
             </div>
             <div class="personal-wrapper-1">
                 <div class="p-wrapper-1-item" @click="go_orderlist(0)">
+                  <div class="p-grouping"><i class="iconfont icon-yichengtuan"></i></div>
+                  <p class="p-wrap-1-title">
+                    全部订单
+                  </p>
+                </div>
+                <div class="p-wrapper-1-item" @click="go_orderlist(1)">
                     <div class="p-unpaid"><i class="iconfont icon-daifukuan"></i></div>
                     <p class="p-wrap-1-title">
                         待付款
-                    </p>
-                </div>
-                <div class="p-wrapper-1-item" @click="go_orderlist(1)">
-                    <div class="p-grouping"><i class="iconfont icon-yichengtuan"></i></div>
-                    <p class="p-wrap-1-title">
-                        待成团
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(2)">
@@ -60,7 +60,7 @@
                     <div class="p-likes"><i class="ion-help-buoy color-calm"></i></div>
                     <p class="p-wrap-2-title">我的收藏</p>
                 </div>
-                <div class="p-wrapper-2-item">
+                <div class="p-wrapper-2-item" @click='this.$router.push({name:"order_refund_list"})'>
                     <div class="p-after-sales"><i class="ion-help-buoy color-balanced"></i></div>
                     <p class="p-wrap-2-title">退款/售后</p>
                 </div>

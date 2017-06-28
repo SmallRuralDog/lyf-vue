@@ -41,6 +41,7 @@ const store_home = resolve => require(['./components/page/store_home.vue'], reso
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
+const order_refund_list = resolve => require(['./components/page/order/order-refund-list.vue'], resolve)
 const login = resolve => require(['./components/page/login.vue'], resolve)
 const auth = resolve => require(['./components/page/auth.vue'], resolve)
 
@@ -120,6 +121,12 @@ const routes = [{
         name: 'order_refund',
         component: order_refund
       },
+      {
+        path: '/order-refund-list',
+        name: 'order_refund_list',
+        component: order_refund_list
+      },
+
       {
         path: '/store/:store_id',
         name: 'store_home',

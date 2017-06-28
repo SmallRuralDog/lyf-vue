@@ -103,7 +103,9 @@ export default {
   },
   beforeRouteEnter(to,from,next){
     next(vm=>{
-      vm.active=vm.$route.params.type
+      let id=vm.$route.params.type
+      vm.active=id
+      vm.$store.commit('ORDERLIST_UPDATE',{active:id})
       vm.loading=true
       vm.getData(() => {
         //vm.$refs.lyf_scroll.infiniteDone()
@@ -284,8 +286,9 @@ export default {
   watch:{
 
     active(val,oldVal){
-      this.loading=true
+
       if(!this.init){
+        this.loading=true
         this.getData(() => {
           //this.$refs.lyf_scroll.infiniteDone()
         })

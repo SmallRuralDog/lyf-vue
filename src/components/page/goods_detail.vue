@@ -36,8 +36,8 @@
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
                   <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
-                    <i class="iconfont icon-favorite" style="font-size: 22px;"></i>
-                    收藏
+                    <i class="iconfont icon-favorite" :class="{'color-theme':collected}" style="font-size: 22px;"></i>
+                    <template v-show="collected">已</template>收藏
                   </div>
               </div>
           </div>
@@ -225,7 +225,7 @@
                     <!--<i class="iconfont icon-favorite"></i>-->
                 <!--</div>-->
                 <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
-                    <i class="iconfont icon-gouwuchexiantiao"></i>
+                    <i class="iconfont icon-gouwuche1"></i>
                     <div v-show="cartNumber>0" class="cart-badge">{{cartNumber}}</div>
 
                 </div>
@@ -291,6 +291,7 @@ function dataInit() {
 //      slidesPerView: 3,
 //      spaceBetween: 20
     },
+    collected:false,//已收藏
     recom_items1: [
       {
         "price_ori": 5000,
@@ -535,10 +536,13 @@ export default {
           })
       },
     collect(id) {
+      $loading.show()
       this.$api.userAuthGet('favorites_add_goods?goods_id=' + id, res => {
-        $toast('收藏成功')
+        this.collected=true;
+        $loading.hide()
+        $toast.show('收藏成功',3000)
       }, err => {
-          //$toast(err)
+          $toast.show(err)
       })
     },
     goback(){

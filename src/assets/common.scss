@@ -11,6 +11,9 @@ img {
 img[lazy=loading] {opacity:0;}
 img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 
+.color-theme{
+  color:$color-theme;
+}
 .color-assertive{
   color:#EA5A49;
 }
@@ -152,6 +155,16 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
   -webkit-box-flex: 3;
   -ms-flex: 3;
   flex: 3;
+}
+.hm-flex-4 {
+  -webkit-box-flex: 4;
+  -ms-flex: 4;
+  flex: 4;
+}
+.hm-flex-5 {
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
 }
 .hm-margin-b, .hm-margin-b-m, .hm-margin-tb, .hm-margin-tb-m {
   margin-bottom: .27rem;
