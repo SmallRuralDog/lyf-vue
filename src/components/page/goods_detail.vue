@@ -62,6 +62,7 @@
                               "{{value}}"
                           </template>
                       </template>
+                    "数量:{{quantityx}}"
                       <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
                   </div>
               </li>
@@ -591,6 +592,7 @@ export default {
             showpicksheet:state=>state.actionsheet.showpicksheet,
             firstTimeOpenSheet:state=>state.actionsheet.firstTimeOpenSheet,
             cur_spec_namex:state=>state.actionsheet.cur_spec_namex,
+            quantityx:state=>state.actionsheet.quantityx,
         }),
 
         init_spec(){//默认属性id数组
@@ -671,6 +673,9 @@ export default {
       console.log('beforeRouteEnter id=', id)
       vm.goods_id = id;
       vm.getData();
+      //还原默认购买数量
+      vm.$store.commit('ACTIONSHEET_UPDATE', { key: 'quantityx', value: 1 })
+
 
     })
   },

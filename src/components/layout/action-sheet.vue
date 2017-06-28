@@ -128,6 +128,10 @@ export default {
     }
 
   },
+  deactivated() {
+    console.log('~~actionsheet.vue deactivated~~')
+    this.quantity=1;
+  },
   watch: {
     //同步showpicksheet=popupVisible
     showpicksheet(val, oldVal) {
@@ -140,6 +144,9 @@ export default {
     },
     popupVisible(val, oldVal) {
       this.$store.commit('ACTIONSHEET_UPDATE', { key: 'showpicksheet', value: val })
+    },
+    quantity(val, oldVal){
+      this.$store.commit('ACTIONSHEET_UPDATE', { key: 'quantityx', value: val })
     },
       cur_spec(val, oldVal){
 

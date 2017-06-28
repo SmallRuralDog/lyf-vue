@@ -3,6 +3,8 @@ const state = {
     firstTimeOpenSheet:false,
     cur_specx:[],
     cur_spec_namex:[],
+    quantityx:1,
+
 
 
 }
