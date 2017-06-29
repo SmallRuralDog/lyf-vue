@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="item-pay-btn">
                                       <a class="h" v-if="order_info.order_state==20" @click="go_refund(order_info.order_id,goods.goods_id)"> 退款 </a>
-                                      <a class="h" v-if="order_info.order_state==30"> 退货 </a>
+                                      <a class="h" v-if="order_info.order_state==30" @click="go_refund(order_info.order_id,goods.goods_id)"> 退货 </a>
                                     </div>
                                 </div>
                             </div>
