@@ -2,7 +2,8 @@
 <div class="page">
   <div class="topbar">
       <div ref="list_top_menu" class="top-menu">
-          <ul ref="list_top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
+          <ul ref="list_top_menu_list" class="top-menu-list">
+            <!--:style="'width:'+m_w+'px'"-->
               <li ref="list_top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index,item.gc_id)">{{item.gc_name}}</li>
           </ul>
       </div>
@@ -18,7 +19,8 @@
                                 <div class="hm-list-title-2 goods-name" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
                                 <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
                                     <div class="" style="color: #ee2e3a;font-weight: 700;">
-                                        <span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>
+                                        <!--<span>￥<b><big style="font-size:.48rem;">{{item.goods_price}}</big></b></span>-->
+                                      <span>￥<b><big style="font-size:.48rem;">{{item.goods_price|price_yuan}}</big></b>{{item.goods_price|price_jiao}}</span>
                                     </div>
                                     <div class="hm-color-gray" style="color:#9c9c9c;">
                                         <small>已售</small>{{item.goods_salenum}}<small>件</small>
@@ -194,6 +196,18 @@ export default {
         }
       });
     },
+  },
+  beforeRouteEnter(to, from, next){
+    console.log('catgoods beforeRouteEnter')
+    next(vm=>{
+      vm.gc_id = vm.$route.params.gc_id;
+      if (vm.gc_id > 0) {
+        vm.$store.commit('UPDATE_COMMON_DATA', {
+          cat_goods_list_class_id: vm.gc_id
+        })
+      }
+      vm.getData(()=>{})
+    })
   }
 }
 </script>
