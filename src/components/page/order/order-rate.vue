@@ -138,6 +138,13 @@ export default {
           console.log(this.data.order_goods);
           this.page_show = true
           $loading.hide()
+
+        }else{
+          $toast.show(res.data.message)
+
+          setTimeout(()=>{
+            $router.go(-2)
+          },1500);
         }
       }, error => {
 
@@ -175,6 +182,31 @@ export default {
         $toast.show("请对服务态度评分")
         return
       }
+      let goods = new Object()
+      this.data.order_goods.map(a => {
+        let item = new Object()
+        item.score = a.scores
+        item.comment = a.content
+        item.anony = a.nimin
+        goods[a.goods_id] = item
+      })
+
+      console.log(goods);
+      $loading.show()
+      this.$api.userAuthPost("order_rate", {
+        order_id: this.order_id,
+        goods: goods,
+        store_servicecredit: servicecredit,
+        store_deliverycredit: deliverycredit
+      }, res => {
+        if(res.data.status_code==1){
+          $toast.show(res.data.message)
+        }else{
+          $toast.show(res.data.message)
+        }
+      }, error => {
+        $toast.show(res.data.message)
+      })
 
     }
 
