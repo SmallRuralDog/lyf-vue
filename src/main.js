@@ -54,97 +54,116 @@ const routes = [{
     children: [{
         path: '/home',
         name: 'home',
+        meta:{title: '首页'},
         component: Home
       },
       {
         path: 'new_arrivals',
         name: 'new_arrivals',
+        meta:{title: '新品上市'},
         component: new_arrivals
       },
       {
         path: 'class_all',
         name: "class_all",
+        meta:{title: '全部分类'},
         component: ClassAll
       },
       {
         path: 'cart',
         name: 'cart',
+        meta:{title: '购物车'},
         component: Cart
       },
       {
         path: 'user',
         name: 'user',
+        meta:{title: '个人中心'},
         component: User
       },
       {
         path: '/goods/:id',
         name: 'goods_detail',
+        meta:{title: '商品详情'},
         component: goods_detail
       },
       {
         path: '/catgoods/:gc_id',
         name: 'catgoods',
+        meta:{title: '分类'},
         component: catgoods
       },
       {
         path: '/address',
         name: 'address',
+        meta:{title: '收货地址'},
         component: address
       },
       {
         path: '/order_buynow/:cart_id-:ifcart', //（购物车，快速购买）下单第一步  参数格式  :cart_id（产品ID|购买数量）  :ifcart  (true or false) 是否从购物车
         name: 'order_buynow',
+        meta:{title: '下单'},
         component: order_buynow
       },
       {
         path: '/order-list/:type',
         name: 'order_list',
+        meta:{title: '订单列表'},
         component: order_list
       },
       {
         path: '/order-detail/:order_id',
         name: 'order_detail',
+        meta:{title: '订单详情'},
         component: order_detail
       },
       {
         path: '/order-logistics/:order_id',
         name: 'order_logistics',
+        meta:{title: '物流详情'},
         component: order_logistics
       },
       {
         path: '/order-rate/:order_id',
         name: 'order_rate',
+        meta:{title: '订单评价'},
         component: order_rate
       },
       {
         path: '/order-refund/:order_id/:goods_id',
         name: 'order_refund',
+        meta:{title: '退款'},
         component: order_refund
       },
       {
         path: '/order-refund-list',
         name: 'order_refund_list',
+        meta:{title: '退款列表'},
         component: order_refund_list
       },
 
       {
         path: '/store/:store_id',
         name: 'store_home',
+        meta:{title: '商家首页'},
         component: store_home
       },
       {
         path: '/login',
         name: 'login',
+        meta:{title: '登录'},
         component: login
       },
       {
         path: '/auth/:token',
         name: 'auth',
+        meta:{title: '授权'},
         component: auth
       },
       {
         path: '/favorite',
         name: 'favorite',
+        meta:{title: '收藏夹'},
         component: favorite
       },
     ]
@@ -183,6 +202,14 @@ const afterEach = (toRoute, fromRoute) => {
       Vonic.app.pageContentScrollTop(h.scrollTop)
     })
   }
+  //修改页面标题为路由标题
+  let title=toRoute.meta.title
+  if(title){
+    document.title='老友粉 - '+title
+  } else{
+    document.title='老友粉'
+  }
+  //console.log('toRoute.title=',toRoute.meta.title)
 }
 Vonic.app.setConfig('beforeEach', beforeEach)
 Vonic.app.setConfig('afterEach', afterEach)

@@ -2,14 +2,14 @@
 <div class="page">
   <div class="topbar">
       <div ref="list_top_menu" class="top-menu">
-          <ul ref="list_top_menu_list" class="top-menu-list">
+          <ul ref="list_top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
             <!--:style="'width:'+m_w+'px'"-->
               <li ref="list_top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index,item.gc_id)">{{item.gc_name}}</li>
           </ul>
       </div>
       </div>
       <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" v-show="page_show">
-        <div class="goods-list clear">
+        <div class="goods-list clear" v-for="(items,indexs) in goods_class" v-if="active == indexs">
           <div class="hm-list hm-flex" style="flex-wrap:wrap">
             <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods">
               <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
@@ -59,7 +59,8 @@ export default {
       is_load: false,
       load_more: true,
       more_data: '-- 没有更多了 --',
-      page_show:false
+      page_show:false,
+      list_top_menu:null,
     }
   },
   computed: {
@@ -73,7 +74,7 @@ export default {
     cat_goods_list_class_id: function(val, oldVal) {
       if (val != oldVal) {
         this.page = 1
-        this.m_w = 0
+//        this.m_w = 0
         this.load_more = true
         this.page_show = false
         this.$refs.lyf_scroll.setscrollTop(0)
@@ -198,8 +199,15 @@ export default {
     },
   },
   beforeRouteEnter(to, from, next){
-    console.log('catgoods beforeRouteEnter')
+    console.log('catgoods beforeRouteEnter from=',from.name)
     next(vm=>{
+      //从首页进入则要刷新分类
+      if(from.name=='home'){
+        console.log('cat_goods_list_class_init_menu: false')
+        vm.$store.commit('UPDATE_COMMON_DATA', {
+          cat_goods_list_class_init_menu: false
+        })
+      }
       vm.gc_id = vm.$route.params.gc_id;
       if (vm.gc_id > 0) {
         vm.$store.commit('UPDATE_COMMON_DATA', {
@@ -207,6 +215,10 @@ export default {
         })
       }
       vm.getData(()=>{})
+      //清零active
+      vm.$store.commit('UPDATE_COMMON_DATA', {
+        cat_goods_list_class_active: 0
+      })
     })
   }
 }

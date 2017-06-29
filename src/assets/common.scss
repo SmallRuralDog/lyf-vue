@@ -123,11 +123,11 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
   height: 100%;
   font-size: 14px;
   text-align: center;
-  line-height: 1.07rem;
+  line-height: 1.07rem;//display: inline-block;
 }
-.top-menu-item:first {
-  padding-left: 0.53rem;
-}
+//.top-menu-item:first {
+//  padding-left: 0.53rem;
+//}
 
 .top-menu-list .active {
   color: $color-theme;

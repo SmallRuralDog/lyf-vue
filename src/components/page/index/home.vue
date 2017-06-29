@@ -24,10 +24,8 @@
                     <ul class="category hm-flex" style="flex-wrap:wrap;">
                         <li style="width: 25%;" v-for="item in subclass">
                             <div @click="go_cat(item.gc_id)">
-                                <!-- <a v-link="{name:'categorylist',params:{id:item.cat_id,name:item.cat_name}}"> -->
                                 <img :src="item.logo">
                                 <span>{{item.gc_name}}</span>
-                                <!-- </a> -->
                             </div>
                         </li>
                         <li style="width: 25%;">
@@ -56,14 +54,14 @@
                     </div>
                 </div>
 
-                <div class="goods-list clear" v-for="(item,index) in goods_class" v-if="active == index">
+                <div class="goods-list clear" v-for="(items,indexs) in goods_class" v-if="active == indexs"> <!--加上可避免切换时图片晃-->
                   <div class="hm-list hm-flex"  v-if="goods.length>0" style="flex-wrap:wrap">
                     <div  style="width: 49.4%;margin:0.3%;background: #fff;" v-for="(item,index) in goods[active].goods">
                       <div class="hm-list-item" style="padding:0" @click="goodsClick(item.goods_id)">
                             <div class="hm-list-inner" style="padding:0">
                                     <img v-lazy="item.goods_image" style="width: 100%;">
                                     <div  style="padding:.13rem .08rem .13rem .08rem;">
-                                        <div class="hm-list-title-2 goods-name aui-ellipsis-2" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
+                                        <div class="goods-name aui-ellipsis-2" style=" height:1.17rem; line-height:.59rem; font-size:.37rem; color:#333;">{{item.goods_name}}</div>
                                         <div class="hm-list-price hm-flex" style=" margin-top:.07rem;justify-content: space-between;">
                                             <div class="" style="color: #ee2e3a;font-weight: 700;">
                                                 <span>￥<b><big style="font-size:.48rem;">{{item.goods_price|price_yuan}}</big></b>{{item.goods_price|price_jiao}}</span>
@@ -82,7 +80,7 @@
                 <div v-if="!load_more" slot="infinite" @click="goLoad" class="text-center">{{more_data}}</div>
             </scroll>
             <div @click="goTop()" :class="{'top-button-show':page>1}" class="go-top"><span>顶部</span></div>
-            <!--<lyf-tab-bar :index="0"></lyf-tab-bar>-->
+
             <footnav :active="0"></footnav>
         </div>
     </div>
@@ -119,7 +117,8 @@ export default {
       swiperOption: {
         autoplay: 5000,
         pagination: '.swiper-pagination'
-      }
+      },
+      top_menu_scroll:null
     }
   },
   computed: mapState({
@@ -183,7 +182,7 @@ export default {
       })
     },
     changeMenu(index) {
-      //设置当前滚动距离
+      //设置当前y轴滚动距离
       let o_scrol = this.$refs.lyf_scroll.$el.scrollTop;
       let o_active = this.active;
 //      console.log('o_active=',o_active,'o_scrol=',o_scrol)

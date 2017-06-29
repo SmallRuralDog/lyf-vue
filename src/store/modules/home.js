@@ -1,7 +1,6 @@
 import http from '../../api/http.js'
 
 let list = []
-let list_scroll = []//列表滚动距离
 let catLen=12
 for (var i=0;i<catLen;i++){
     list.push({
@@ -14,26 +13,16 @@ for (var i=0;i<catLen;i++){
         load_more: true,
         more_data: '--- 到底了 ---',
     })
-    //list_scroll.push({
-    //  scroll:0,
-    //})
 }
 
 const state = {
     swiper_data: [],
     goods_class: [],
-    //grid_nav: [],
-    //goods: [],
-    //page: 1,
-    //is_load: false,
-    //load_more: true,
-    //more_data: '--- 到底了 ---',
     list,
-    //list_scroll,
     active:0,
     init_load:false
 }
-// actions
+
 const actions = {
     getData(context, cb) {
         context.commit("UPDATE_LIST", {
@@ -100,7 +89,6 @@ const mutations = {
     },
     ['UPDATE_HOME_LIST_SCROLL'](state, payload){
       state.list[payload.active].scroll = payload.scrol
-      //state.list_scroll
     }
 }
 export default {
