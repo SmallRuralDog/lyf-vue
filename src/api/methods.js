@@ -119,5 +119,21 @@ export default {
         return true;
     }
     return false;
+  },
+  unique_arr(data) {
+    data = data || [];
+    var a = {};
+    let len = data.length;
+    for (var i = 0; i < len; i++) {
+      var v = data[i];
+      if (typeof(a[v]) == 'undefined') {
+        a[v] = 1;
+      }
+    };
+    data.length = 0;
+    for (var i in a) {
+      data[data.length] = i;
+    }
+    return data;
   }
 }

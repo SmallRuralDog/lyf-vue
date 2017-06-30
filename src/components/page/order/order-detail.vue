@@ -87,7 +87,7 @@
                                     <dd>￥{{order_info.shipping_fee}}</dd>
                                 </dl>
                                 <dl> <dt>实付款（含运费）</dt>
-                                    <dd class="h">￥{{order_info.real_pay_amount}}</dd>
+                                    <dd class="h">￥{{order_info.order_amount}}</dd>
                                 </dl>
                             </div>
                         </div>
