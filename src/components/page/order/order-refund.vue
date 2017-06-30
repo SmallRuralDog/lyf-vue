@@ -31,7 +31,8 @@
 
       </div>
 
-      <ul v-if="!refund_applied" class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
+      <template v-if="!refund_applied">
+      <ul class="aui-list hm-margin-b"  style="margin-bottom:10px;">
         <li class="aui-list-item aui-list-item-middle" @click='choose_reason()'>
           <div class="aui-list-item-inner ">
             选择<template v-if="type=='tuikuan'">退款</template><template v-else>退货</template>原因：{{reason}}
@@ -39,6 +40,22 @@
           </div>
         </li>
       </ul>
+
+      <ul class="aui-list aui-form-list" style="margin-bottom:10px;">
+        <li class="aui-list-item">
+          <div class="aui-list-item-inner">
+            <div class="aui-list-item-label">
+              退款金额(元)：
+            </div>
+            <div class="aui-list-item-input">
+              <input type="tel" placeholder="" v-model="refund_amout">
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      </template>
+
       <ul v-else class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
         <li class="aui-list-item aui-list-item-middle">
           <div class="aui-list-item-inner ">
@@ -75,6 +92,7 @@ export default {
       order_id: 0,
       goods_id: 0,
       type:'tuikuan',
+      refund_amout:'',
 
       order: {
         "order_id": null,

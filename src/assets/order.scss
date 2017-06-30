@@ -1,3 +1,4 @@
+@import "config.scss";
 html {
     background: #eee
 }
@@ -58,7 +59,7 @@ del {
     display: none!important
 }
 .h {
-    color: #ea5a49
+    color: $color-theme
 }
 .gray {
     color: #999
@@ -414,7 +415,7 @@ padding-right: .267rem;
 }
 .order-manage .order-serviceinfo li {
     display: inline-block;
-    background: #ea5a49;
+    background: $color-theme;
     color: #fff;
     padding: .04rem .133rem;
     margin: .133rem .133rem 0 0
@@ -436,8 +437,8 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .order-phase li.current {
-    color: #ea5a49;
-    border-color: #ea5a49
+    color: $color-theme;
+    border-color: $color-theme
 }
 .order-manage .order-price-freight {
     padding: .133rem 0;
@@ -571,9 +572,9 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .nav-tab-top ul .cur {
-    border-bottom: .04rem solid #ea5a49;
+    border-bottom: .04rem solid $color-theme;
     box-sizing: border-box;
-    color: #ea5a49
+    color: $color-theme
 }
 .order-manage .o-t-title-shop {
     height: 1.067rem;
@@ -813,7 +814,7 @@ padding-right: .267rem;
     color: #999
 }
 .order-manage .o-t-item .item-info .state {
-    color: #ea5a49
+    color: $color-theme
 }
 .order-manage .o-t-item .item-img {
     width: 1.6rem;
@@ -881,8 +882,8 @@ padding-right: .267rem;
 .order-manage .o-t-item .item-pay .item-pay-btn a {
     padding: 0 .133rem;
     display: inline-block;
-    border-color: #ea5a49;
-    color: #ea5a49;
+    border-color: $color-theme;
+    color: $color-theme;
     overflow: hidden
 }
 .order-manage .o-t-item .item-pay .price {
@@ -921,8 +922,8 @@ padding-right: .267rem;
 .order-manage .o-item-pay-btn a {
     padding: 0 .133rem;
     display: inline-block;
-    border-color: #ea5a49;
-    color: #ea5a49
+    border-color: $color-theme;
+    color: $color-theme
 }
 .order-manage .o-total-price {
     min-height: .9rem;
@@ -1022,7 +1023,7 @@ padding-right: .267rem;
     border: 0
 }
 .order-manage .o-tab-btn .h {
-    border-color: #ea5a49
+    border-color: $color-theme
 }
 .order-manage .o-t-contmsg {
     padding: .32rem;
@@ -1439,7 +1440,7 @@ padding-right: .267rem;
     font-size: 36px
 }
 .order-manage .o-pop-btm .subinfo {
-    color: #ea5a49;
+    color: $color-theme;
     text-align: center;
     padding: .133rem 0
 }
@@ -1472,7 +1473,7 @@ padding-right: .267rem;
 }
 .order-manage .o-pop-btm .btn p.confirmPay,
 .order-manage .o-pop-btm .btn p.pay {
-    background: #ea5a49;
+    background: $color-theme;
     color: #fff
 }
 .order-manage .o-pop-btm .btn p.cancel {

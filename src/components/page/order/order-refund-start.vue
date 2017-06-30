@@ -32,18 +32,40 @@
 
       </div>
 
-      <ul  class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
+      <ul  class="aui-list aui-media-list"  style="margin-bottom:.8rem;">
         <li class="aui-list-item aui-list-item-middle" @click="go_refund(order_id,goods_id,'tuikuan')">
-          <div class="aui-list-item-inner ">
-            退款
-            <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+          <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-media" style="width: 36px;">
+              <i class="iconfont icon-ccgl-tuihuoyugao-7 color-theme" style="font-size: 24px;"></i>
+            </div>
+            <div class="aui-list-item-inner  aui-list-item-arrow">
+              <div class="aui-list-item-text">
+                <div class="aui-list-item-title">
+                  仅退款
+                </div>
+              </div>
+              <div class="aui-list-item-text">
+                未收到货(包含未签收)，或卖家协商同意前提下
+              </div>
+            </div>
           </div>
         </li>
 
         <li class="aui-list-item aui-list-item-middle" @click="go_refund(order_id,goods_id,'tuihuo')">
-          <div class="aui-list-item-inner ">
-            退货
-            <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
+          <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-media" style="width: 36px;">
+              <i class="iconfont icon-tuihuo color-theme" style="font-size: 24px;"></i>
+            </div>
+            <div class="aui-list-item-inner  aui-list-item-arrow">
+            <div class="aui-list-item-text">
+              <div class="aui-list-item-title">
+              退货退款
+              </div>
+            </div>
+            <div class="aui-list-item-text">
+              已收到货，需要退换已收到的货物
+            </div>
+            </div>
           </div>
         </li>
       </ul>

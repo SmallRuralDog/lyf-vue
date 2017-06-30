@@ -323,6 +323,7 @@ export default {
 }
 </script>
 <style lang="scss">
+  @import "../../../assets/config.scss";
   .top-fixed {
     position: fixed;
     top: 0;
@@ -349,8 +350,9 @@ export default {
   }
 
   .order-manage .nav-tab-top ul .cur {
-    border-bottom: 0.02rem solid #ea5a49;
+    border-bottom: 0.01rem solid $color-theme;
     box-sizing: border-box;
-    color: #ea5a49;
+    color: $color-theme;
+    font-weight:bold;
   }
 </style>

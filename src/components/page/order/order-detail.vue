@@ -74,7 +74,7 @@
                                         <p class="nums">x{{goods.goods_num}}</p>
                                     </div>
                                     <div class="item-pay-btn">
-                                      <a class="h" v-if="order_info.order_state==20" @click="go_refund_start(order_info.order_id,goods.goods_id,'tuikuan')"> 退款 </a>
+                                      <!--<a class="h" v-if="order_info.order_state==20" @click="go_refund_start(order_info.order_id,goods.goods_id,'tuikuan')"> 退款 </a>-->
                                       <a class="h" v-if="order_info.order_state==30" @click="go_refund_start(order_info.order_id,goods.goods_id,'tuihuo')"> 退货 </a>
                                     </div>
                                 </div>
@@ -122,6 +122,7 @@
                                   <li class="h" v-if="order_info.order_state==40" @click="$router.push({name:'order_rate',params:{order_id:order_info.order_id}})"> 评价订单 </li>
                                   <li class="" v-if="order_info.order_state==30 || order_info.order_state==40" @click="$router.push({name:'order_logistics',params:{order_id:order_info.order_id}})"> 查看物流 </li>
                                   <!--li class="h" v-if="order.order_state==10"> 立即付款 </li-->
+                                  <li class="" v-if="order_info.order_state==20" @click="confirm_cancel(order_info.order_id)"> 取消订单全部退款 </li>
                                   <li class="" v-if="order_info.order_state==10" @click="order_cancel(order_info.order_id)"> 取消订单 </li>
                                   <li class="" v-if="order_info.order_state==0"> 删除订单 </li>
 
@@ -189,7 +190,61 @@ export default {
 //          type:type
 //        }
       });
-    }
+    },
+    confirm_cancel(order_id){
+      /* Confirm 确认框 */
+      $dialog.confirm({
+        // 设置为ios样式
+//        theme: 'ios',
+        // 标题
+//        title: '提示',
+        title:'<br>确定要取消订单全部退款吗？<br><br>',
+        // 取消按钮文本，颠倒了一下，强调取消
+        cancelText: '确定',
+        // 确定按钮文本
+        okText: '取消'
+      }).then((res) => {
+        console.log('confirm result: ', res)
+        if(res==false){
+          //取消订单
+          this.cancel(order_id)
+
+        }
+      })
+    },
+    cancel(order_id){
+      $loading.show('')
+      this.$api.userAuthPost("add_refund_all",{
+        order_id:order_id,
+        buyer_message:''
+      }, res => {
+        $loading.hide()
+        if (res.data.status_code == 1) {
+//          $toast.show('取消订单全部退款申请成功',2000)
+          /* Alert 警告框 */
+          $dialog.alert({
+            // 效果
+              theme: 'ios',
+            // 标题
+            title: '取消订单全部退款申请成功!',
+            // 内容
+//            content: '这是一个警告框',
+            // 按钮文本
+            okText: '确定',
+            // 按钮主题
+            okTheme: 'assertive'
+          }).then(()=>{
+            this.$router.go(-1)
+          })
+
+
+        }
+
+      }, error => {
+          $loading.hide()
+      })
+    },
+
   }
 }
 </script>

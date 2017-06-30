@@ -1,5 +1,4 @@
-// 主题色
-$color-theme:#F23030; //#e02e24;
+@import "config.scss";
 
 img {
     max-width: 100%;
@@ -483,8 +482,9 @@ button, .aui-btn {
 
 
 .aui-list .aui-list-item-text {
-  font-size: 14px;
-  color: #757575;
+  font-size: 12px;
+  line-height:1.8;
+  color: #999;
   position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -595,14 +595,14 @@ button, .aui-btn {
 }
 .aui-list-item-arrow:before {
   content: '';
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 8px;
+  height: 8px;
   position: absolute;
   top: 50%;
-  right: 0.75rem;
-  margin-top: -0.2rem;
+  right: 15px;
+  margin-top: -4px;
   background: transparent;
-  border: 1px solid #eeeeee;
+  border: 1px solid #ddd;
   border-top: none;
   border-right: none;
   z-index: 2;
@@ -612,7 +612,7 @@ button, .aui-btn {
   transform: rotate(-135deg);
 }
 .aui-list-item.aui-list-item-arrow {
-  padding-right: 0.75rem;
+  padding-right: 15px;
 }
 .aui-list label {
   line-height: 1.3rem;
