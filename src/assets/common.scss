@@ -449,7 +449,7 @@ button, .aui-btn {
   color: #212121;
   border-bottom: 1px solid #eeeeee;
   position: relative;
-  min-height: 44px;
+  min-height: 48px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: -webkit-box;
@@ -630,10 +630,10 @@ button, .aui-btn {
 .aui-list .aui-list-item-label-icon {
   color: #212121;
   width: 35%;
-  min-width: 30px;
+  min-width: 25px;
   margin: 0;
   padding: 0;
-  padding-right: 5px;
+  padding-right: 0px;
   line-height: 44px;
   position: relative;
   overflow: hidden;

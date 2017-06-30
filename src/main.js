@@ -40,6 +40,7 @@ const order_rate = resolve => require(['./components/page/order/order-rate.vue']
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 
+const order_refund_start = resolve => require(['./components/page/order/order-refund-start.vue'], resolve)
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
 const order_refund_list = resolve => require(['./components/page/order/order-refund-list.vue'], resolve)
 const login = resolve => require(['./components/page/login.vue'], resolve)
@@ -130,9 +131,15 @@ const routes = [{
         component: order_rate
       },
       {
+        path: '/order-refund-start/:order_id/:goods_id',
+        name: 'order_refund_start',
+        meta:{title: '选择退款/退货'},
+        component: order_refund_start
+      },
+      {
         path: '/order-refund/:order_id/:goods_id',
         name: 'order_refund',
-        meta:{title: '退款'},
+        meta:{title: '申请退款/退货'},
         component: order_refund
       },
       {

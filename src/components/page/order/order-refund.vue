@@ -12,13 +12,13 @@
 <template lang="html">
 
 <div class="page">
-    <div class="page-content">
+    <div class="page-content" v-show="init">
 
       <div class="refund-tip" v-show="refund_applied"><i class="iconfont icon-xuanze"></i>&nbsp;退款申请已提交</div>
 
       <div class="hm-flex" style="background: #fff;padding: 10px;">
-        <div class="hm-flex-2"><img :src="goods.goods_image"></div>
-        <div class="hm-flex-5 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
+        <div class="hm-flex-1"><img :src="goods.goods_image"></div>
+        <div class="hm-flex-4 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
           <div>{{goods.goods_name}}</div>
           <div>卖家：{{order.store_name}}</div>
           <div style="color: #ee2e3a;font-weight: 700;">
@@ -27,14 +27,14 @@
         </div>
       </div>
       <div class="aui-border-t  hm-margin-b" style="background-color: #fff;text-align: right;padding: 10px;">
-        退款 共{{goods.goods_num}}件商品 合计：￥<big>{{goods.goods_pay_price}}</big>
+        <span v-if="type=='tuikuan'">退款</span><span v-else>退货</span> 共{{goods.goods_num}}件商品 合计：￥<big>{{goods.goods_pay_price}}</big>
 
       </div>
 
       <ul v-if="!refund_applied" class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
         <li class="aui-list-item aui-list-item-middle" @click='choose_reason()'>
           <div class="aui-list-item-inner ">
-            选择退款原因：{{reason}}
+            选择<template v-if="type=='tuikuan'">退款</template><template v-else>退货</template>原因：{{reason}}
             <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </div>
         </li>
@@ -42,7 +42,7 @@
       <ul v-else class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
         <li class="aui-list-item aui-list-item-middle">
           <div class="aui-list-item-inner ">
-            退款原因：{{reason}}
+            <template v-if="type=='tuikuan'">退款</template><template v-else>退货</template>原因：{{reason}}
             <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </div>
         </li>
@@ -52,7 +52,7 @@
 
 
       <div style="padding: 10px;" v-show="!refund_applied">
-        <div class="aui-btn aui-btn-danger aui-btn-block aui-btn-sm" @click="refund">申请退款</div>
+        <div class="aui-btn aui-btn-danger aui-btn-block aui-btn-sm" @click="refund">申请<span v-if="type=='tuikuan'">退款</span><span v-else>退货</span></div>
       </div>
 
 
@@ -71,28 +71,30 @@ export default {
   name: "order_refund",
   data() {
     return {
+      init:false,
       order_id: 0,
       goods_id: 0,
+      type:'tuikuan',
 
       order: {
-        "order_id": 107,
+        "order_id": null,
         "order_type": null,
-        "order_amount": "0.02",
-        "order_sn": "9000000000010901",
-        "store_name": "老友粉",
-        "store_id": 1
+        "order_amount": "",
+        "order_sn": "",
+        "store_name": "",
+        "store_id": null
       },
       goods: {
-        "store_id": 1,
-        "order_goods_id": 128,
-        "goods_id": 1119,
-        "goods_name": "测试产品 黑色 S",
+        "store_id": null,
+        "order_goods_id": null,
+        "goods_id": null,
+        "goods_name": "",
         "goods_type": "",
-        "goods_image": "http://lyfimg.gxlyf.cn/goods_image/mJyCpvciU4Kjag7arRUtUCJPXYiUD72NWpXwSZ1p.jpeg!240x240",
-        "goods_price": "0.01",
-        "goods_spec": "N;",
-        "goods_num": 1,
-        "goods_pay_price": "0.01"
+        "goods_image": "",
+        "goods_price": "",
+        "goods_spec": "",
+        "goods_num": null,
+        "goods_pay_price": ""
       },
 //      reason_list: [
 //        {
@@ -107,31 +109,31 @@ export default {
       buyer_message:'000',
       refund_applied:false,
 
-
-
     }
   },
   mounted() {
-    this.order_id = this.$route.params.order_id
-    this.goods_id = this.$route.params.goods_id
-
-    this.getData()
+//    this.order_id = this.$route.params.order_id
+//    this.goods_id = this.$route.params.goods_id
+//    this.type=this.$route.query.type
+//    this.getData()
   },
   methods: {
     getData() {
       this.$api.userAuthGet("refund_form?order_id=" + this.order_id + "&order_goods_id=" + this.goods_id, res => {
           this.order=res.data.data.order;
           this.goods=res.data.data.goods;
+          this.init=true;
 
       }, error => {
 
       })
     },
     choose_reason(){
+      let title=this.type=='tuikuan'?'点击退款原因':'点击退货原因'
       $actionSheet.show({
           // 支持三种主题样式 ios/android/weixin
           theme: 'weixin',
-          title: '点击退款原因',
+          title: title,
           buttons: {
             // 操作列表选项文字及回调函数
             '效果不好不喜欢': () => {
@@ -199,6 +201,14 @@ export default {
       })
     }
 
+  },
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      vm.order_id = vm.$route.params.order_id
+      vm.goods_id = vm.$route.params.goods_id
+      vm.type=vm.$route.query.type
+      vm.getData()
+    })
   }
 }
 </script>

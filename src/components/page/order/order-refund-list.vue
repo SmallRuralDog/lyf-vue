@@ -15,13 +15,13 @@
 
       </div>
       <div class="hm-flex" style="background: #fff;padding: 10px;" v-for="itemg in item.goods_list">
-        <div class="hm-flex-2"><img :src="itemg.goods_img"></div>
-        <div class="hm-flex-5 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
+        <div class="hm-flex-1"><img :src="itemg.goods_img"></div>
+        <div class="hm-flex-4 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
           <div>{{itemg.goods_name}}</div>
           <div>卖家：{{item.store_name}}</div>
-          <!--<div style="color: #ee2e3a;font-weight: 700;">-->
-            <!--<span>￥<b><big style="font-size:.48rem;">{{goods.goods_pay_price|price_yuan}}</big></b>{{goods.goods_pay_price|price_jiao}}</span>-->
-          <!--</div>-->
+          <div style="color: #ee2e3a;font-weight: 700;">
+            <span>￥<b><big style="font-size:.48rem;">xx</big></b>.00</span>
+          </div>
         </div>
       </div>
       <div class="aui-border-t  hm-margin-b" style="background-color: #fff;text-align: right;padding: 10px;">

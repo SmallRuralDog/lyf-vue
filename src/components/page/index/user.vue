@@ -8,12 +8,23 @@
                     <p class="p-platform"></p>
                 </div>
             </div>
-            <div class="personal-orders">
-                <div class="p-orders">
-                    <span class="p-all-orders">我的订单</span>
-                    <span class="p-all-orders-span" @click="go_orderlist(0)">查看更多订单 <i class="ion-ios-arrow-right"></i></span>
-                </div>
-            </div>
+
+          <ul class="aui-list aui-list-in">
+            <li class="aui-list-item " style="min-height: 44px;">
+              <div class="aui-list-item-inner">
+                <div class="aui-list-item-title">我的订单</div>
+                <div class="aui-list-item-right" @click="go_orderlist(0)" style="color: #aaa;display: flex;align-items: center;">查看更多 <i class="ion-ios-arrow-right" style="color: #DDD;margin-left: 5px;"></i></div>
+                <!--<i class="ion-ios-arrow-right" style="color: #DDD;"></i>-->
+              </div>
+            </li>
+          </ul>
+
+            <!--<div class="personal-orders">-->
+                <!--<div class="p-orders">-->
+                    <!--<span class="p-all-orders">我的订单</span>-->
+                    <!--<span class="p-all-orders-span" @click="go_orderlist(0)">查看更多 <i class="ion-ios-arrow-right"></i></span>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="personal-wrapper-1">
                 <div class="p-wrapper-1-item" @click="go_orderlist(0)">
                   <div class="p-grouping"><i class="iconfont icon-yichengtuan"></i></div>
@@ -47,21 +58,21 @@
                 </div>
             </div>
 
-            <div class="personal-wrapper-2">
+            <div class="personal-wrapper-2 hm-margin-b">
                 <div class="p-wrapper-2-item">
-                    <div class="p-messages"><i class="ion-help-buoy color-assertive"></i></div>
+                    <div class="p-messages"><i class="iconfont icon-xiaoxi1 color-assertive"></i></div>
                     <p class="p-wrap-2-title">我的消息</p>
                 </div>
                 <div class="p-wrapper-2-item">
-                    <div class="p-coupons"><i class="ion-help-buoy color-positive"></i></div>
+                    <div class="p-coupons"><i class="iconfont icon-coupon color-positive"></i></div>
                     <p class="p-wrap-2-title">我的优惠券</p>
                 </div>
                 <div class="p-wrapper-2-item" @click='this.$router.push({name:"favorite"})'>
-                    <div class="p-likes"><i class="ion-help-buoy color-calm"></i></div>
+                    <div class="p-likes"><i class="iconfont icon-ai-mark color-calm"></i></div>
                     <p class="p-wrap-2-title">我的收藏</p>
                 </div>
                 <div class="p-wrapper-2-item" @click='this.$router.push({name:"order_refund_list"})'>
-                    <div class="p-after-sales"><i class="ion-help-buoy color-balanced"></i></div>
+                    <div class="p-after-sales"><i class="iconfont icon-tuikuan1 color-balanced"></i></div>
                     <p class="p-wrap-2-title">退款/售后</p>
                 </div>
             </div>
@@ -80,9 +91,9 @@
 
             <!--</div>-->
 
-          <div class="item item-divider">
-          必备工具
-          </div>
+          <!--<div class="item item-divider">-->
+          <!--必备工具-->
+          <!--</div>-->
 
           <ul class="aui-list hm-margin-b"  style="margin-bottom:.8rem;"><!--@click="add"-->
             <li class="aui-list-item aui-list-item-middle" @click='this.$router.push({name:"address"})'>

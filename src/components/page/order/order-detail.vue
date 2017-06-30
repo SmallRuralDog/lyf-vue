@@ -74,8 +74,8 @@
                                         <p class="nums">x{{goods.goods_num}}</p>
                                     </div>
                                     <div class="item-pay-btn">
-                                      <a class="h" v-if="order_info.order_state==20" @click="go_refund(order_info.order_id,goods.goods_id)"> 退款 </a>
-                                      <a class="h" v-if="order_info.order_state==30" @click="go_refund(order_info.order_id,goods.goods_id)"> 退货 </a>
+                                      <a class="h" v-if="order_info.order_state==20" @click="go_refund_start(order_info.order_id,goods.goods_id,'tuikuan')"> 退款 </a>
+                                      <a class="h" v-if="order_info.order_state==30" @click="go_refund_start(order_info.order_id,goods.goods_id,'tuihuo')"> 退货 </a>
                                     </div>
                                 </div>
                             </div>
@@ -166,13 +166,28 @@ export default {
         $loading.hide()
       })
     },
-    go_refund(order_id, goods_id) {
+    go_refund(order_id, goods_id,type) {
       $router.push({
         name: "order_refund",
         params: {
           order_id: order_id,
           goods_id: goods_id
+        },
+        query:{
+          type:type
         }
+      });
+    },
+    go_refund_start(order_id, goods_id,type){
+      $router.push({
+        name: "order_refund_start",
+        params: {
+          order_id: order_id,
+          goods_id: goods_id
+        },
+//        query:{
+//          type:type
+//        }
       });
     }
   }

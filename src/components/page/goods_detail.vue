@@ -35,7 +35,7 @@
                   <h3 class="hm-flex-1">
                     <span>{{data.goods_info.goods_name}}</span>
                   </h3>
-                  <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 40px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 10px;">
+                  <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 45px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 5px;">
                     <i class="iconfont icon-favorite" :class="{'color-theme':collected}" style="font-size: 22px;"></i>
                     <template v-show="collected">已</template>收藏
                   </div>
@@ -753,7 +753,7 @@ $color-theme: #F23030;//#e02e24;
     color: #666;
 }
 .submit-order .hm-flex-1 .iconfont {
-    font-size: 22px;
+    font-size: 24px;
 }
 .cart-badge{
     background: lighten($color-theme,10%);

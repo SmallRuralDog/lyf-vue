@@ -349,7 +349,7 @@ export default {
   }
 
   .order-manage .nav-tab-top ul .cur {
-    border-bottom: 0.08rem solid #ea5a49;
+    border-bottom: 0.02rem solid #ea5a49;
     box-sizing: border-box;
     color: #ea5a49;
   }
