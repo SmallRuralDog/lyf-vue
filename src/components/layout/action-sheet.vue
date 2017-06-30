@@ -5,7 +5,7 @@
     <div class="container_sku">
       <div class="head">
         <template v-show="this.data.goods_info.color_id">
-            <img :src="data.spec_image[goodsid_choose]" @click="sku_show_pic(goodsid_choose)"><!--init_color_id  -->
+            <img :src="goods_sku_img" @click="sku_show_pic(goodsid_choose)"><!--init_color_id  -->
         </template>
         <div class="infos">
           <p class="price">¥<strong id="J_sku-price">{{data.goods_info.goods_price}}</strong><span id="J_sku-stock"></span>
@@ -106,7 +106,7 @@ export default {
       if (cur_spec2) {
         var cur_spec_sort = cur_spec2.sort((a, b) => {
           return a - b
-        });
+        })
         var str = ''
         for (var i in cur_spec_sort) {
           str += cur_spec_sort[i] + '|';
@@ -114,6 +114,9 @@ export default {
         str = str.substring(0, str.length - 1)
         return str;
       }
+    },
+    goods_sku_img(){
+      return this.data.spec_image[this.goodsid_choose]
     },
     goodsid_choose() {
       let spec_list = this.data.spec_list;
@@ -175,7 +178,7 @@ export default {
     },
     goodsid_choose(val, oldVal) {
       if (val && oldVal && val != oldVal) {
-        console.log('goodsid_choose=', val, oldVal)
+        //console.log('goodsid_choose=', val, oldVal)
         this.$emit('refresh_goods_data', val)
 
       }
@@ -185,18 +188,16 @@ export default {
 
   methods: {
     sku_show_pic(goods_id) {
-      let current = this.data.spec_image[goods_id].replace("!310x310", "")
+      let spec_image  = this.data.spec_image
+      let current = spec_image[goods_id].replace("!310x310", "")
       let urls = []
       urls.push(current)
-
-      for (var key in this.data.spec_image) {
-        let img = this.data.spec_image[key].replace("!310x310", "")
+      for (var key in spec_image) {
+        let img = spec_image[key].replace("!310x310", "")
         if(current !== img)
         urls.push(img)
       }
-
       urls = this.$api.unique_arr(urls)
-
       if (typeof WeixinJSBridge != "undefined") {
         WeixinJSBridge.invoke('imagePreview', {
           'current': current,
