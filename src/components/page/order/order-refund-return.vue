@@ -12,30 +12,17 @@
 <template lang="html">
 
 <div class="page">
-    <div class="page-content" v-show="init">
+    <div class="page-content">
 
-      <div class="refund-tip" v-show="refund_applied"><i class="iconfont icon-xuanze"></i>&nbsp;退款申请已提交</div>
+      <div class="refund-tip" v-show="refund_applied"><i class="iconfont icon-xuanze"></i>&nbsp;卖家已同意退货<br>请上传退货快递单号</div>
 
-      <div class="hm-flex" style="background: #fff;padding: 10px;">
-        <div class="hm-flex-1"><img :src="goods.goods_image"></div>
-        <div class="hm-flex-4 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
-          <div>{{goods.goods_name}}</div>
-          <div>卖家：{{order.store_name}}</div>
-          <div style="color: #ee2e3a;font-weight: 700;">
-            <span>￥<b><big style="font-size:.48rem;">{{goods.goods_pay_price|price_yuan}}</big></b>{{goods.goods_pay_price|price_jiao}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="aui-border-t  hm-margin-b" style="background-color: #fff;text-align: right;padding: 10px;">
-        <span v-if="type=='tuikuan'">退款</span><span v-else>退货</span> 共{{goods.goods_num}}件商品 合计：￥<big>{{goods.goods_pay_price}}</big>
 
-      </div>
 
-      <template v-if="!refund_applied">
+
       <ul class="aui-list hm-margin-b"  style="margin-bottom:10px;">
         <li class="aui-list-item aui-list-item-middle" @click='choose_reason()'>
           <div class="aui-list-item-inner ">
-            <div><span class="color-theme">*</span>&nbsp;选择<template v-if="type=='tuikuan'">退款</template><template v-else>退货</template>原因：{{reason}}</div>
+            <div><span class="color-theme">*</span>&nbsp;选择快递公司：{{reason}}</div>
             <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
           </div>
         </li>
@@ -45,7 +32,7 @@
         <li class="aui-list-item">
           <div class="aui-list-item-inner">
             <div class="aui-list-item-label">
-              <span class="color-theme">*</span>&nbsp;退款金额：
+              <span class="color-theme">*</span>&nbsp;快递单号：
             </div>
             <div class="aui-list-item-input">
               <input type="tel" placeholder="" v-model="refund_amout">
@@ -54,22 +41,15 @@
         </li>
       </ul>
 
-      </template>
 
-      <ul v-else class="aui-list hm-margin-b"  style="margin-bottom:.8rem;">
-        <li class="aui-list-item aui-list-item-middle">
-          <div class="aui-list-item-inner ">
-            <template v-if="type=='tuikuan'">退款</template><template v-else>退货</template>原因：{{reason}}
-            <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
-          </div>
-        </li>
-      </ul>
+
+
 
 
 
 
       <div style="padding: 10px;" v-show="!refund_applied">
-        <div class="aui-btn aui-btn-danger aui-btn-block aui-btn-sm" @click="refund">申请<span v-if="type=='tuikuan'">退款</span><span v-else>退货</span></div>
+        <div class="aui-btn aui-btn-danger aui-btn-block aui-btn-sm" @click="refund">提交</div>
       </div>
 
 
@@ -93,6 +73,7 @@ export default {
       goods_id: 0,
       type:'tuikuan',
       refund_amout:'',
+      return_id:0,
 
       order: {
         "order_id": null,
@@ -125,28 +106,15 @@ export default {
       reason_id:0,
       refund_type:1,
       buyer_message:'000',
-      refund_applied:false,
+      refund_applied:true,
 
     }
   },
   mounted() {
-//    this.order_id = this.$route.params.order_id
-//    this.goods_id = this.$route.params.goods_id
-//    this.type=this.$route.query.type
-//    this.getData()
+
   },
   methods: {
-    getData() {
-      this.$api.userAuthGet("refund_form?order_id=" + this.order_id + "&order_goods_id=" + this.goods_id, res => {
-          this.order=res.data.data.order;
-          this.goods=res.data.data.goods;
-          this.refund_amout=res.data.data.order.order_amount
-          this.init=true;
 
-      }, error => {
-
-      })
-    },
     choose_reason(){
       let title=this.type=='tuikuan'?'点击退款原因':'点击退货原因'
       $actionSheet.show({
@@ -248,15 +216,33 @@ export default {
         console.log(err)
 //        $toast.show(err.data.message,2000);
       })
+    },
+    getExpressData(return_id) {
+      console.log('getExpressData() return_id=',return_id)
+      this.$api.userAuthPost("return_ship",{
+        return_id:parseInt(return_id)
+      },res => {
+        if(res.data.status_code==1){
+
+
+        }
+        console.log(res)
+
+      },err => {
+
+      })
+    },
+    return_ship_post(return_id){
+
     }
 
   },
   beforeRouteEnter(to,from,next){
     next(vm=>{
-      vm.order_id = vm.$route.params.order_id
-      vm.goods_id = vm.$route.params.goods_id
-      vm.type=vm.$route.query.type
-      vm.getData()
+      vm.return_id = vm.$route.params.return_id
+      console.log('vm.return_id=',vm.return_id)
+//      vm.getExpressData(33)//vm.return_id
+
     })
   }
 }

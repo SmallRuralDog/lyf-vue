@@ -7,25 +7,27 @@
 <template lang="html">
 
 <div class="page">
-    <div class="page-content">
-    <div style="background: #fff;" v-for="item in data">
+    <div class="page-content" v-show="init">
+    <div style="background-color: #fff;" v-for="item in data">
       <div class="aui-border-b hm-flex" style="padding: 10px;text-align: right;justify-content: space-between;">
         <div>订单号：{{item.order_sn}}</div>
         <div class="color-theme">{{item.seller_state}}</div>
-
       </div>
       <div class="hm-flex" style="background: #fff;padding: 10px;" v-for="itemg in item.goods_list">
         <div class="hm-flex-1"><img :src="itemg.goods_img"></div>
         <div class="hm-flex-4 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
           <div>{{itemg.goods_name}}</div>
           <div>卖家：{{item.store_name}}</div>
-          <div style="color: #ee2e3a;font-weight: 700;">
-            <span>￥<b><big style="font-size:.48rem;">xx</big></b>.00</span>
-          </div>
+          <!--<div style="color: #ee2e3a;font-weight: 700;">-->
+            <!--<span>￥<b><big style="font-size:.48rem;">{{item.refund_amount|price_yuan}}</big></b>{{item.refund_amount|price_jiao}}</span>-->
+
+          <!--</div>-->
         </div>
       </div>
       <div class="aui-border-t  hm-margin-b" style="background-color: #fff;text-align: right;padding: 10px;">
-        退款 共x件商品 合计：￥<big>x</big>
+        退款 共x件商品 合计：￥<big>{{item.refund_amount}}</big>&nbsp;&nbsp;
+
+        <div class="aui-label aui-label-danger" @click="go_return_ship(item.refund_id)">上传退货快递单</div>
 
       </div>
     </div>
@@ -48,6 +50,7 @@ export default {
   name: "order_refund_list",
   data() {
     return {
+      init:false,
       page:1,
       data:[{
         "refund_id": 27,
@@ -112,15 +115,33 @@ export default {
   },
   methods: {
     getData() {
+      $loading.show('')
       this.$api.userAuthGet("get_refund_list?page=" + this.page , res => {
-//          this.order=res.data.data.order;
-//          this.goods=res.data.data.goods;
+        if(res.data.status_code==1){
+          this.data.pop()
+          for(var i in res.data.data.data){
+              this.data.push(res.data.data.data[i])
+          }
+        }
+        $loading.hide()
+        this.init=true
+
         console.log(res)
 
       }, error => {
 
       })
     },
+
+    go_return_ship(return_id){
+      console.log(return_id)
+      $router.push({
+        name:'order_refund_return',
+        params:{
+          return_id:return_id
+        }
+      })
+    }
 
 
 

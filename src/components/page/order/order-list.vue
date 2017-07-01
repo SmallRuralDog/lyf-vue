@@ -106,7 +106,7 @@ export default {
       let id=vm.$route.params.type
       vm.active=id
       vm.$store.commit('ORDERLIST_UPDATE',{active:id})
-      vm.loading=true
+//      vm.loading=true
       vm.getData(() => {
         //vm.$refs.lyf_scroll.infiniteDone()
       })
