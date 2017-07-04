@@ -17,7 +17,11 @@
         <div class="hm-flex-1"><img :src="itemg.goods_img"></div>
         <div class="hm-flex-4 hm-flex" style="flex-direction: column;justify-content: space-between;padding-left: 10px">
           <div>{{itemg.goods_name}}</div>
-          <div>卖家：{{item.store_name}}</div>
+          <div>卖家：{{item.store_name}}
+
+            <div class="aui-label aui-label-danger" @click="go_return_ship(item.refund_id)" v-if="item.seller_state_v==2" style="float:right">上传退货凭证</div>
+
+          </div>
           <!--<div style="color: #ee2e3a;font-weight: 700;">-->
             <!--<span>￥<b><big style="font-size:.48rem;">{{item.refund_amount|price_yuan}}</big></b>{{item.refund_amount|price_jiao}}</span>-->
 
@@ -25,9 +29,10 @@
         </div>
       </div>
       <div class="aui-border-t  hm-margin-b" style="background-color: #fff;text-align: right;padding: 10px;">
-        退款 共x件商品 合计：￥<big>{{item.refund_amount}}</big>&nbsp;&nbsp;
+        <!--<div class="aui-label aui-label-danger" @click="go_return_ship(item.refund_id)" v-if="item.seller_state_v==2" style="margin-bottom:5px; ">上传退货凭证</div><br>-->
+        退款 共x件商品 合计：￥<big>{{item.refund_amount}}</big>
 
-        <div class="aui-label aui-label-danger" @click="go_return_ship(item.refund_id)">上传退货快递单</div>
+
 
       </div>
     </div>
