@@ -7,9 +7,10 @@ import BUS from './bus.js'
 
 //popup插件.
 import {
-  Popup
+  Popup,Picker
 } from 'mint-ui';
 Vue.component(Popup.name, Popup);
+Vue.component(Picker.name, Picker);
 
 
 import 'lib-flexible/flexible'

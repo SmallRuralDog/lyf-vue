@@ -296,7 +296,7 @@
         </div>
     </div>
     <div style="width:100%;">
-        <mt-popup v-model="popupVisible" popup-transition="popup-fade" class="mint-popup-100">
+        <mt-popup v-model="popupVisible"  popup-transition="popup-fade" modal="false" closeOnClickModal="false" class="mint-popup-100">
             <div class="" style="width:100%;">
                 <div class="m-addr-main">
                     <div class="m-addr-title">{{title}}收货地址</div>
@@ -304,6 +304,7 @@
                         <input class="m-addr-name" id="name" v-model="name" placeholder="名字" type="text">
                         <input class="m-addr-mobile" id="mobile" v-model="mobile" placeholder="电话" type="tel">
                     </div>
+
                     <div class="m-addr-region">
                         <div class="m-addr-province">
                             <select class="m-addr-select" v-model="province">
@@ -340,11 +341,14 @@
 </template>
 
 <script>
+ import address_from from './address-from.vue'
 import bus from '../../../bus.js'
+
 export default {
   name: "address_list",
   data() {
     return {
+      f_modal: undefined,
       title: "添加",
       popupVisible: false,
       address_list: [],
@@ -361,6 +365,7 @@ export default {
       mobile: "",
       address: "",
       address_id: 0,
+
     }
   },
   watch: {
@@ -401,6 +406,12 @@ export default {
   mounted() {
     $loading.show()
     this.getData()
+    $modal.fromComponent(address_from, {
+        title: this.title+'地址',
+        theme: 'default'
+      }).then((modal) => {
+        this.f_modal = modal
+      })
   },
   methods: {
     getData() {
@@ -442,7 +453,8 @@ export default {
       })
     },
     add_address() {
-      this.title = "添加新"
+      this.f_modal.show()
+      /*this.title = "添加新"
       this.popupVisible = true
       this.address_id = 0
       this.name = ''
@@ -454,7 +466,7 @@ export default {
       this.province = 0
       this.city = 0
       this.district = 0
-      this.getArea()
+      this.getArea()*/
     },
     edit_address(address_id) {
       this.address_list.filter(a => {
