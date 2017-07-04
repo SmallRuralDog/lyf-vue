@@ -1,4 +1,4 @@
-<style lang="css">
+<style lang="scss">
 .o-t-error {
     margin: 2.133rem 0;
 }
@@ -39,10 +39,22 @@
 }
 .o-t-error .btn a {
     display: inline-block;
-    border: 0.01rem solid #051b28;
+    border: 1px solid #051b28;
     border-radius: .107rem;
     padding: .107rem .667rem;
     cursor: pointer;
+    animation: myfirst 0.5s linear infinite;
+    @keyframes myfirst {
+        0% {
+            transform: translate(0px, 0px);
+        }
+        50% {
+            transform: translate(0px, -2px);
+        }
+        100% {
+            transform: translate(0px, 0px);
+        }
+    }
 }
 a, a:hover {
     text-decoration: none;

@@ -1,11 +1,12 @@
 <template lang="html">
     <div class="page has-tabbar">
-        <div class="page-content">
-            <div class="personal-head head-bg-img">
-                <img alt="" src="http://pinduoduoimg.yangkeduo.com/base/mobile_user_avatar.png">
+        <scroll class="page-content" style="top: -1.07rem;" :on-refresh="onRefresh" v-if="page_show">
+            <div class="personal-head head-bg-img" >
+                <img alt="" v-lazy="user.user.avatar">
                 <div class="p-head-info">
-                    <p class="p-nickname">186****7774</p>
-                    <p class="p-platform"></p>
+                    <p class="p-nickname">{{user.user.nickname}}</p>
+                    <p class="p-platform" v-if="user.user.user_wx != ''">已绑定微信</p>
+                    <p  class="p-platform" v-else>未绑定微信</p>
                 </div>
             </div>
 
@@ -33,25 +34,26 @@
                   </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(1)">
-                    <div class="p-unpaid"><i class="iconfont icon-daifukuan"></i></div>
+                    <div class="p-unpaid"><i class="iconfont icon-daifukuan"></i><span v-if="user.order_count.order_nopay_count >0">{{user.order_count.order_nopay_count}}</span></div>
                     <p class="p-wrap-1-title">
+
                         待付款
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(2)">
-                    <div class="p-unshipping"><i class="iconfont icon-wuliu"></i></div>
+                    <div class="p-unshipping"><i class="iconfont icon-wuliu"></i><span v-if="user.order_count.order_nosend_count >0">{{user.order_count.order_nosend_count}}</span></div>
                     <p class="p-wrap-1-title">
                         待发货
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(3)">
-                    <div class="p-unreceived"><i class="iconfont icon-daishouhuo"></i></div>
+                    <div class="p-unreceived"><i class="iconfont icon-daishouhuo"></i><span v-if="user.order_count.order_noreceipt_count >0">{{user.order_count.order_noreceipt_count}}</span></div>
                     <p class="p-wrap-1-title">
                         待收货
                     </p>
                 </div>
                 <div class="p-wrapper-1-item" @click="go_orderlist(4)">
-                    <div class="p-unrated"><i class="iconfont icon-daipingjia"></i></div>
+                    <div class="p-unrated"><i class="iconfont icon-daipingjia"></i><span v-if="user.order_count.order_noeval_count >0">{{user.order_count.order_noeval_count}}</span></div>
                     <p class="p-wrap-1-title">
                         待评价
                     </p>
@@ -116,7 +118,7 @@
             </li>
           </ul>
 
-        </div>
+        </scroll>
       <footnav :active="4"></footnav>
     </div>
 </template>
@@ -125,21 +127,39 @@
 import footnav from '../../layout/footnav';
 export default {
   components: {
-
     footnav
   },
   data() {
     return {
-
+      user: {
+        order_nopay_count:[]
+      },
+      page_show:false,
+      is_load:false
     }
   },
   mounted() {
-    $loading.hide()
+
     this.$store.commit('UPDATE_PAGE_LOAD_STATE_DATA', {
-      user:true,
+      user: true,
     })
+    this.get_data(()=>{})
   },
   methods: {
+    get_data(done) {
+      this.is_load = true;
+      this.$api.userAuthGet("user_index", res => {
+        if (res.data.status_code == 1) {
+          this.user = res.data.data
+        }
+        $loading.hide()
+        this.is_load = false
+        this.page_show = true
+        done()
+      }, error => {
+        $toast.show("加载失败")
+      })
+    },
     go_orderlist(id) {
       $router.push({
         name: 'order_list',
@@ -147,7 +167,11 @@ export default {
           type: id
         }
       })
-    }
+    },
+    onRefresh(done) {
+      if (this.is_load) return;
+      this.get_data(done)
+    },
   }
 }
 </script>
@@ -333,5 +357,33 @@ export default {
     font-size: 0.32rem;
     line-height: 0.32rem;
     position: relative;
+}
+.p-unpaid,
+.p-unrated,
+.p-unreceived,
+.p-unshipping {
+    span {
+        color: #ffffff;
+        line-height: 0.37rem;
+        padding: 0.0rem 0.11rem;
+        border-radius: 0.13rem;
+        position: absolute;
+        background: #EA5A49;
+        font-size: 0.27rem;
+        top: 0.08rem;
+        right: 20px;
+        animation: myfirst 0.5s linear infinite;
+        @keyframes myfirst {
+            0% {
+                transform: translate(0px, 0px);
+            }
+            50% {
+                transform: translate(0px, -2px);
+            }
+            100% {
+                transform: translate(0px, 0px);
+            }
+        }
+    }
 }
 </style>

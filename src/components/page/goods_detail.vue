@@ -328,7 +328,7 @@ $color-theme: #F23030; //#e02e24;
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
                 <swiper-slide>
-                    <img v-lazy="slide" alt="" style="background-color:#ffffff; width:100%;" @click="goods_img_show(index)">
+                    <img :src="slide" alt="" style="background-color:#ffffff; width:100%;" @click="goods_img_show(index)">
                 </swiper-slide>
             </template>
       <div class="swiper-pagination" slot="pagination"></div>

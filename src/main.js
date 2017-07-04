@@ -37,6 +37,7 @@ const order_list = resolve => require(['./components/page/order/order-list.vue']
 const order_detail = resolve => require(['./components/page/order/order-detail.vue'], resolve)
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
+const order_pay_success = resolve => require(['./components/page/order/order-pay-success.vue'], resolve)
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 
@@ -155,7 +156,12 @@ const routes = [{
         meta:{title: '退款列表'},
         component: order_refund_list
       },
-
+      {
+        path:"/order-pay-success/:pay_sn",
+        name:"order_pay_success",
+        meta:{title:'支付成功'},
+        component:order_pay_success
+      },
       {
         path: '/store/:store_id',
         name: 'store_home',

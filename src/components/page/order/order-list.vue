@@ -22,12 +22,13 @@
                                     <div class="contact">
                                         <a>
                                             <p class="title">{{order.order_store.store_name}}</p>
-                                            <p class="arrow" style="margin-left:.13rem;"><span class="ion-chevron-right"></span></p>
+                                            <p class="" style="margin-left:.13rem;"><span class="ion-chevron-right"></span></p>
                                         </a>
                                     </div>
                                     <div class="state">
                                         <div class="state-cont">
-                                            <p class="h" style="width:auto;">{{order.order_state|order_stae}}</p>
+                                            <p class="h" style="width:auto;" v-if="!order.if_lock">{{order.order_state|order_stae}}</p>
+                                              <p class="h" style="width:auto;" v-else>退款退货中</p>
                                         </div>
                                     </div>
                                 </div>

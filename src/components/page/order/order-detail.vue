@@ -7,16 +7,19 @@
 <template lang="html">
 
 <div class="page">
-    <div class="page-content">
+    <div class="">
         <div class="order-manage detail" v-if="page_show">
             <div class="order">
                 <ul class="order-list">
                     <li>
 
                         <div class="module status">
-                            <div class="seller-state  " style="background: #ff7e00;">
+                            <div class="seller-state" style="background: #EA5A49;">
                                 <div class="state-cont">
-                                    <p class="h">{{order_info.order_text}} </p>
+                                    <p class="h text-0" v-if="!order_info.if_lock">{{order_info.order_text}} </p>
+                                    <p class="h text-0" v-else>
+                                      退款退货中..
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +54,7 @@
                                     <div class="contact">
                                         <a>
                                             <p class="title">{{order_info.store_info.store_name}}</p>
-                                            <p class="arrow" style="margin-left:.13rem;"><span class="ion-chevron-right"></span></p>
+                                            <p class="" style="margin-left:.13rem;"><span class="ion-chevron-right"></span></p>
                                         </a>
                                     </div>
                                 </div>
@@ -115,7 +118,7 @@
                             </div>
                         </div>
 
-                        <div class="module orderop">
+                        <div class="module orderop" style="background:#f7f7f7;"  v-if="!order_info.if_lock">
                             <div class="o-tab-btn">
                               <ul>
                                   <li class="h" v-if="order_info.order_state==30" @click="order_receive(order_info.order_id)"> 确认收货 </li>
@@ -125,7 +128,6 @@
                                   <li class="" v-if="order_info.order_state==20" @click="confirm_cancel(order_info.order_id)"> 取消订单全部退款 </li>
                                   <li class="" v-if="order_info.order_state==10" @click="order_cancel(order_info.order_id)"> 取消订单 </li>
                                   <li class="" v-if="order_info.order_state==0"> 删除订单 </li>
-
                               </ul>
                             </div>
                         </div>
@@ -167,73 +169,73 @@ export default {
         $loading.hide()
       })
     },
-    go_refund(order_id, goods_id,type) {
+    go_refund(order_id, goods_id, type) {
       $router.push({
         name: "order_refund",
         params: {
           order_id: order_id,
           goods_id: goods_id
         },
-        query:{
-          type:type
+        query: {
+          type: type
         }
       });
     },
-    go_refund_start(order_id, goods_id,type){
+    go_refund_start(order_id, goods_id, type) {
       $router.push({
         name: "order_refund_start",
         params: {
           order_id: order_id,
           goods_id: goods_id
         },
-//        query:{
-//          type:type
-//        }
+        //        query:{
+        //          type:type
+        //        }
       });
     },
-    confirm_cancel(order_id){
+    confirm_cancel(order_id) {
       /* Confirm 确认框 */
       $dialog.confirm({
         // 设置为ios样式
-//        theme: 'ios',
+        theme: 'ios',
         // 标题
-//        title: '提示',
-        title:'<br>确定要取消订单全部退款吗？<br><br>',
+        //        title: '提示',
+        title: '确定要取消订单全部退款吗？',
         // 取消按钮文本，颠倒了一下，强调取消
-        cancelText: '确定',
+        cancelText: '取消',
         // 确定按钮文本
-        okText: '取消'
+        okText: '确定'
       }).then((res) => {
         console.log('confirm result: ', res)
-        if(res==false){
+        if (res == true) {
           //取消订单
           this.cancel(order_id)
 
         }
       })
     },
-    cancel(order_id){
+    cancel(order_id) {
       $loading.show('')
-      this.$api.userAuthPost("add_refund_all",{
-        order_id:order_id,
-        buyer_message:''
+      this.$api.userAuthPost("add_refund_all", {
+        order_id: order_id,
+        buyer_message: ''
       }, res => {
         $loading.hide()
         if (res.data.status_code == 1) {
-//          $toast.show('取消订单全部退款申请成功',2000)
+          //          $toast.show('取消订单全部退款申请成功',2000)
           /* Alert 警告框 */
           $dialog.alert({
             // 效果
-              theme: 'ios',
+            theme: 'ios',
             // 标题
             title: '取消订单全部退款申请成功!',
             // 内容
-//            content: '这是一个警告框',
+            //            content: '这是一个警告框',
             // 按钮文本
             okText: '确定',
             // 按钮主题
             okTheme: 'assertive'
-          }).then(()=>{
+          }).then(() => {
             this.$router.go(-1)
           })
 
@@ -241,7 +243,7 @@ export default {
         }
 
       }, error => {
-          $loading.hide()
+        $loading.hide()
       })
     },
 

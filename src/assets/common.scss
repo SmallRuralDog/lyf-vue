@@ -52,9 +52,30 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 .text-16{
   font-size: .43rem;
 }
+.text-18{
+  font-size: .48rem;
+}
+.text-20{
+  font-size: .53rem;
+}
+.text-30{
+  font-size: .8rem;
+}
+.text-60{
+  font-size: 1.6rem;
+}
+.text-80{
+  font-size: 2.13rem;
+}
 .tabbar{
   box-shadow: none;
   height: 1.31rem;
+}
+.mt-80{
+  margin-top: 2.13rem;
+}
+.mt-10{
+  margin-top: .27rem;
 }
 .pd-10{
   padding: .27rem;
