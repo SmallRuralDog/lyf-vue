@@ -82,6 +82,15 @@ export default {
           for(var it in res.data.data.express_list){
             this.options.push(res.data.data.express_list[it])
           }
+        }else{
+          //状态异常
+          $dialog.alert({
+            theme: 'ios',
+            title: res.data.message,
+            okText: '确定',
+          }).then(()=>{
+            $router.go(-1)
+          })
         }
       },err => {
 

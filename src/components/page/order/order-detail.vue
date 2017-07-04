@@ -108,7 +108,7 @@
                             </div>
                         </div>
 
-                        <div class="module  orderinfo">
+                        <div class="module  orderinfo"  style="padding-bottom: 70px;">
                             <div class="order-box order-message">
                                 <p class="">订单编号：{{order_info.order_sn}}</p>
                                 <p class="">交易号：{{order_info.order_pay.pay_sn}}</p>
