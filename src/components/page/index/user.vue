@@ -204,6 +204,7 @@ export default {
     height: 1.71rem;
     position: relative;
     width: 1.71rem;
+    vertical-align:top;
 }
 
 .personal-head .p-head-info {

@@ -1,11 +1,6 @@
 <style lang="css">
-
-
-
 </style>
-
 <template lang="html">
-
 <div v-if="show_page">
     <div class="page-content" style="margin-bottom:2.64rem;">
         <div class="cartbuy" style="margin-bottom: 1.32rem;">
@@ -30,8 +25,8 @@
                                     </a>
                                 </div>
                                 <div class="state">
-                                    <div class="state-cont" v-if="false">
-                                        <p class="edit undefined">领券</p>
+                                    <div class="state-cont" v-if="store.voucher_list.length > 0">
+                                        <p class="edit undefined" @click="neck_voucher(store.voucher_list,store.store_name)">领券</p>
                                     </div>
                                     <div class="state-cont">
                                         <p class="edit undefined" @click="edit_cart(store.store_id)">{{store.edit_text}}</p>
@@ -134,7 +129,7 @@
                                                     <a @click="cut_goods_num(store.store_id,index)" class="btn minus off" min="1"></a>
                                                 </p>
                                                 <p class="btn-input">
-                                                    <input type="number" min="1" v-model="goods.goods_num">
+                                                    <input type="number" min="1" v-on:blur="changeCount(store.store_id,index)" v-model.number="goods.goods_num">
                                                 </p>
                                                 <p class="btn-plus">
                                                     <a @click="add_goods_num(store.store_id,index)" class="btn plus" max="2"></a>
@@ -197,14 +192,16 @@
             </div>
         </div>
     </div>
+    <voucher-list :popupVisible="popupVisible" :voucherlist="voucher_list" :storename="voucher_store_name" ></voucher-list>
 </div>
-
 </template>
 
 <script>
 import '../../assets/cart.scss'
+
 import CartNoData from './cart-no-data'
 import bus from '../../bus.js'
+import VoucherList from '../layout/voucher-list.vue'
 import {
   mapState,
   mapActions
@@ -212,7 +209,8 @@ import {
 export default {
   name: "cart_data",
   components: {
-    CartNoData
+    CartNoData,
+    VoucherList
   },
   data() {
     return {
@@ -222,6 +220,9 @@ export default {
       show_page: false,
       is_cart_state: [],
       is_c: true,
+      popupVisible: false,
+      voucher_list: [],
+      voucher_store_name: "店铺优惠券",
     }
   },
   watch: {
@@ -247,8 +248,8 @@ export default {
         }
       }
     },
-    cart_view_data_reload:function(val, oldVal){
-      if(val){
+    cart_view_data_reload: function(val, oldVal) {
+      if (val) {
         this.getList()
       }
     }
@@ -323,6 +324,10 @@ export default {
       $loading.show("");
       this.getList();
     }
+    bus.$on("onVoucherState", res => {
+      console.log(res);
+      this.popupVisible = res
+    })
   },
   methods: {
     getList() {
@@ -340,11 +345,11 @@ export default {
         this.show_page = true
         $loading.hide()
         this.$store.commit('UPDATE_COMMON_DATA', {
-          cart_view_data_reload:false
+          cart_view_data_reload: false
         })
       }, error => {
         this.$store.commit('UPDATE_COMMON_DATA', {
-          cart_view_data_reload:false
+          cart_view_data_reload: false
         })
       })
     },
@@ -362,6 +367,10 @@ export default {
       this.cart_list[store_id].goods[index].goods_num++
         let quantity = this.cart_list[store_id].goods[index].goods_num
       let cart_id = this.cart_list[store_id].goods[index].cart_id
+      if (quantity < 1) {
+        $toast.show("受不鸟了，宝贝不能再减少了哦")
+        return
+      }
       this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
         if (res.data.status_code != 1) {
           this.cart_list[store_id].goods[index].goods_num--
@@ -383,6 +392,11 @@ export default {
         $loading.show("");
       let quantity = this.cart_list[store_id].goods[index].goods_num
       let cart_id = this.cart_list[store_id].goods[index].cart_id
+      if (quantity < 1) {
+        $toast.show("受不鸟了，宝贝不能再减少了哦")
+        this.cart_list[store_id].goods[index].goods_num = 1
+        return
+      }
       this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
         if (res.data.status_code != 1) {
           this.cart_list[store_id].goods[index].goods_num++
@@ -392,6 +406,26 @@ export default {
         }
       }, error => {
         this.cart_list[store_id].goods[index].goods_num++
+      })
+    },
+    changeCount(store_id, index) {
+      let quantity = this.cart_list[store_id].goods[index].goods_num
+      let cart_id = this.cart_list[store_id].goods[index].cart_id
+      if (quantity < 1) {
+        $toast.show("受不鸟了，宝贝不能再减少了哦")
+        this.cart_list[store_id].goods[index].goods_num = 1
+        quantity = 1
+      }
+      $loading.show("");
+      this.$api.userAuthGet('cart_edit_quantity?cart_id=' + cart_id + '&quantity=' + quantity, res => {
+        if (res.data.status_code != 1) {
+          this.cart_list[store_id].goods[index].goods_num = quantity
+          $toast.show(res.data.message)
+        } else {
+          $loading.hide()
+        }
+      }, error => {
+        this.cart_list[store_id].goods[index].goods_num = 1
       })
     },
     del_cart(cart_id, store_id, index) {
@@ -435,6 +469,11 @@ export default {
           params: { cart_id: cart_arr.join(","), ifcart: true },
         })
       }
+    },
+    neck_voucher(list, name) {
+      this.voucher_list = list
+      this.voucher_store_name = name
+      this.popupVisible = true
     }
   }
 }

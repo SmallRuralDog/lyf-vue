@@ -356,17 +356,18 @@ $color-theme: #e02e24;
 }
 .sku-prop .prop-mainer .sku-item {
     display: inline-block;
-    height: 0.8rem;
-    line-height: 0.8rem;
+    height: 0.9rem;
+    line-height: 0.9rem;
     text-align: center;
     vertical-align: middle;
-    font-size: 0.32rem;
+    font-size: .35rem;
     background: #f9f9f9;
     border-radius: 0.16rem;
     padding: 0 0.267rem;
     box-sizing: border-box;
     margin: 0.24rem 0.24rem 0 0;
     cursor: pointer;
+    min-width: 1.63rem;
 }
 .sku-prop .prop-mainer .sku-item.active {
     color: #fff;

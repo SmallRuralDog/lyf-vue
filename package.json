@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "better-scroll": "^0.1.15",
+    "better-scroll": "^0.2.4",
     "es6-promise": "^4.1.0",
     "fastclick": "^1.0.6",
     "lib-flexible": "^0.3.2",
