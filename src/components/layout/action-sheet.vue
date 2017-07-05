@@ -101,6 +101,7 @@ export default {
       return this.data.goods_info.color_id
     },
     spec_string() {
+      //复制数组
       var cur_spec2 = this.cur_spec.slice(0, this.cur_spec.length);
 
       if (cur_spec2) {
@@ -130,10 +131,6 @@ export default {
       }
 
     },
-    sheet_thumb() {
-      let thumb_key = this.goodsid_choose
-      return this.data.spec_image[thumb_key]
-    }
 
   },
   deactivated() {
@@ -163,7 +160,7 @@ export default {
 
     },
     firstTimeOpenSheet(val, oldVal) {
-      console.log('firstTimeOpenSheet set  this.cur_spec')
+      console.log('firstTimeOpenSheet set this.cur_spec')
       if (val) {
         this.cur_spec = []
         this.cur_spec_name = []
@@ -177,8 +174,9 @@ export default {
       }
     },
     goodsid_choose(val, oldVal) {
-      if (val && oldVal && val != oldVal) {
-        //console.log('goodsid_choose=', val, oldVal)
+      //打开action-sheet时，选择参数导致goodsid_choose变更，触发详情页刷新
+      if (val && oldVal && val != oldVal && this.showpicksheet) {
+        console.log('goodsid_choose=', val, oldVal,' refresh_goods_data()')
         this.$emit('refresh_goods_data', val)
 
       }

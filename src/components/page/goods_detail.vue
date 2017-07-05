@@ -7,6 +7,8 @@
   <div class="page-content" v-show="init" style="padding-bottom: 70px;">
     <!-- 页面内容 -->
 
+
+
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
           <swiper-slide>
@@ -204,13 +206,9 @@
       <div class="hm-flex-1 icon-align" @click="gohome">
         <i class="iconfont icon-shouye-shouye"></i>
       </div>
-      <!--<div class="hm-flex-1 icon-align hm-border-l"  @click="collect">-->
-      <!--<i class="iconfont icon-favorite"></i>-->
-      <!--</div>-->
       <div class="hm-flex-1 icon-align hm-border-l" @click="gocart" style="position: relative;">
         <i class="iconfont icon-gouwuche1"></i>
         <div v-show="cartNumber>0" class="cart-badge">{{cartNumber}}</div>
-
       </div>
       <div style="flex:0.15"></div>
       <div class="hm-flex-2 buy-align cart" style="flex:2.5" @click="add">
@@ -271,17 +269,14 @@ function dataInit() {
     cartNumber: 5,
     swiperOption: {
       autoplay: 4000,
-      initialSlide: 1,
-      loop: true,
-      pagination: '.swiper-pagination'
-    },
-    swiperOption2: {
-      //      autoplay: 4000,
       initialSlide: 0,
       loop: true,
       pagination: '.swiper-pagination',
-      //      slidesPerView: 3,
-      //      spaceBetween: 20
+    },
+    swiperOption2: {
+      initialSlide: 0,
+      loop: true,
+      pagination: '.swiper-pagination',
     },
     collected: false, //已收藏
     recom_items1: [{
@@ -489,7 +484,6 @@ export default {
   },
   created() {
     this.swipe_height = screen.width;
-
   },
   methods: {
     getData() {
@@ -497,26 +491,23 @@ export default {
       this.$api.userGet('goods_info?goods_id=' + this.goods_id, res => {
         //console.log(JSON.stringify(res.data));
         this.data = res.data.data;
-        this.$nextTick(() => {
-          this.init = true;
-          $loading.hide();
-          //更新init_spec，init_spec_name至vuex
-          this.$store.commit('ACTIONSHEET_UPDATE', {
-            key: 'cur_specx',
-            value: this.init_spec
-          })
-          this.$store.commit('ACTIONSHEET_UPDATE', {
-            key: 'cur_spec_namex',
-            value: this.init_spec_name
-          })
+        this.init = true;
+        $loading.hide();
+        //更新init_spec，init_spec_name至vuex
+        this.$store.commit('ACTIONSHEET_UPDATE', {
+          key: 'cur_specx',
+          value: this.init_spec
         })
-
-        this.swiper.slideTo(1, 1000, false)
+        this.$store.commit('ACTIONSHEET_UPDATE', {
+          key: 'cur_spec_namex',
+          value: this.init_spec_name
+        })
       }, err => {
         //$toast(err)
       })
     },
     refreshGoodsData(id) {
+      console.log('refreshGoodsData(id)..',this.goods_id)
       this.$api.userGet('goods_info?goods_id=' + id, res => {
         this.data = res.data.data;
         //更新init_spec，init_spec_name至vuex
@@ -549,14 +540,6 @@ export default {
     },
     gohome() {
       this.$router.push('/home')
-      //        this.$router.push('/home')
-
-      //        console.log('History.previous=',history.length,history.previous)
-      //        if(history.length>2){
-      //            this.$router.go(-1)
-      //        }else{
-      //            this.$router.push('/home')
-      //        }
     },
     go_store(id) {
       $router.push({
@@ -610,8 +593,6 @@ export default {
         });
       }
     }
-
-
   },
   computed: {
     ...mapState({
@@ -627,15 +608,11 @@ export default {
       let spec_value = this.data.goods_info.spec_value
       let spec_key = {}
       let spec_arr = []
-
       for (var goodsKey in goods_spec) {
-        //                console.log(goodsKey)
         for (var valueKey in spec_value) {
-          //                    console.log(goodsKey,JSON.stringify(spec_value[valueKey]))
           let valueJson = spec_value[valueKey]
           for (var keyValueJson in valueJson) {
             if (keyValueJson == goodsKey) {
-              //                            console.log(valueKey,keyValueJson)
               spec_key[valueKey] = keyValueJson
             }
           }
@@ -684,13 +661,10 @@ export default {
     }
   },
   watch: {
-
-    gid(val, newVal) {
+    goods_id(val, newVal) {
       console.log('watch', val, newVal)
-      this.goods_id = val
-      getData()
-
-
+//      this.goods_id = val
+        this.getData()
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -699,8 +673,12 @@ export default {
       let id = vm.$route.params.id;
       //            vm.data=dataInit()
       console.log('beforeRouteEnter id=', id)
-      vm.goods_id = id;
-      vm.getData();
+      if(vm.goods_id != id){
+        vm.goods_id = id;
+      }else{
+        vm.init=true;
+      }
+//      vm.getData();
       //还原默认购买数量
       vm.$store.commit('ACTIONSHEET_UPDATE', {
         key: 'quantityx',
@@ -711,7 +689,7 @@ export default {
     })
   },
   beforeRouteLeave(to, from, next) {
-    console.log('to:' + to.path, 'from:' + from.path)
+//    console.log('to:' + to.path, 'from:' + from.path)
     this.init = false
     this.$store.commit('ACTIONSHEET_UPDATE', {
       key: 'firstTimeOpenSheet',
