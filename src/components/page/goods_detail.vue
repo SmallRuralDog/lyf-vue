@@ -1,321 +1,3 @@
-<style lang="scss">
-// 主题色
-$color-theme: #F23030; //#e02e24;
-.submit-order {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    z-index: 100;
-    height: 1.33rem;
-}
-
-.submit-order .buy-align {
-    color: #fff;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    background: $color-theme;
-    font-size: 14px;
-}
-
-.submit-order .buy-align.cart {
-    background: lighten($color-theme, 15%);
-}
-
-.submit-order .icon-align {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-}
-
-.submit-order .hm-flex-1 {
-    color: #666;
-}
-
-.submit-order .hm-flex-1 .iconfont {
-    font-size: 24px;
-}
-
-.cart-badge {
-    background: lighten($color-theme, 10%);
-    color: #fff;
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    top: 4px;
-    right: 8px;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-//幻灯片焦点颜色
-.swiper-pagination-bullet-active {
-    background: #e02e24;
-}
-
-.download-app {
-    padding-top: 4px;
-    height: 48px;
-    background-color: transparent;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    vertical-align: middle;
-    display: block;
-    i {
-        display: block;
-        float: left;
-        color: #fff;
-        background: rgba(0, 0, 0, 0.3);
-        margin: 5px 10px;
-        font-size: 18px;
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        border-radius: 50%;
-        text-align: center;
-        z-index: 100;
-    }
-}
-
-.promise-block {
-    font-size: 12px;
-    i {
-        font-size: 12px;
-        color: $color-theme;
-        margin-right: 5px;
-    }
-    .hm-flex-1 {
-        text-align: center;
-        color: #666;
-    }
-}
-
-//贝贝样式
-.flex-center {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-.flex-center.align-bottom {
-    -webkit-box-align: end;
-    -webkit-align-items: flex-end;
-    -ms-flex-align: end;
-    align-items: flex-end;
-}
-
-.infos {
-    padding: 10px;
-    background-color: #fff;
-}
-
-.infos .area .prices .sale-tag-wrapper {
-    display: inline-block;
-    margin-left: 0.34133333rem;
-    /*-webkit-transform: scale(.6);*/
-    /*-moz-transform: scale(.6);*/
-    /*transform: scale(.6);*/
-    /*-webkit-transform-origin: left bottom;*/
-    /*transform-origin: left bottom;*/
-}
-
-.infos .area .prices .sale-tag {
-    display: inline-block;
-    /*display: flex;*/
-    /*align-items:center;*/
-    /*justify-content:center;*/
-    margin-left: 4px;
-    padding: 1px 7px 0;
-    color: #fff;
-    line-height: 1.8;
-    font-size: 8px;
-    background: lighten($color-theme, 5%);
-}
-
-.infos .area .prices span {
-    /*vertical-align: bottom;*/
-}
-
-.infos .area .prices .price {
-    /*display: inline-block;*/
-    /*line-height: 1;*/
-    font-size: 15px;
-}
-
-.infos .area .prices .price i {
-    font-size: 24px;
-    /*line-height: 1.024rem;*/
-    margin-left: 0.064rem;
-    font-weight: bold;
-}
-
-.infos .area .prices .price-old {
-    margin-left: 0.256rem;
-    /*display: inline-block;
-    line-height: 1;*/
-    font-size: 13px;
-    text-decoration: line-through;
-    color: #8f8f8f;
-}
-
-.infos .product h3 {
-    font-size: 15px;
-    line-height: 1.5;
-}
-
-/*评价列表样式*/
-
-.reviews {
-    background: #fff;
-}
-
-.reviews .review-item {
-    padding: 10px;
-}
-
-.reviews .content {
-    margin: 0 0 5px;
-    color: #3d3d3d;
-    font-size: 13px;
-    line-height: 1.5;
-    padding-left: 40px;
-}
-
-.reviews .head-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 1px solid #e4e4e4;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.reviews .sku-info span {
-    /*margin-right: .384rem;*/
-    font-size: 12px;
-    line-height: 1.5;
-    color: #999;
-    padding-left: 40px;
-}
-
-.reviews .review-item span {
-    display: inline-block;
-    vertical-align: top;
-}
-
-.reviews .icon-score.active {
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAMAAADto6y6AAAAVFBMV…Chy0apPDoqGE5MP6J24oQpQTN7/Tw9sy6hXWH1am3v8QcfsRf3W4ketwAAAABJRU5ErkJggg==") no-repeat 50%;
-    background-size: 0.46933333rem 0.46933333rem;
-}
-
-/*===========*/
-
-.event-list {
-    display: flex;
-    background: #fff;
-    padding: 15px 0;
-}
-
-.event-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /*border-right: 1px #fafafa solid;*/
-}
-
-/*.event-item:last-child{*/
-
-/*flex:1.5;*/
-
-/*}*/
-
-.event-item-num {
-    font-size: 14px;
-}
-
-.event-item-text {
-    color: #8f8f8f;
-}
-.instore.aui-label-outlined:after {
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    height: 200%;
-    content: '';
-    width: 200%;
-    border: 1px solid $color-theme;
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    transform: scale(0.5);
-    -webkit-transform: scale(0.5);
-    transform-origin: 0 0;
-    -webkit-transform-origin: 0 0;
-    z-index: 1;
-}
-
-.score i {
-    font-size: 0.32rem;
-    color: #f60;
-    margin-right: 0.05rem;
-}
-.mobile_body {
-    background: #ffffff;
-    margin-top: 0.4rem;
-    padding-top: 0.4rem;
-}
-.mobile_body p {
-    padding-left: 0.32rem;
-    padding-right: 0.32rem;
-    margin-top: 0.16rem;
-    margin-bottom: 0.16rem;
-    font-size: 0.4rem;
-    color: #3d4245;
-}
-.join-store-btn {
-    border: 1px solid #ff5000;
-    color: #ff5000;
-    padding: 0.08rem 0.32rem;
-    border-radius: 0.106667rem;
-    margin: 0 0.32rem;
-    height: 0.75rem;
-}
-</style>
-
 <template>
 <div class="page">
   <!--固定不动的元素 要放到page-content的外面-->
@@ -327,33 +9,28 @@ $color-theme: #F23030; //#e02e24;
 
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
-                <swiper-slide>
-                    <img :src="slide" alt="" style="background-color:#ffffff; width:100%;" @click="goods_img_show(index)">
-                </swiper-slide>
-            </template>
+          <swiper-slide>
+              <img :src="slide" v-show="init" alt="" style="background-color:#ffffff; width:100%;" @click="goods_img_show(index)">
+          </swiper-slide>
+      </template>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
 
     <div class="infos hm-margin-b">
       <div class="area">
-        <div class="prices " style="display: flex;align-items: center;">
-          <!--flex-center align-bottom-->
+        <div class="prices" style="display: flex;align-items: center;width:100%;">
           <div class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price|price_yuan}}</i><b><big>{{data.goods_info.goods_price|price_jiao}}</big></b></div>
           <div class="price-old">¥268</div>
-          <div class="sale-tag-wrapper">
-
-            <!--<span class="sale-tag">拼团价</span>-->
-            <!--<span class="sale-tag">包邮</span>-->
+          <div style="padding-left: 10px;">
             <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;margin:0 5px;">拼团价</div>
             <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;">包邮</div>
-
           </div>
         </div>
       </div>
       <div class="product hm-flex" style="padding-top: 6px;">
         <h3 class="hm-flex-1">
-                    <span>{{data.goods_info.goods_name}}</span>
-                  </h3>
+          <span>{{data.goods_info.goods_name}}</span>
+        </h3>
         <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 45px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 5px;">
           <i class="iconfont icon-favorite" :class="{'color-theme':collected}" style="font-size: 22px;"></i>
           <template v-show="collected">已</template>收藏
@@ -498,11 +175,11 @@ $color-theme: #F23030; //#e02e24;
         </swiper-slide>
         <swiper-slide>
           <div class="hm-flex">
-            <template v-for="slide in recom_items3">
+            <template v-for="slide3 in recom_items3">
                             <div class="hm-flex-1">
                                 <div style="margin:1.6%;">
-                                    <img :src="slide.img" style="background-color:#ffffff; width:100%;">
-                                    <p class="aui-ellipsis-2">{{slide.title}}</p>
+                                    <img :src="slide3.img" style="background-color:#ffffff; width:100%;">
+                                    <p class="aui-ellipsis-2">{{slide3.title}}</p>
                                 </div>
                             </div>
                         </template>
@@ -818,22 +495,22 @@ export default {
     getData() {
       $loading.show("")
       this.$api.userGet('goods_info?goods_id=' + this.goods_id, res => {
-        //                console.log(JSON.stringify(res.data));
+        //console.log(JSON.stringify(res.data));
         this.data = res.data.data;
-        //        this.$nextTick(() => {
-        this.init = true;
-        $loading.hide();
-        //更新init_spec，init_spec_name至vuex
-        this.$store.commit('ACTIONSHEET_UPDATE', {
-          key: 'cur_specx',
-          value: this.init_spec
+        this.$nextTick(() => {
+          this.init = true;
+          $loading.hide();
+          //更新init_spec，init_spec_name至vuex
+          this.$store.commit('ACTIONSHEET_UPDATE', {
+            key: 'cur_specx',
+            value: this.init_spec
+          })
+          this.$store.commit('ACTIONSHEET_UPDATE', {
+            key: 'cur_spec_namex',
+            value: this.init_spec_name
+          })
         })
-        this.$store.commit('ACTIONSHEET_UPDATE', {
-          key: 'cur_spec_namex',
-          value: this.init_spec_name
-        })
-        //        })
-        console.log("123");
+
         this.swiper.slideTo(1, 1000, false)
       }, err => {
         //$toast(err)
@@ -1057,3 +734,283 @@ export default {
 
 }
 </script>
+<style lang="scss">
+  @import "../../assets/config.scss";
+  .submit-order {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 100;
+    height: 1.33rem;
+  }
+
+  .submit-order .buy-align {
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background: $color-theme;
+    font-size: 14px;
+  }
+
+  .submit-order .buy-align.cart {
+    background: lighten($color-theme, 15%);
+  }
+
+  .submit-order .icon-align {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  .submit-order .hm-flex-1 {
+    color: #666;
+  }
+
+  .submit-order .hm-flex-1 .iconfont {
+    font-size: 24px;
+  }
+
+  .cart-badge {
+    background: lighten($color-theme, 10%);
+    color: #fff;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    top: 3px;
+    right: 6px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  //幻灯片焦点颜色
+    .swiper-pagination-bullet-active {
+      background: #e02e24;
+    }
+
+  .download-app {
+    padding-top: 4px;
+    height: 48px;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    vertical-align: middle;
+    display: block;
+  i {
+    display: block;
+    float: left;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 5px 10px;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    z-index: 100;
+  }
+  }
+
+  .promise-block {
+    font-size: 12px;
+  i {
+    font-size: 12px;
+    color: $color-theme;
+    margin-right: 5px;
+  }
+  .hm-flex-1 {
+    text-align: center;
+    color: #666;
+  }
+  }
+
+  //贝贝样式
+
+
+  .infos {
+    padding: 10px;
+    background-color: #fff;
+  }
+
+
+
+  .infos .area .prices span {
+    /*vertical-align: bottom;*/
+  }
+
+  .infos .area .prices .price {
+    /*display: inline-block;*/
+    /*line-height: 1;*/
+    font-size: 15px;
+  }
+
+  .infos .area .prices .price i {
+    font-size: 24px;
+    /*line-height: 1.024rem;*/
+    margin-left: 0.064rem;
+    font-weight: bold;
+  }
+
+  .infos .area .prices .price-old {
+    margin-left: 0.256rem;
+    /*display: inline-block;
+    line-height: 1;*/
+    font-size: 13px;
+    text-decoration: line-through;
+    color: #8f8f8f;
+  }
+
+  .infos .product h3 {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /*评价列表样式*/
+
+  .reviews {
+    background: #fff;
+  }
+
+  .reviews .review-item {
+    padding: 10px;
+  }
+
+  .reviews .content {
+    margin: 0 0 5px;
+    color: #3d3d3d;
+    font-size: 13px;
+    line-height: 1.5;
+    padding-left: 40px;
+  }
+
+  .reviews .head-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .reviews .sku-info span {
+    /*margin-right: .384rem;*/
+    font-size: 12px;
+    line-height: 1.5;
+    color: #999;
+    padding-left: 40px;
+  }
+
+  .reviews .review-item span {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .reviews .icon-score.active {
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAMAAADto6y6AAAAVFBMV…Chy0apPDoqGE5MP6J24oQpQTN7/Tw9sy6hXWH1am3v8QcfsRf3W4ketwAAAABJRU5ErkJggg==") no-repeat 50%;
+    background-size: 0.46933333rem 0.46933333rem;
+  }
+
+  /*===========*/
+
+  .event-list {
+    display: flex;
+    background: #fff;
+    padding: 15px 0;
+  }
+
+  .event-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*border-right: 1px #fafafa solid;*/
+  }
+
+  /*.event-item:last-child{*/
+
+  /*flex:1.5;*/
+
+  /*}*/
+
+  .event-item-num {
+    font-size: 14px;
+  }
+
+  .event-item-text {
+    color: #8f8f8f;
+  }
+  .instore.aui-label-outlined:after {
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    height: 200%;
+    content: '';
+    width: 200%;
+    border: 1px solid $color-theme;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    z-index: 1;
+  }
+
+  .score i {
+    font-size: 0.32rem;
+    color: #f60;
+    margin-right: 0.05rem;
+  }
+  .mobile_body {
+    background: #ffffff;
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+  }
+  .mobile_body p {
+    padding-left: 0.32rem;
+    padding-right: 0.32rem;
+    margin-top: 0.16rem;
+    margin-bottom: 0.16rem;
+    font-size: 0.4rem;
+    color: #3d4245;
+  }
+  .join-store-btn {
+    border: 1px solid #ff5000;
+    color: #ff5000;
+    padding: 0.08rem 0.32rem;
+    border-radius: 0.106667rem;
+    margin: 0 0.32rem;
+    height: 0.75rem;
+  }
+</style>
