@@ -105,7 +105,7 @@ export default {
         this.address_scroll = new BScroll(this.$refs.addList, {
           startX: 0,
           startY: 0,
-          click: false
+          click: true
         })
       }
     },

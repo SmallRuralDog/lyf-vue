@@ -161,8 +161,8 @@
             <cart-no-data v-if="cart_count <= 0"></cart-no-data>
         </div>
     </div>
-    <div class="cartbuy" v-if="cart_count > 0">
-        <div class="footer" :class="{'c_fb':show_footer}">
+    <div class="cartbuy" v-if="cart_count > 0" style="position:fixed; width:100%;bottom: 1.31rem; margin-top:0;">
+        <div class="footer" :class="{'c_fb':show_footer}" style="margin-top:0;">
             <div :class="{'c_fb':show_footer}" class="f-fx">
                 <div>
                     <div class="ft-cb">
