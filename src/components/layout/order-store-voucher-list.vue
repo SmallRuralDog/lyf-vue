@@ -6,6 +6,7 @@
     h1 {
         text-align: center;
         font-size: 0.43rem;
+        margin-bottom: 0;
     }
     div {
         text-align: center;
@@ -26,31 +27,47 @@
                     flex-grow: 1;
                 }
             }
+            p {
+                margin-bottom: 0;
+            }
         }
     }
 }
 </style>
 
 <template lang="html">
-<mt-popup v-model="popupVisible_o" position="bottom" style="width:100%; height:10.8rem;">
+<mt-popup v-model="order_store_voucher_list_show" position="bottom" style="width:100%; height:10.8rem;">
         <div class="voucher-top">
             <h1 class="color-dark">{{storename}}</h1>
-            <div class="color-royal">领取优惠券</div>
+            <div class="color-royal">可用优惠券</div>
         </div>
         <div class="voucher-list" ref="voucherListScroll">
             <ul>
-                <li v-for="item in voucherlist">
+                <li v-for="item in voucherlist" @click="select_voucher(item.voucher_id,item.voucher_store_id)">
                     <div class="voucher-list-item">
                         <div class="voucher-list-item-left">
-                            <p style="font-size:.67rem;color:#EA5A49;">{{item.voucher_t_price}}<small style="font-size:.43rem; margin-left:3px;">元</small></p>
-                            <p class="text-12 color-dark">订单满<strong style="color:#EA5A49;">{{item.voucher_t_limit}}</strong>元使用（不含邮费）</p>
-                            <p class="text-12 color-royal">使用期限 {{item.voucher_t_start_date}} - {{item.voucher_t_end_date}}</p>
+                            <p class="text-14 color-assertive">{{item.name}}</p>
+                            <p class="text-12 color-royal">订单满<strong>{{item.voucher_limit}}</strong>元使用</p>
+                            <p class="text-12 color-royal">使用期限： {{item.voucher_start_date}} - {{item.voucher_end_date}}</p>
                         </div>
                         <div class="" style="width:2.13rem;align-self:center;text-align:right">
-                            <button @click="get_voucher(item.voucher_t_id)" style="width:1.47rem;" class="button button-assertive button-outline button-small">领取</button>
+                            <i v-if="voucherInfo.voucher_id == item.voucher_id" class="ion-ios-checkmark text-30 color-assertive"></i>
+                            <i v-else class="ion-ios-circle-outline text-30 color-royal"></i>
                         </div>
                     </div>
                 </li>
+                <li  @click="select_voucher('no',voucherInfo.voucher_store_id)">
+                  <div class="voucher-list-item">
+                      <div class="voucher-list-item-left">
+                         <p style="line-height:35px;" class="text-14 color-dark">不使用优惠券</p>
+                      </div>
+                      <div class="" style="width:2.13rem;align-self:center;text-align:right">
+                          <i v-if="voucherInfo == null || voucherInfo == ''" class="ion-ios-checkmark text-30 color-assertive"></i>
+                          <i v-else class="ion-ios-circle-outline text-30 color-royal"></i>
+                      </div>
+                    </div>
+                </li>
+
             </ul>
         </div>
         <div @click="close_voucher()" style="height:1.33rem; line-height:1.33rem; text-align:center;color:#ffffff;background-color:#EA5A49; font-size:.37rem;">关闭</div>
@@ -64,7 +81,7 @@ import bus from '../../bus.js'
 export default {
   data() {
     return {
-      popupVisible_o: false,
+      order_store_voucher_list_show: false,
     }
   },
   props: {
@@ -74,6 +91,10 @@ export default {
     },
     voucherlist: {
       type: Array,
+      default: null,
+    },
+    voucherInfo: {
+      type: Object|Array,
       default: null,
     },
     storename: {
@@ -88,11 +109,10 @@ export default {
       })
     },
     popupVisible(val, oldVal) {
-      this.popupVisible_o = val
+      this.order_store_voucher_list_show = val
     },
-    popupVisible_o(val, oldVal) {
-      bus.$emit("onVoucherState", val)
-
+    order_store_voucher_list_show(val, oldVal) {
+      bus.$emit("onBuyVoucherState", val)
     }
   },
   methods: {
@@ -106,15 +126,11 @@ export default {
       }
     },
     close_voucher() {
-      this.popupVisible_o = false
+      this.order_store_voucher_list_show = false
     },
-    get_voucher(id) {
-      $loading.show();
-      this.$api.userAuthGet("get_voucher?voucher_t_id=" + id, res => {
-        $toast.show(res.data.message)
-      }, error => {
-        $toast.show(error.data.message)
-      })
+    select_voucher(voucher_id, store_id) {
+      let res = {voucher_id:voucher_id,store_id:store_id};
+      bus.$emit("onBuyVoucherselect", res)
     }
   }
 }

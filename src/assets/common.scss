@@ -6,6 +6,9 @@ img {
     height: auto;
     vertical-align: top;
 }
+.loading-container{
+  z-index: 999999;
+}
 // 图片懒加载动画
 img[lazy=loading] {opacity:0;}
 img[lazy=loaded] {transition:opacity .2s; opacity:1;}

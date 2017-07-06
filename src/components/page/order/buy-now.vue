@@ -37,13 +37,7 @@
 
 
 
-        <div class="user-coupon no-coupon" id="user-quan">
-            <h2 class="uc-title" id="default-coupon-title">
-              <span class="cp-title">使用优惠券</span>
-              <span class="iconfont ion-chevron-right"></span>
-              <span class="fr coupon-status"><font color="#999999">暂无可用券</font></span>
-            </h2>
-        </div>
+
 
 
 
@@ -58,12 +52,12 @@
                 <!--入仓商品列表-->
                 <div class="scb-content" v-for="(store,key,index) in store_cart_list">
                   <p class="seller" v-if="address_info != null">
-                      <i class="iconfont ion-ios-cart"></i><font color="#4a4a4a">  {{store.store_name}}</font> 发货
+                      <i class="iconfont ion-ios-cart color-dark"></i><font color="#4a4a4a"> 宝贝由  {{store.store_name}} 发货</font>
                       <span v-if="address_api.content[key] > 0" style="color:#ff464e">运费：￥{{address_api.content[key]}}</span>
                       <span v-else>运费：包邮</span>
                   </p>
-                    <ul class="bag-list">
-                        <li v-for="goods in store.goods_list" >
+                    <ul class="bag-list" style="background:#f7f7f7;">
+                        <li v-for="goods in store.goods_list">
                             <a class="orderlist-box clear js-active-goods">
                                 <div class="pic fl">
                                     <img v-lazy="goods.goods_image_url">
@@ -79,10 +73,16 @@
                                     </div>
                                 </div>
                             </a>
-
                         </li>
-
                     </ul>
+                    <div class="user-coupon no-coupon" v-if="store.store_voucher_list != null">
+                        <h2 @click="select_order_voucger(store.store_voucher_list,store.store_voucher_info,store.store_id,store.store_name)" class="uc-title" id="default-coupon-title" style="margin-bottom:0;">
+                          <span class="cp-title">店铺优惠</span>
+                          <span class="iconfont ion-chevron-right"></span>
+                          <span class="fr coupon-status" v-if="store.store_voucher_info.voucher_id > 0"><font color="#ff464e">已用优惠券，{{store.store_voucher_info.name}}</font></span>
+                          <span class="fr coupon-status" v-else>不使用优惠券</span>
+                        </h2>
+                    </div>
                     <p class="seller">
                         <span>
                             小计：<strong style="color:#ff464e">￥{{store_final_total_list[key]}}</strong>
@@ -113,23 +113,20 @@
                 </li>
             </ul>
         </div>
-
         <div class="order_total order-amount-total">
             <div class="total-title">应付金额<span>¥{{order_amount}}</span></div>
             <p class="clear"><span class="sp1">商品总额</span><span class="sp2">¥{{goods_total}}</span></p>
             <p class="clear"><span class="sp1">总运费</span><span class="sp2">¥{{freight_total}}</span></p>
         </div>
-
-
-
-
-
     </div>
     <div class="bag-total order_temai" v-if="page_show">
         <a href="javascript:;" class="go_pay" @click="go_pay()">去付款</a>
     </div>
-</div>
 
+
+    <order-store-voucher-list :popupVisible="order_store_voucher_list_show" :voucherlist="order_store_voucher_list_data" :voucherInfo="order_store_voucher_info" :storename="order_store_voucher_list_name"></order-store-voucher-list>
+
+</div>
 </template>
 
 <script>
@@ -137,21 +134,31 @@ import "../../../assets/buy-now.scss"
 import 'lib-flexible/flexible'
 
 import address_modal from "../user/addresses.vue"
+import orderStoreVoucherList from "../../layout/order-store-voucher-list.vue"
 import bus from "../../../bus.js"
 export default {
   name: "order_buynow",
+  components: {
+    orderStoreVoucherList
+  },
   data() {
     return {
       page_show: false,
       cart_id: '',
       ifcart: false,
+      voucher:new Object,
       address_info: [],
       store_cart_list: [],
       address_api: [],
       store_final_total_list: [],
       order_amount: 0,
       pay_massage: [],
-      modal: undefined
+      modal: undefined,
+
+      order_store_voucher_list_data:[],
+      order_store_voucher_info:null,
+      order_store_voucher_list_show:false,
+      order_store_voucher_list_name:"店铺优惠",
     }
   },
   filters: {
@@ -179,6 +186,17 @@ export default {
         this.address_info = address
       }
       this.modal.hide();
+    })
+    bus.$on("onBuyVoucherState", res => {
+      console.log(res);
+      this.order_store_voucher_list_show = res
+    })
+    bus.$on("onBuyVoucherselect",res=>{
+      console.log(res);
+      this.$set(this.voucher,res.store_id,res.voucher_id)
+      console.log(this.voucher);
+      this.order_store_voucher_list_show = false
+      this.getData()
     })
   },
   computed: {
@@ -216,7 +234,8 @@ export default {
       $loading.show()
       this.$api.userAuthPost("buy_step1", {
         cart_id: this.cart_id,
-        ifcart: this.ifcart
+        ifcart: this.ifcart,
+        voucher:JSON.stringify(this.voucher)
       }, res => {
         if (res.data.status_code == 1) {
           this.address_info = res.data.data.address_info
@@ -275,6 +294,13 @@ export default {
           $router.go(-1)
         },1500);
       })
+    },
+    select_order_voucger(list,store_voucher_info,store_id,store_name){
+      console.log(store_voucher_info);
+      this.order_store_voucher_list_data = list
+      this.order_store_voucher_info = store_voucher_info
+      this.order_store_voucher_list_name= store_name
+      this.order_store_voucher_list_show = true
     }
   }
 }
