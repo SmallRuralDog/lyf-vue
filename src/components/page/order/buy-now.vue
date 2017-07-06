@@ -79,7 +79,7 @@
                         <h2 @click="select_order_voucger(store.store_voucher_list,store.store_voucher_info,store.store_id,store.store_name)" class="uc-title" id="default-coupon-title" style="margin-bottom:0;">
                           <span class="cp-title">店铺优惠</span>
                           <span class="iconfont ion-chevron-right"></span>
-                          <span class="fr coupon-status" v-if="store.store_voucher_info.voucher_id > 0"><font color="#ff464e">已用优惠券，{{store.store_voucher_info.name}}</font></span>
+                          <span class="fr coupon-status" v-if="store.store_voucher_info.voucher_id > 0"><font color="#ff464e">{{store.store_voucher_info.name}}</font></span>
                           <span class="fr coupon-status" v-else>不使用优惠券</span>
                         </h2>
                     </div>
