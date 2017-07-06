@@ -180,11 +180,14 @@ export default {
       this.modal = modal
     })
     bus.$on("onChangeAddress", address => {
-      if(this.address_info == null){
+      /*if(this.address_info == null){
         this.getData()
       }else{
         this.address_info = address
-      }
+        this.getData()
+      }*/
+      this.address_info = address
+      this.getData()
       this.modal.hide();
     })
     bus.$on("onBuyVoucherState", res => {
@@ -235,6 +238,7 @@ export default {
       this.$api.userAuthPost("buy_step1", {
         cart_id: this.cart_id,
         ifcart: this.ifcart,
+        address_id:this.address_info.address_id,
         voucher:JSON.stringify(this.voucher)
       }, res => {
         if (res.data.status_code == 1) {
