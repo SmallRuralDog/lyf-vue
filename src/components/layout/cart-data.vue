@@ -192,7 +192,7 @@
             </div>
         </div>
     </div>
-    <voucher-list :popupVisible="popupVisible" :voucherlist="voucher_list" :storename="voucher_store_name" ></voucher-list>
+    <voucher-list :popupVisible="popupVisible" :voucherlist="voucher_list" :storename="voucher_store_name" :from="'cart'"></voucher-list>
 </div>
 </template>
 
@@ -324,7 +324,7 @@ export default {
       $loading.show("");
       this.getList();
     }
-    bus.$on("onVoucherState", res => {
+    bus.$on("onVoucherStateByCart", res => {
       console.log(res);
       this.popupVisible = res
     })

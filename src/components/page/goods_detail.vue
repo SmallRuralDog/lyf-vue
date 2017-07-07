@@ -233,7 +233,7 @@
   <actionsheet :data="data" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name" @refresh_goods_data="refreshGoodsData"></actionsheet>
 
   {{/*店铺优惠券*/}}
-  <voucher-list :popupVisible="voucherPopupVisible" :voucherlist="data.voucher_list" :storename="data.store_info.store_name" ></voucher-list>
+  <voucher-list :popupVisible="voucherPopupVisible" :voucherlist="data.voucher_list" :storename="data.store_info.store_name" :from="'goods'"></voucher-list>
 </div>
 </template>
 

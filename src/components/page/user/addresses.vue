@@ -360,7 +360,7 @@ export default {
     del_address(address_id) {
       $dialog.confirm({
         theme: 'ios',
-        title: '确认要删除这个宝贝吗?',
+        title: '确认要删除吗?',
         cancelText: '取消',
         okText: '确认'
       }).then((res) => {
