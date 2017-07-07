@@ -65,7 +65,7 @@
                     <div class="p-messages"><i class="iconfont icon-xiaoxi1 color-assertive"></i></div>
                     <p class="p-wrap-2-title">我的消息</p>
                 </div>
-                <div class="p-wrapper-2-item">
+                <div class="p-wrapper-2-item" @click='this.$router.push({name:"my_voucher"})'>
                     <div class="p-coupons"><i class="iconfont icon-coupon color-positive"></i></div>
                     <p class="p-wrap-2-title">我的优惠券</p>
                 </div>

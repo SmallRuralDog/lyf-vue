@@ -279,7 +279,7 @@ export default {
 </script>
 
 <style lang="scss">
-$color-theme: #F23030;
+@import "../../../assets/config.scss";
 .search-btn {
     line-height: 1.07rem;
     padding: 0 0.27rem;

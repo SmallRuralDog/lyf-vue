@@ -43,7 +43,7 @@ const order_rate = resolve => require(['./components/page/order/order-rate.vue']
 const order_pay_success = resolve => require(['./components/page/order/order-pay-success.vue'], resolve)
 const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
-
+const my_voucher = resolve => require(['./components/page/user/my-voucher.vue'], resolve)
 const order_refund_start = resolve => require(['./components/page/order/order-refund-start.vue'], resolve)
 const order_refund_return = resolve => require(['./components/page/order/order-refund-return.vue'], resolve)
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
@@ -189,6 +189,13 @@ const routes = [{
         meta:{title: '收藏夹'},
         component: favorite
       },
+      {
+        path: '/my-voucher',
+        name: 'my_voucher',
+        meta:{title: '我的优惠券'},
+        component: my_voucher
+      },
+
     ]
 
   },

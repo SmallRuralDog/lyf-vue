@@ -140,15 +140,19 @@ img[lazy=loaded] {transition:opacity .2s; opacity:1;}
 .top-menu-list {
   height: 1.07rem;
   width: 100%;
-  display: flex;
+  //display: flex;
 }
 
 .top-menu-item {
   min-width: 1.33rem;
+  max-width:3rem;
   height: 100%;
   font-size: 14px;
   text-align: center;
-  line-height: 1.07rem;//display: inline-block;
+  line-height: 1.07rem;
+  float: left;
+  padding:0 0.1rem;
+
 }
 //.top-menu-item:first {
 //  padding-left: 0.53rem;

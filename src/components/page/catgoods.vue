@@ -1,12 +1,14 @@
 <template lang="html">
 <div class="page">
-  <div class="topbar">
-      <div ref="list_top_menu" class="top-menu">
-          <ul ref="list_top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
-            <!--:style="'width:'+m_w+'px'"-->
-              <li ref="list_top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index,item.gc_id)">{{item.gc_name}}</li>
-          </ul>
-      </div>
+      <div class="topbar">
+        <div ref="list_top_menu" class="top-menu aui-border-b hm-flex-1">
+            <ul ref="list_top_menu_list" class="top-menu-list" :style="'width:'+m_w+'px'">
+              <!--:style="'width:'+m_w+'px'"-->
+                <li ref="list_top_menu_item" class="top-menu-item" :class="index==active?'active':''" v-for="(item,index) in goods_class" @click="changeMenu(index,item.gc_id)">{{item.gc_name}}</li>
+
+            </ul>
+        </div>
+        <a class="search-btn J_search-btn  aui-border-b" @click="go_search()"><i class="iconfont icon-sousuo"></i></a>
       </div>
       <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" v-show="page_show">
         <div class="goods-list clear" v-for="(items,indexs) in goods_class" v-if="active == indexs">
@@ -197,6 +199,14 @@ export default {
         }
       });
     },
+    go_search() {
+      $router.push({
+        name: 'class_all',
+        params: {
+          show_search: 0,
+        }
+      });
+    },
   },
   beforeRouteEnter(to, from, next){
     console.log('catgoods beforeRouteEnter from=',from.name)
@@ -225,7 +235,17 @@ export default {
 </script>
 
 <style lang="scss">
+  .search-btn {
+    line-height: 1.07rem;
+    padding: 0 0.27rem;
+    text-align: center;
+    display: inline-block;
+  }
 
+  .search-btn i {
+    font-size: 0.59rem;
+    color: #333;
+  }
 .goods-list {
     width: 10rem;
 }
