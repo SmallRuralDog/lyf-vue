@@ -1,11 +1,15 @@
 import axios from 'axios'
-var http = axios.create({
-  baseURL: HOST + '/api/',
-  timeout: 10000,
-});
+
 export default {
   //http
   userGet(url, cb, error) {
+    var http = axios.create({
+      baseURL: HOST + '/api/',
+      timeout: 10000,
+      headers: {
+        'Authorization': 'Bearer ' + this.l_get("token")
+      }
+    });
     http.get(url).then(res => {
       cb(res)
     }).catch(err => {
@@ -13,6 +17,13 @@ export default {
     });
   },
   userPost(url, data, cb, error) {
+    var http = axios.create({
+      baseURL: HOST + '/api/',
+      timeout: 10000,
+      headers: {
+        'Authorization': 'Bearer ' + this.l_get("token")
+      }
+    });
     http.post(url, data).then(res => {
       cb(res)
     }).catch(err => {
@@ -30,6 +41,11 @@ export default {
         }
       });
       uhttp.get(url).then(res => {
+        if (res.data.status_code <= -10000) {
+          $toast.show("登录信息已过期")
+          this.l_remove("token");
+          this.ck_login()
+        }
         cb(res)
       }).catch(err => {
         $loading.hide()
@@ -52,6 +68,11 @@ export default {
         }
       });
       uhttp.post(url, data).then(res => {
+        if (res.data.status_code <= -10000) {
+          $toast.show("登录信息已过期")
+          this.l_remove("token");
+          this.ck_login()
+        }
         cb(res)
       }).catch(err => {
         $loading.hide()

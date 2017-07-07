@@ -1,13 +1,10 @@
 <template lang="html">
 <div class="page">
   <div class="page-content">
+    <div class="padding">
+      <button @click="go_back()" class="button button-assertive button-block">点击回到登录前页面</button>
+    </div>
 
-    <p>
-      token:{{token}}
-    </p>
-    <p>
-      back:{{back}}
-    </p>
   </div>
 </div>
 </template>
@@ -35,6 +32,11 @@ export default {
       $router.back(this.back)
     }
     console.log(this.back);
+  },
+  methods:{
+    go_back(){
+      $router.replace(this.back)
+    }
   }
 }
 </script>

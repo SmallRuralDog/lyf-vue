@@ -6,11 +6,13 @@
     h1 {
         text-align: center;
         font-size: 0.43rem;
+        margin-bottom: 0;
     }
     div {
         text-align: center;
         font-size: 0.32rem;
     }
+
 }
 .voucher-list {
     height: 8rem;
@@ -28,6 +30,9 @@
             }
         }
     }
+    p{
+      margin-bottom: 0;
+    }
 }
 </style>
 
@@ -43,11 +48,12 @@
                     <div class="voucher-list-item">
                         <div class="voucher-list-item-left">
                             <p style="font-size:.67rem;color:#EA5A49;">{{item.voucher_t_price}}<small style="font-size:.43rem; margin-left:3px;">元</small></p>
-                            <p class="text-12 color-dark">订单满<strong style="color:#EA5A49;">{{item.voucher_t_limit}}</strong>元使用（不含邮费）</p>
-                            <p class="text-12 color-royal">使用期限 {{item.voucher_t_start_date}} - {{item.voucher_t_end_date}}</p>
+                            <p class="text-12 color-royal">订单满<strong>{{item.voucher_t_limit}}</strong>元使用（不含邮费）</p>
+                            <p class="text-12 color-royal">使用期限：{{item.voucher_t_start_date}} - {{item.voucher_t_end_date}}</p>
                         </div>
                         <div class="" style="width:2.13rem;align-self:center;text-align:right">
-                            <button @click="get_voucher(item.voucher_t_id)" style="width:1.47rem;" class="button button-assertive button-outline button-small">领取</button>
+                            <button class="button button-royal button-small button-outline color-royal" v-if="!item.get_num">已领取</button>
+                            <button v-else @click="get_voucher(item.voucher_t_id)" style="width:1.47rem;" class="button button-assertive button-outline button-small">领取</button>
                         </div>
                     </div>
                 </li>
@@ -83,16 +89,16 @@ export default {
   },
   watch: {
     voucherlist(val, oldVal) {
-      this.$nextTick(() => {
-        this._initScroll()
-      })
+
     },
     popupVisible(val, oldVal) {
       this.popupVisible_o = val
     },
     popupVisible_o(val, oldVal) {
       bus.$emit("onVoucherState", val)
-
+      this.$nextTick(() => {
+        this._initScroll()
+      })
     }
   },
   methods: {

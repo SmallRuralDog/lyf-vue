@@ -4,11 +4,8 @@
   <div class="download-app">
     <i class="iconfont icon-houtui2" @click="goback"></i>
   </div>
-  <div class="page-content" v-show="init" style="padding-bottom: 70px;">
+  <div class="page-content" v-show="init" style="padding-bottom: 1.87rem;">
     <!-- 页面内容 -->
-
-
-
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
           <swiper-slide>
@@ -18,30 +15,28 @@
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
 
-    <div class="infos hm-margin-b">
+    <div class="infos">
       <div class="area">
         <div class="prices" style="display: flex;align-items: center;width:100%;">
           <div class="price theme-txt" style="color:#e02e24">¥<i>{{data.goods_info.goods_price|price_yuan}}</i><b><big>{{data.goods_info.goods_price|price_jiao}}</big></b></div>
           <div class="price-old">¥268</div>
-          <div style="padding-left: 10px;">
-            <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;margin:0 5px;">拼团价</div>
-            <div class="aui-label aui-label-danger" style="font-size: 10px;height:14px;line-height: 15px;padding: 0px 3px;">包邮</div>
+          <div style="padding-left: .27rem;">
+            <div class="aui-label aui-label-danger" style="font-size: .27rem;height:.37rem;line-height: .4rem;padding: 0px .08rem;margin:0 .13rem;">拼团价</div>
+            <div class="aui-label aui-label-danger" style="font-size: .27rem;height:.37rem;line-height: .4rem;padding: 0px .08rem;">包邮</div>
           </div>
         </div>
       </div>
-      <div class="product hm-flex" style="padding-top: 6px;">
+      <div class="product hm-flex" style="padding-top: .16rem;">
         <h3 class="hm-flex-1">
           <span>{{data.goods_info.goods_name}}</span>
         </h3>
-        <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 45px;flex-direction: column;align-items:center;font-size: 10px;padding-left: 5px;">
-          <i class="iconfont icon-favorite" :class="{'color-theme':collected}" style="font-size: 22px;"></i>
+        <div class="hm-flex" @click="collect(data.goods_info.goods_id)" style="width: 1.2rem;flex-direction: column;align-items:center;font-size: .27rem;padding-left: .13rem;">
+          <i class="iconfont icon-favorite" :class="{'color-theme':collected}" style="font-size: .59rem;"></i>
           <template v-show="collected">已</template>收藏
         </div>
       </div>
     </div>
-
-
-    <!--<div class="hm-margin-b promise-block" style="background: #fff;padding:0 10px 10px;">-->
+    <!--<div class="hm-margin-b promise-block" style="background: #fff;padding:0 .27rem .27rem;">-->
     <!--<div class="hm-flex">-->
     <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>正品保证</div>-->
     <!--<div class="hm-flex-1"><i class="iconfont icon-shouye"></i>全场包邮</div>-->
@@ -50,8 +45,22 @@
     <!--</div>-->
     <!--</div>-->
 
+    <ul class="aui-list" v-if="data.voucher_list != ''">
+      <li class="aui-list-item aui-list-item-middle" style="height:1.07rem; min-height:1.07rem;" @click="neck_voucher()">
+        <div class="aui-list-item-inner " style="height:1.07rem; min-height:1.07rem;">
+          <div class="goods-voucher">
+            <div class="goods-voucher-name">领券</div>
+            <div class="goods-voucher-list">
+              <span v-if="index<3" v-for="(item,index) in data.voucher_list">满{{item.voucher_t_limit}}减{{item.voucher_t_price}}</span>
+            </div>
+          </div>
+          <i class="icon ion-android-more-horizontal color-royal"></i>
+        </div>
+      </li>
+    </ul>
 
-    <ul class="aui-list hm-margin-b" @click="add">
+
+    <ul class="aui-list hm-margin-b mt-10" @click="add">
       <li class="aui-list-item aui-list-item-middle">
         <div class="aui-list-item-inner ">
           已选
@@ -67,7 +76,7 @@
       </li>
     </ul>
 
-    <ul class="aui-list">
+    <ul class="aui-list ">
       <li class="aui-list-item aui-list-item-middle">
         <div class="aui-list-item-inner ">
           买家口碑
@@ -102,12 +111,12 @@
 
     <!--<item class="item-icon-right">-->
     <!--{{data.store_info.store_name}}-->
-    <!--<span style="float:right;font-size: 12px;color: #888;">进入店铺</span>-->
+    <!--<span style="float:right;font-size: .32rem;color: #888;">进入店铺</span>-->
     <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
     <!--</item>-->
 
-    <div class="hm-flex" @click="go_store(data.store_info.store_id)" style="background: #fff;padding: 15px 15px 0;">
-      <img v-lazy="data.store_info.store_label" style="width:35px; height:35px; margin-right:5px; border-radius:2px;" class="aui-border">
+    <div class="hm-flex" @click="go_store(data.store_info.store_id)" style="background: #fff;padding: .4rem .4rem 0;">
+      <img v-lazy="data.store_info.store_label" style="width:.93rem; height:.93rem; margin-right:.13rem; border-radius:.05rem;" class="aui-border">
       <div class="text-14" style="flex:1">{{data.store_info.store_name}}</div>
       <div class="join-store-btn" id="instore"> 进店逛逛</div>
     </div>
@@ -147,7 +156,7 @@
     </ul>
 
 
-    <div class="text-14" style="background: #fff;padding: 10px 10px 6px;">店铺推荐</div>
+    <div class="text-14" style="background: #fff;padding: .27rem .27rem .16rem;">店铺推荐</div>
     <div style="background: #fff;">
       <swiper :options="swiperOption2" style="position: relative;z-index: 1;" v-bind:style="{height: swipe2_height+'px'}">
         <!---->
@@ -223,6 +232,8 @@
   {{/*属性选择*/}}
   <actionsheet :data="data" :goodsid="goods_id" :init_spec="init_spec" :init_spec_name="init_spec_name" @refresh_goods_data="refreshGoodsData"></actionsheet>
 
+  {{/*店铺优惠券*/}}
+  <voucher-list :popupVisible="voucherPopupVisible" :voucherlist="data.voucher_list" :storename="data.store_info.store_name" ></voucher-list>
 </div>
 </template>
 
@@ -238,9 +249,11 @@ import {
   mapActions
 }
 from 'vuex'
-
+import VoucherList from '../layout/voucher-list.vue'
+import bus from "../../bus.js"
 function dataInit() {
   return {
+    voucherPopupVisible:false,
     init: false,
     goods_id: null,
     data: {
@@ -480,10 +493,17 @@ export default {
   components: {
     swiper,
     swiperSlide,
-    actionsheet
+    actionsheet,
+    VoucherList
   },
   created() {
     this.swipe_height = screen.width;
+  },
+  mounted(){
+    bus.$on("onVoucherState", res => {
+      console.log(res);
+      this.voucherPopupVisible = res
+    })
   },
   methods: {
     getData() {
@@ -507,7 +527,7 @@ export default {
       })
     },
     refreshGoodsData(id) {
-      console.log('refreshGoodsData(id)..',this.goods_id)
+      console.log('refreshGoodsData(id)..', this.goods_id)
       this.$api.userGet('goods_info?goods_id=' + id, res => {
         this.data = res.data.data;
         //更新init_spec，init_spec_name至vuex
@@ -592,6 +612,9 @@ export default {
           'urls': this.data.goods_image
         });
       }
+    },
+    neck_voucher() {
+      this.voucherPopupVisible = true
     }
   },
   computed: {
@@ -663,8 +686,8 @@ export default {
   watch: {
     goods_id(val, newVal) {
       console.log('watch', val, newVal)
-//      this.goods_id = val
-        this.getData()
+      //      this.goods_id = val
+      this.getData()
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -673,12 +696,12 @@ export default {
       let id = vm.$route.params.id;
       //            vm.data=dataInit()
       console.log('beforeRouteEnter id=', id)
-      if(vm.goods_id != id){
+      if (vm.goods_id != id) {
         vm.goods_id = id;
-      }else{
-        vm.init=true;
+      } else {
+        vm.init = true;
       }
-//      vm.getData();
+      //      vm.getData();
       //还原默认购买数量
       vm.$store.commit('ACTIONSHEET_UPDATE', {
         key: 'quantityx',
@@ -689,7 +712,7 @@ export default {
     })
   },
   beforeRouteLeave(to, from, next) {
-//    console.log('to:' + to.path, 'from:' + from.path)
+    //    console.log('to:' + to.path, 'from:' + from.path)
     this.init = false
     this.$store.commit('ACTIONSHEET_UPDATE', {
       key: 'firstTimeOpenSheet',
@@ -713,8 +736,8 @@ export default {
 }
 </script>
 <style lang="scss">
-  @import "../../assets/config.scss";
-  .submit-order {
+@import "../../assets/config.scss";
+.submit-order {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -722,9 +745,9 @@ export default {
     background-color: #fff;
     z-index: 100;
     height: 1.33rem;
-  }
+}
 
-  .submit-order .buy-align {
+.submit-order .buy-align {
     color: #fff;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -740,14 +763,14 @@ export default {
     -ms-flex-direction: column;
     flex-direction: column;
     background: $color-theme;
-    font-size: 14px;
-  }
+    font-size: .37rem;
+}
 
-  .submit-order .buy-align.cart {
+.submit-order .buy-align.cart {
     background: lighten($color-theme, 15%);
-  }
+}
 
-  .submit-order .icon-align {
+.submit-order .icon-align {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -761,39 +784,39 @@ export default {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-  }
+}
 
-  .submit-order .hm-flex-1 {
+.submit-order .hm-flex-1 {
     color: #666;
-  }
+}
 
-  .submit-order .hm-flex-1 .iconfont {
-    font-size: 24px;
-  }
+.submit-order .hm-flex-1 .iconfont {
+    font-size: .64rem;
+}
 
-  .cart-badge {
+.cart-badge {
     background: lighten($color-theme, 10%);
     color: #fff;
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: .43rem;
+    height: .43rem;
     border-radius: 50%;
-    top: 3px;
-    right: 6px;
-    font-size: 12px;
+    top: .08rem;
+    right: .16rem;
+    font-size: .32rem;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  //幻灯片焦点颜色
-    .swiper-pagination-bullet-active {
-      background: #e02e24;
-    }
+//幻灯片焦点颜色
+.swiper-pagination-bullet-active {
+    background: #e02e24;
+}
 
-  .download-app {
-    padding-top: 4px;
-    height: 48px;
+.download-app {
+    padding-top: .11rem;
+    height: 1.28rem;
     background-color: transparent;
     position: fixed;
     top: 0;
@@ -802,155 +825,152 @@ export default {
     z-index: 10;
     vertical-align: middle;
     display: block;
-  i {
-    display: block;
-    float: left;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.3);
-    margin: 5px 10px;
-    font-size: 18px;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    border-radius: 50%;
-    text-align: center;
-    z-index: 100;
-  }
-  }
+    i {
+        display: block;
+        float: left;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.3);
+        margin: .13rem .27rem;
+        font-size: .48rem;
+        width: .85rem;
+        height: .85rem;
+        line-height: .85rem;
+        border-radius: 50%;
+        text-align: center;
+        z-index: 100;
+    }
+}
 
-  .promise-block {
-    font-size: 12px;
-  i {
-    font-size: 12px;
-    color: $color-theme;
-    margin-right: 5px;
-  }
-  .hm-flex-1 {
-    text-align: center;
-    color: #666;
-  }
-  }
+.promise-block {
+    font-size: .32rem;
+    i {
+        font-size: .32rem;
+        color: $color-theme;
+        margin-right: .13rem;
+    }
+    .hm-flex-1 {
+        text-align: center;
+        color: #666;
+    }
+}
 
-  //贝贝样式
+//贝贝样式
 
-
-  .infos {
-    padding: 10px;
+.infos {
+    padding: .27rem;
     background-color: #fff;
-  }
+}
 
-
-
-  .infos .area .prices span {
+.infos .area .prices span {
     /*vertical-align: bottom;*/
-  }
+}
 
-  .infos .area .prices .price {
+.infos .area .prices .price {
     /*display: inline-block;*/
     /*line-height: 1;*/
-    font-size: 15px;
-  }
+    font-size: .4rem;
+}
 
-  .infos .area .prices .price i {
-    font-size: 24px;
+.infos .area .prices .price i {
+    font-size: .64rem;
     /*line-height: 1.024rem;*/
     margin-left: 0.064rem;
     font-weight: bold;
-  }
+}
 
-  .infos .area .prices .price-old {
+.infos .area .prices .price-old {
     margin-left: 0.256rem;
     /*display: inline-block;
     line-height: 1;*/
-    font-size: 13px;
+    font-size: .35rem;
     text-decoration: line-through;
     color: #8f8f8f;
-  }
+}
 
-  .infos .product h3 {
-    font-size: 15px;
+.infos .product h3 {
+    font-size: .4rem;
     line-height: 1.5;
-  }
+}
 
-  /*评价列表样式*/
+/*评价列表样式*/
 
-  .reviews {
+.reviews {
     background: #fff;
-  }
+}
 
-  .reviews .review-item {
-    padding: 10px;
-  }
+.reviews .review-item {
+    padding: .27rem;
+}
 
-  .reviews .content {
-    margin: 0 0 5px;
+.reviews .content {
+    margin: 0 0 .13rem;
     color: #3d3d3d;
-    font-size: 13px;
+    font-size: .35rem;
     line-height: 1.5;
-    padding-left: 40px;
-  }
+    padding-left: 1.07rem;
+}
 
-  .reviews .head-img {
-    width: 30px;
-    height: 30px;
+.reviews .head-img {
+    width: .8rem;
+    height: .8rem;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: .27rem;
     border: 1px solid #e4e4e4;
     display: inline-block;
     vertical-align: top;
-  }
+}
 
-  .reviews .sku-info span {
+.reviews .sku-info span {
     /*margin-right: .384rem;*/
-    font-size: 12px;
+    font-size: .32rem;
     line-height: 1.5;
     color: #999;
-    padding-left: 40px;
-  }
+    padding-left: 1.07rem;
+}
 
-  .reviews .review-item span {
+.reviews .review-item span {
     display: inline-block;
     vertical-align: top;
-  }
+}
 
-  .reviews .icon-score.active {
+.reviews .icon-score.active {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAWCAMAAADto6y6AAAAVFBMV…Chy0apPDoqGE5MP6J24oQpQTN7/Tw9sy6hXWH1am3v8QcfsRf3W4ketwAAAABJRU5ErkJggg==") no-repeat 50%;
     background-size: 0.46933333rem 0.46933333rem;
-  }
+}
 
-  /*===========*/
+/*===========*/
 
-  .event-list {
+.event-list {
     display: flex;
     background: #fff;
-    padding: 15px 0;
-  }
+    padding: .4rem 0;
+}
 
-  .event-item {
+.event-item {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     /*border-right: 1px #fafafa solid;*/
-  }
+}
 
-  /*.event-item:last-child{*/
+/*.event-item:last-child{*/
 
-  /*flex:1.5;*/
+/*flex:1.5;*/
 
-  /*}*/
+/*}*/
 
-  .event-item-num {
-    font-size: 14px;
-  }
+.event-item-num {
+    font-size: .37rem;
+}
 
-  .event-item-text {
+.event-item-text {
     color: #8f8f8f;
-  }
-  .instore.aui-label-outlined:after {
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
+}
+.instore.aui-label-outlined:after {
+    -webkit-border-radius: .11rem;
+    border-radius: .11rem;
     height: 200%;
     content: '';
     width: 200%;
@@ -963,32 +983,55 @@ export default {
     transform-origin: 0 0;
     -webkit-transform-origin: 0 0;
     z-index: 1;
-  }
+}
 
-  .score i {
+.score i {
     font-size: 0.32rem;
     color: #f60;
     margin-right: 0.05rem;
-  }
-  .mobile_body {
+}
+.mobile_body {
     background: #ffffff;
     margin-top: 0.4rem;
     padding-top: 0.4rem;
-  }
-  .mobile_body p {
+}
+.mobile_body p {
     padding-left: 0.32rem;
     padding-right: 0.32rem;
     margin-top: 0.16rem;
     margin-bottom: 0.16rem;
     font-size: 0.4rem;
     color: #3d4245;
-  }
-  .join-store-btn {
+}
+.join-store-btn {
     border: 1px solid #ff5000;
     color: #ff5000;
     padding: 0.08rem 0.32rem;
     border-radius: 0.106667rem;
     margin: 0 0.32rem;
     height: 0.75rem;
-  }
+}
+.goods-voucher {
+    display: flex;
+    align-items: center;
+    height: .8rem;
+    .goods-voucher-name {
+        margin-right: 0.27rem;
+        line-height: .53rem;
+        height: .53rem;
+    }
+    .goods-voucher-list {
+        span {
+            font-size: 0.27rem;
+            color: #ffffff;
+            background-color: #F23030;
+            padding: .025rem 0.13rem;
+            margin: 0 .2rem 0 0;
+            border-radius: 2px;
+        }
+        height: .53rem;
+        font-size: .27rem;
+        vertical-align: middle;;
+    }
+}
 </style>

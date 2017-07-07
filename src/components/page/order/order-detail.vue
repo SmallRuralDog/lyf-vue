@@ -37,7 +37,7 @@
                             </div>
                         </div>
 
-                        <div class="module address">
+                        <div class="module address" style="position:none;">
                             <div class="o-t-contmsg">
                                 <div class="ico"><span class="ion-location"></span></div>
                                 <div class="cont">

@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="state">
                                     <div class="state-cont" v-if="store.voucher_list.length > 0">
-                                        <p class="edit undefined" @click="neck_voucher(store.voucher_list,store.store_name)">领券</p>
+                                        <p class="edit undefined color-assertive" @click="neck_voucher(store.voucher_list,store.store_name)"><i class="ion-fireball"></i> 领券</p>
                                     </div>
                                     <div class="state-cont">
                                         <p class="edit undefined" @click="edit_cart(store.store_id)">{{store.edit_text}}</p>

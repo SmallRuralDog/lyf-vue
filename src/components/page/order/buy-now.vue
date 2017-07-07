@@ -190,8 +190,7 @@ export default {
       this.getData()
       this.modal.hide();
     })
-    bus.$on("onBuyVoucherState", res => {
-      console.log(res);
+    bus.$on("onBuyVoucherState", res => {//打开关闭优惠券选择弹窗
       this.order_store_voucher_list_show = res
     })
     bus.$on("onBuyVoucherselect",res=>{
@@ -250,6 +249,10 @@ export default {
           this.page_show = true
           for (var key in this.store_cart_list) {
             this.$set(this.pay_massage, key, '')
+            if( this.store_cart_list[key].store_voucher_info != ''){
+              this.$set(this.voucher, key, this.store_cart_list[key].store_voucher_info.voucher_id)
+            }
+
           }
         } else {
           $toast.show(res.data.message)
@@ -277,6 +280,7 @@ export default {
       this.$api.userAuthPost("buy_step2", {
         cart_id: this.cart_id,
         ifcart: this.ifcart,
+        voucher:JSON.stringify(this.voucher),
         address_id: this.address_info.address_id,
         pay_message: msg.join(",")
       }, res => {
@@ -300,7 +304,6 @@ export default {
       })
     },
     select_order_voucger(list,store_voucher_info,store_id,store_name){
-      console.log(store_voucher_info);
       this.order_store_voucher_list_data = list
       this.order_store_voucher_info = store_voucher_info
       this.order_store_voucher_list_name= store_name
