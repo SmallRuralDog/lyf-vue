@@ -39,8 +39,10 @@ $color-leimu: #4FC4F1;
 .voucher-item .hm-flex-1 {
     position: relative;
     border-right: 1px dotted #eee;
-    padding: 8px 5px 8px 10px;
+    padding: 8px 10px 8px 10px;
+
 }
+
 
 .voucher-item.item-dianpu .hm-flex-1 {
     border-left: 4px solid $color-dianpu;
@@ -63,7 +65,7 @@ $color-leimu: #4FC4F1;
 
 .voucher-item .hm-flex-2 {
     border-right: 2px dotted #f5f5f5;
-    padding: 8px 0 8px 25px;
+    padding: 8px 10px 8px 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,6 +76,12 @@ $color-leimu: #4FC4F1;
       right: .13rem;
       font-size: .32rem;
       margin: .13rem;
+    }
+    i{
+      font-size:50px;
+      position: absolute;
+      right: 5px;
+      top:5px;
     }
 }
 
@@ -93,17 +101,17 @@ $color-leimu: #4FC4F1;
     margin-bottom: 5px;
 }
 
-.voucher-item.item-dianpu .hm-flex-2 .voucher-condition {
+.voucher-item.item-dianpu .hm-flex-2 .voucher-condition,.voucher-item.item-dianpu .hm-flex-2 i {
     color: $color-dianpu;
 }
-.voucher-item.item-guoqi .hm-flex-2 .voucher-condition {
+.voucher-item.item-guoqi .hm-flex-2 .voucher-condition ,.voucher-item.item-guoqi .hm-flex-2 i{
     color: #484746;
 }
-.voucher-item.item-tongyong .hm-flex-2 .voucher-condition {
+.voucher-item.item-tongyong .hm-flex-2 .voucher-condition,.voucher-item.item-tongyong .hm-flex-2 i {
     color: $color-tongyong;
 }
 
-.voucher-item.item-leimu .hm-flex-2 .voucher-condition {
+.voucher-item.item-leimu .hm-flex-2 .voucher-condition ,.voucher-item.item-leimu .hm-flex-2 i{
     color: $color-leimu;
 }
 
@@ -186,14 +194,20 @@ $color-theme: #F23030;
                 <div class="voucher-item item-dianpu" :class="{'item-guoqi':item.voucher_state>1}">
                     <div class="hm-flex-1">店铺券
                         <div class="price-wrapper">
-                            ￥<span class="voucher-price">{{item.voucher_price}}</span>
+                            <span style="font-size: 20px;">￥</span><span class="voucher-price">{{item.voucher_price}}</span>
                         </div>
                         <div class="hole hole-up"></div>
                         <div class="hole hole-down"></div>
                     </div>
+
+
+
                     <div class="hm-flex-2">
-                        <span v-if="item.voucher_state==3">已过期</span>
-                        <span v-if="item.voucher_state==2">已使用</span>
+                        <i class="iconfont icon-kuaiguoqi" v-if="item.be_gq"></i>
+                        <i class="iconfont icon-yiguoqi" v-if="item.voucher_state==3"></i><!--已过期-->
+                        <i class="iconfont icon-yishiyong" v-if="item.voucher_state==2"></i><!--已使用-->
+                        <!--<span v-if="item.voucher_state==3">已过期</span>-->
+                        <!--<span v-if="item.voucher_state==2">已使用</span>-->
                         <div class="voucher-condition">满{{item.voucher_limit}}减{{item.voucher_price}}</div>
                         <div>仅限{{item.store.store_name}}</div>
                         <div class="voucher-time">{{item.voucher_start_date}}-{{item.voucher_end_date}}</div>

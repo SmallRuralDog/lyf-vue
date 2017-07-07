@@ -78,7 +78,13 @@
                 </ul>
 
             </div>
-          <div v-if="!load_more" slot="infinite" class="text-center">没有更多数据</div><!--要放在scroll内最外层-->
+          <div v-if="!load_more" slot="infinite" class="text-center" style="margin-top:200px;">
+            <!--没有更多数据-->
+            <p><i class="ion-ios-list-outline color-royal text-80"></i></p>
+            <p>暂无数据</p>
+          </div><!--要放在scroll内最外层-->
+
+
         </scroll>
     </div>
 </div>
