@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="page has-tabbar">
-        <scroll class="page-content" style="top: -1.07rem;" :on-refresh="onRefresh" v-if="page_show">
+        <scroll class="page-content" style="top: -1.1rem;" :on-refresh="onRefresh" v-if="page_show">
             <div class="personal-head head-bg-img" >
                 <img alt="" v-lazy="user.user.avatar">
                 <div class="p-head-info">

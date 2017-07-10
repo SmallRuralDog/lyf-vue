@@ -75,7 +75,7 @@ del {
 }
 .order-manage.list .order-list > li,
 .order-manage .order-box {
-    border-bottom: 0.01rem solid #e7e7e7;
+    //border-bottom: 0.01rem solid #e7e7e7;
     position: relative
 }
 .order-manage.list .order-list > li:after,
@@ -332,7 +332,7 @@ padding-right: .267rem;
     display: -ms-box;
     display: -o-box;
     display: box;
-    border-bottom: 1px solid #e7e7e7
+    //border-bottom: 1px solid #e7e7e7
 }
 [data-dpr="1"] .order-manage header {
     font-size: 18px
@@ -425,7 +425,7 @@ padding-right: .267rem;
     background: #fff
 }
 .order-manage .order-phase {
-    border-bottom: 1px solid #e7e7e7
+    //border-bottom: 1px solid #e7e7e7
 }
 [data-dpr="1"] .order-manage .order-phase {
     font-size: 12px
@@ -522,7 +522,9 @@ padding-right: .267rem;
     font-size: .533rem
 }
 .order-manage .nav-tab-top {
-    height: 1.093rem
+    height: 1.067rem;
+    background: #fff;
+
 }
 [data-dpr="1"] .order-manage .nav-tab-top {
     font-size: 14px
@@ -548,8 +550,10 @@ padding-right: .267rem;
     display: -ms-box;
     display: -o-box;
     display: box;
-    background: #fff;
-    border-bottom: 1px solid #e7e7e7
+    //background: #fff;
+    //border-bottom: 1px solid #e7e7e7
+
+
 }
 .order-manage .nav-tab-top ul li {
     -webkit-box-flex: 1;
@@ -559,7 +563,8 @@ padding-right: .267rem;
     box-flex: 1;
     height: 1.067rem;
     line-height: 1.067rem;
-    text-align: center
+    text-align: center;
+
 }
 [data-dpr="1"] .order-manage .nav-tab-top ul li span {
     font-size: 12px
@@ -729,7 +734,7 @@ padding-right: .267rem;
     display: box;
     padding: .233rem .32rem;
     box-sizing: border-box;
-    background: #f7f7f7
+    background: #fafafa;//#f7f7f7
 }
 [data-dpr="1"] .order-manage .o-t-item {
     font-size: 12px
@@ -944,7 +949,8 @@ padding-right: .267rem;
     display: -o-box;
     display: box;
     background: #fff;
-    border-bottom: 0.01rem solid #f7f7f7
+    //border-bottom: 0.01rem solid #f7f7f7
+
 }
 .order-manage .o-total-price .cont {
     width: 100%;
@@ -1394,7 +1400,7 @@ padding-right: .267rem;
     display: -o-box;
     display: box;
     padding: .32rem 0;
-    border-bottom: 1px solid #e7e7e7
+    //border-bottom: 1px solid #e7e7e7
 }
 .order-manage .o-pop-btm .info li p {
     -webkit-box-flex: 1;

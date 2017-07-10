@@ -3,17 +3,19 @@
     <div class="order-manage list">
         <div class="top-fixed">
             <div class="nav-tab-top">
-                <ul>
+                <ul class=" aui-border-b">
                   <template v-for="(item,index) in tabs">
                     <li :class="{'cur':index==active}" @click="go_orderlist(index)">{{item}}</li>
                   </template>
                 </ul>
             </div>
         </div>
-        <scroll class="page-content" ref="lyf_scroll" :on-refresh="onRefresh" :on-infinite="onInfinite">
+
+
+        <scroll class="page-content" ref="lyf_scroll" :on-refresh="onRefresh" :on-infinite="onInfinite" v-show="init">
             <div class="">
-                <ul class="order-list">
-                    <li v-for="order in order_list" style="margin-bottom:.27rem;">
+                <ul class="order-list" v-if="order_list.length>0">
+                    <li v-for="order in order_list" style="margin-bottom:.27rem;" class="aui-border-b">
                         <div class="module storage"></div>
                         <div class="module seller">
                             <div class="o-t-title-shop">
@@ -77,11 +79,16 @@
                     </li>
                 </ul>
 
+                <div v-else class="text-center" style="margin-top:200px;">
+                  <p><i class="ion-ios-list-outline color-royal text-80"></i></p>
+                  <p>暂无数据</p>
+                </div>
+
             </div>
-          <div v-if="!load_more" slot="infinite" class="text-center" style="margin-top:200px;">
-            <!--没有更多数据-->
-            <p><i class="ion-ios-list-outline color-royal text-80"></i></p>
-            <p>暂无数据</p>
+          <div v-if="!load_more" slot="infinite" class="text-center">
+            <template v-if="order_list.length>0">
+            没有更多数据
+            </template>
           </div><!--要放在scroll内最外层-->
 
 
@@ -98,6 +105,7 @@ export default {
   name: "order_list",
   data() {
     return {
+
       tabs:['全部','待付款','待发货','待收货','待评价'],
       state_type:['all','dfk','dfh','dsh','dpj'],
 //      active:0,
@@ -139,6 +147,7 @@ export default {
     getData(done) {
 
       if(!this.load_more) return;
+      $loading.show()
       console.log('!load_more=',!this.load_more,'loading=',this.loading,'pages=',this.page)
 //      if (this.page == 1) {
 //        $loading.show()
@@ -167,6 +176,7 @@ export default {
         }
         this.loading=false
         this.$nextTick(() => {
+
           $loading.hide()
           done()
         })
@@ -341,20 +351,22 @@ export default {
 
   .order-manage .nav-tab-top ul {
     display: flex;
-    background: #fff;
-    border-bottom: 0.01rem solid #e7e7e7;
+    /*background: #fff;
+    border-bottom: 0.01rem solid #e7e7e7;*/
   }
 
   .order-manage .nav-tab-top ul li {
     height: 1.067rem;
     line-height: 1.067rem;
-    margin-bottom: -0.01rem;
+    /*margin-bottom: -0.01rem;*/
     text-align: center;
     font-size: 0.37rem;
     font-weight: 400;
     flex-grow: 1;
     flex-shrink: 0;
   }
+
+
 
   .order-manage .nav-tab-top ul .cur {
     border-bottom: 0.01rem solid $color-theme;

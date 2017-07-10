@@ -1,4 +1,5 @@
 <style lang="scss">
+@import "../../../assets/config.scss";
 $hole-width: 10px;
 $color-dianpu: #F3A544;
 $color-guoqi: #484746;
@@ -115,7 +116,6 @@ $color-leimu: #4FC4F1;
     color: $color-leimu;
 }
 
-$color-theme: #F23030;
 .top-fixed {
     position: fixed;
     top: 0;
@@ -126,8 +126,8 @@ $color-theme: #F23030;
 
 .order-manage .nav-tab-top ul {
     display: flex;
-    background: #fff;
-    border-bottom: 0.01rem solid #e7e7e7;
+    /*background: #fff;*/
+    /*border-bottom: 0.01rem solid #e7e7e7;*/
 }
 
 .order-manage .nav-tab-top ul li {
@@ -142,9 +142,10 @@ $color-theme: #F23030;
 }
 
 .order-manage .nav-tab-top ul .cur {
-    border-bottom: 0.08rem solid #ea5a49;
+    border-bottom: 0.01rem solid $color-theme;
     box-sizing: border-box;
-    color: #ea5a49;
+    color: $color-theme;
+    font-weight:bold;
 }
 
 .fav-good-item {
@@ -182,7 +183,7 @@ $color-theme: #F23030;
     <div class="order-manage list">
         <div class="top-fixed">
             <div class="nav-tab-top">
-                <ul>
+                <ul class=" aui-border-b">
                     <template v-for="(item,index) in tabs">
                         <li @click="change_type(index)" :class="{'cur':index==active}">{{item}}</li>
                     </template>

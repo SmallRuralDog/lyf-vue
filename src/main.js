@@ -32,8 +32,9 @@ const new_arrivals = resolve => require(['./components/page/index/new_arrivals.v
 const Cart = resolve => require(['./components/page/index/cart.vue'], resolve)
 const User = resolve => require(['./components/page/index/user.vue'], resolve)
 const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
-const goods_detail = resolve => require(['./components/page/goods_detail.vue'], resolve)
-const catgoods = resolve => require(['./components/page/catgoods.vue'], resolve)
+const goods_detail = resolve => require(['./components/page/mall/goods_detail.vue'], resolve)
+const comment_list = resolve => require(['./components/page/mall/comment-list.vue'], resolve)
+const catgoods = resolve => require(['./components/page/mall/catgoods.vue'], resolve)
 const address = resolve => require(['./components/page/user/addresses.vue'], resolve)
 const order_buynow = resolve => require(['./components/page/order/buy-now.vue'], resolve)
 const order_list = resolve => require(['./components/page/order/order-list.vue'], resolve)
@@ -41,7 +42,7 @@ const order_detail = resolve => require(['./components/page/order/order-detail.v
 const order_logistics = resolve => require(['./components/page/order/order-logistics.vue'], resolve)
 const order_rate = resolve => require(['./components/page/order/order-rate.vue'], resolve)
 const order_pay_success = resolve => require(['./components/page/order/order-pay-success.vue'], resolve)
-const store_home = resolve => require(['./components/page/store_home.vue'], resolve)
+const store_home = resolve => require(['./components/page/mall/store_home.vue'], resolve)
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 const my_voucher = resolve => require(['./components/page/user/my-voucher.vue'], resolve)
 const order_refund_start = resolve => require(['./components/page/order/order-refund-start.vue'], resolve)
@@ -92,6 +93,12 @@ const routes = [{
         name: 'goods_detail',
         meta:{title: '商品详情'},
         component: goods_detail
+      },
+      {
+        path: '/comment-list/:id',
+        name: 'comment_list',
+        meta:{title: '买家口碑'},
+        component: comment_list
       },
       {
         path: '/catgoods/:gc_id',

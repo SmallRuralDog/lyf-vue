@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1499419544190'); /* IE9*/
-  src: url('iconfont.eot?t=1499419544190#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1499419544190') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1499419544190') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1499419544190#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1499655069606'); /* IE9*/
+  src: url('iconfont.eot?t=1499655069606#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1499655069606') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1499655069606') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1499655069606#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -24,6 +24,8 @@
 .icon-cshy-rmb2:before { content: "\e62c"; }
 
 .icon-sousuo:before { content: "\e621"; }
+
+.icon-wuxing:before { content: "\e64b"; }
 
 .icon-daifukuan:before { content: "\e7a2"; }
 

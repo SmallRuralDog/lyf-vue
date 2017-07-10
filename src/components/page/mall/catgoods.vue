@@ -42,7 +42,7 @@
 
 <script>
 import BScroll from 'better-scroll'
-import scroll from '../layout/scroll.vue';
+import scroll from '../../layout/scroll.vue';
 import {
   mapState,
   mapActions

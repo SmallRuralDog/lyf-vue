@@ -77,7 +77,7 @@
     </ul>
 
     <ul class="aui-list ">
-      <li class="aui-list-item aui-list-item-middle">
+      <li class="aui-list-item aui-list-item-middle" @click="go_comment(goods_id)">
         <div class="aui-list-item-inner ">
           买家口碑
           <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
@@ -93,8 +93,8 @@
             <span class="nick">{{item.nick}}</span>
             <!--<span class="join-time">在贝贝188天</span>-->
             <span class="score">
-                      <i class="iconfont icon-favorite active " v-for="i in item.geval_scores"></i>
-                    </span>
+              <i class="iconfont icon-favorite active " v-for="i in item.geval_scores"></i>
+            </span>
           </p>
 
           <p class="content">{{item.geval_content}}</p>
@@ -163,37 +163,37 @@
         <swiper-slide>
           <div class="hm-flex">
             <template v-for="slide in recom_items1">
-                            <div class="hm-flex-1">
-                                <div style="margin:1.6%;">
-                                    <img :src="slide.img" style="background-color:#ffffff; width:100%;">
-                                    <p class="aui-ellipsis-2">{{slide.title}}</p>
-                                </div>
-                            </div>
-                        </template>
+                <div class="hm-flex-1">
+                    <div style="margin:1.6%;">
+                        <img :src="slide.img" style="background-color:#ffffff; width:100%;">
+                        <p class="aui-ellipsis-2">{{slide.title}}</p>
+                    </div>
+                </div>
+            </template>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="hm-flex">
             <template v-for="slide in recom_items2">
-                            <div class="hm-flex-1">
-                                <div style="margin:1.6%;">
-                                    <img :src="slide.img" style="background-color:#ffffff; width:100%;">
-                                    <p class="aui-ellipsis-2">{{slide.title}}</p>
-                                </div>
-                            </div>
-                        </template>
+                <div class="hm-flex-1">
+                    <div style="margin:1.6%;">
+                        <img :src="slide.img" style="background-color:#ffffff; width:100%;">
+                        <p class="aui-ellipsis-2">{{slide.title}}</p>
+                    </div>
+                </div>
+            </template>
           </div>
         </swiper-slide>
         <swiper-slide>
           <div class="hm-flex">
             <template v-for="slide3 in recom_items3">
-                            <div class="hm-flex-1">
-                                <div style="margin:1.6%;">
-                                    <img :src="slide3.img" style="background-color:#ffffff; width:100%;">
-                                    <p class="aui-ellipsis-2">{{slide3.title}}</p>
-                                </div>
-                            </div>
-                        </template>
+                <div class="hm-flex-1">
+                    <div style="margin:1.6%;">
+                        <img :src="slide3.img" style="background-color:#ffffff; width:100%;">
+                        <p class="aui-ellipsis-2">{{slide3.title}}</p>
+                    </div>
+                </div>
+            </template>
           </div>
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
@@ -243,14 +243,14 @@ import {
   swiperSlide
 }
 from 'vue-awesome-swiper'
-import actionsheet from '../layout/action-sheet.vue';
+import actionsheet from '../../layout/action-sheet.vue';
 import {
   mapState,
   mapActions
 }
 from 'vuex'
-import VoucherList from '../layout/voucher-list.vue'
-import bus from "../../bus.js"
+import VoucherList from '../../layout/voucher-list.vue'
+import bus from "../../../bus.js"
 function dataInit() {
   return {
     voucherPopupVisible:false,
@@ -569,6 +569,14 @@ export default {
         }
       })
     },
+    go_comment(id) {
+      $router.push({
+        name: 'comment_list',
+        params: {
+          id: id
+        }
+      })
+    },
     gocart() {
       this.$router.push('/cart')
     },
@@ -736,7 +744,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "../../assets/config.scss";
+@import "../../../assets/config.scss";
 .submit-order {
     position: fixed;
     bottom: 0;

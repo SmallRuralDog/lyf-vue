@@ -7,7 +7,9 @@
 <template lang="html">
 
 <div class="page">
-    <div class="page-content" v-show="init">
+    <scroll class="page-content" ref="lyf_scroll" :on-refresh="onRefresh" :on-infinite="onInfinite" v-show="init" style="margin-top: -40px;">
+    <!--<div class="page-content" v-show="init">-->
+
     <div style="background-color: #fff;" v-for="item in data">
       <div class="aui-border-b hm-flex" style="padding: 10px;text-align: right;justify-content: space-between;">
         <div>订单号：{{item.order_sn}}</div>
@@ -34,14 +36,14 @@
       </div>
     </div>
 
+    <div v-if="!load_more" slot="infinite" class="text-center">
+      <template v-if="data.length>0">
+        没有更多数据
+      </template>
+    </div><!--要放在scroll内最外层-->
 
 
-
-
-
-
-
-    </div>
+    </scroll>
 </div>
 
 </template>
@@ -76,14 +78,19 @@ export default {
           }
         ]
       }],
+      load_more:true,
+      page:1,
+      loading:false,
     }
   },
   mounted() {
 
-    this.getData()
+    this.getData(()=>{
+      this.init=true
+    })
   },
   methods: {
-    getData() {
+    getData(done) {
       $loading.show('')
       this.$api.userAuthGet("get_refund_list?page=" + this.page , res => {
         if(res.data.status_code==1){
@@ -92,14 +99,37 @@ export default {
               this.data.push(res.data.data.data[i])
           }
         }
-        $loading.hide()
-        this.init=true
+        if(res.data.data.current_page>=res.data.data.last_page) {
+          this.load_more=false
+        }
 
+        $loading.hide()
+//        this.init=true
         console.log(res)
+        done()
 
       }, error => {
 
       })
+    },
+    onRefresh(done) {
+      if (this.loading) return;
+      this.page = 1
+      this.load_more = true
+//      this.$store.commit('ORDERLIST_UPDATE_LIST',{load_more:true})
+      this.getData(done)
+
+    },
+    onInfinite(){
+//      this.$set(this.pages,this.active,this.page+1)
+//      this.$store.commit('ORDERLIST_UPDATE_LIST',{page:this.page+1})
+
+      console.log('pages=',this.page,'load_more=',this.load_more)
+      if(this.load_more){
+        this.page=this.page+1
+        this.getData(()=>{})
+      }
+
     },
 
     //上传退货凭证
