@@ -157,50 +157,22 @@
 
 
     <div class="text-14" style="background: #fff;padding: .27rem .27rem .16rem;">店铺推荐</div>
-    <div style="background: #fff;">
-      <swiper :options="swiperOption2" style="position: relative;z-index: 1;" v-bind:style="{height: swipe2_height+'px'}">
-        <!---->
-        <swiper-slide>
-          <div class="hm-flex">
-            <template v-for="slide in recom_items1">
-                <div class="hm-flex-1">
-                    <div style="margin:1.6%;">
-                        <img :src="slide.img" style="background-color:#ffffff; width:100%;">
-                        <p class="aui-ellipsis-2">{{slide.title}}</p>
+    <div style="background: #fff;" ref="store_hot_scl">
+      <div class="hm-flex" :style="'width:'+store_hot_list_w+'px'">
+        <template v-for="goods in data.store_hot">
+                <div class="hm-flex-1" ref="store_hot_scl_item" @click="go_goods(goods.goods_id)">
+                    <div style="width:130px; margin:5px;">
+                        <img v-lazy="goods.goods_image" style="background-color:#ffffff; width:100%;">
+                        <p class="aui-ellipsis-2">{{goods.goods_name}}</p>
                     </div>
                 </div>
             </template>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="hm-flex">
-            <template v-for="slide in recom_items2">
-                <div class="hm-flex-1">
-                    <div style="margin:1.6%;">
-                        <img :src="slide.img" style="background-color:#ffffff; width:100%;">
-                        <p class="aui-ellipsis-2">{{slide.title}}</p>
-                    </div>
-                </div>
-            </template>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <div class="hm-flex">
-            <template v-for="slide3 in recom_items3">
-                <div class="hm-flex-1">
-                    <div style="margin:1.6%;">
-                        <img :src="slide3.img" style="background-color:#ffffff; width:100%;">
-                        <p class="aui-ellipsis-2">{{slide3.title}}</p>
-                    </div>
-                </div>
-            </template>
-          </div>
-        </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+      </div>
+
     </div>
 
     <div class="mobile_body">
+      <div class="text-14" style="background: #fff;padding: .27rem .27rem .16rem;">商品详情</div>
       <template v-for="item in data.goods_info.mobile_body">
         <img v-if="item.type=='image'" v-lazy="item.value" alt="">
         <p v-else-if="item.type=='text'" v-html="item.value"></p>
@@ -251,9 +223,11 @@ import {
 from 'vuex'
 import VoucherList from '../../layout/voucher-list.vue'
 import bus from "../../../bus.js"
+import BScroll from 'better-scroll'
+
 function dataInit() {
   return {
-    voucherPopupVisible:false,
+    voucherPopupVisible: false,
     init: false,
     goods_id: null,
     data: {
@@ -292,199 +266,7 @@ function dataInit() {
       pagination: '.swiper-pagination',
     },
     collected: false, //已收藏
-    recom_items1: [{
-      "price_ori": 5000,
-      "img": "http://b1.hucdn.com/upload/item/1701/04/11007582681203_800x800.jpg",
-      "iid": 17103226,
-      "sale_num": 3153,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "3153人已团",
-      "discount": 62,
-      "ads_tag": "",
-      "title": "10条装活力鸭 6层婴儿纱布口水巾宝宝纯棉小方巾",
-      "his_product_sold_cnt": 3153,
-      "vid": 15,
-      "event_id": 600015913,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 3100,
-      "product_id": 2265437,
-      "stock": 10074,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 8800,
-      "img": "http://b1.hucdn.com/upload/item/1704/28/54964729637083_800x800.jpg",
-      "iid": 20570576,
-      "sale_num": 1688,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "1688人已团",
-      "discount": 21,
-      "ads_tag": "",
-      "title": "5条装   贝吉宝婴儿口水巾新生儿洗脸巾纯棉小方巾超柔宝宝儿童手帕手绢",
-      "his_product_sold_cnt": 1688,
-      "vid": 15,
-      "event_id": 600003198,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 1789,
-      "product_id": 2972477,
-      "stock": 4992,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 3990,
-      "img": "http://b1.hucdn.com/upload/item/1611/29/00200816563322_800x800.jpg",
-      "iid": 16324824,
-      "sale_num": 593,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "593人已团",
-      "discount": 31,
-      "ads_tag": "",
-      "title": "贝比熊 棉质柔软6层纱布巾婴儿口水巾2条装",
-      "his_product_sold_cnt": 593,
-      "vid": 15,
-      "event_id": 600014918,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 1200,
-      "product_id": 2212280,
-      "stock": 987,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }],
-    recom_items2: [{
-      "price_ori": 6200,
-      "img": "http://b1.hucdn.com/upload/item/1704/03/93963615297083_800x800.jpg",
-      "iid": 20063120,
-      "sale_num": 956,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "956人已团",
-      "discount": 26,
-      "ads_tag": "",
-      "title": "【5条装】婴儿双层纱布口水巾围嘴",
-      "his_product_sold_cnt": 956,
-      "vid": 15,
-      "event_id": 600003198,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 1600,
-      "product_id": 2801944,
-      "stock": 799,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 19500,
-      "img": "http://b1.hucdn.com/upload/item/1703/23/65252644291311_800x800.jpg",
-      "iid": 14944478,
-      "sale_num": 1269,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "1269人已团",
-      "discount": 18,
-      "ads_tag": "",
-      "title": "HHTU高密度5条装婴儿纯棉6层纱布巾宝宝口水巾",
-      "his_product_sold_cnt": 1269,
-      "vid": 15,
-      "event_id": 600002893,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 3490,
-      "product_id": 1754037,
-      "stock": 3973,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 5800,
-      "img": "http://b1.hucdn.com/upload/item/1703/15/52853905321583_800x800.jpg",
-      "iid": 5283805,
-      "sale_num": 2231,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "2231人已团",
-      "discount": 48,
-      "ads_tag": "",
-      "title": "威尔贝鲁 婴儿纱布口水巾 宝宝毛巾小方巾",
-      "his_product_sold_cnt": 2231,
-      "vid": 462,
-      "event_id": 600002134,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 2760,
-      "product_id": 300739,
-      "stock": 10767,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }],
-    recom_items3: [{
-      "price_ori": 12800,
-      "img": "http://b1.hucdn.com/upload/item/1703/03/03088614807083_800x800.jpg",
-      "iid": 14017389,
-      "sale_num": 1129,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "1129人已团",
-      "discount": 29,
-      "ads_tag": "",
-      "title": "贝吉宝【10条装】30*30cm六层纯棉纱布方巾纱布毛巾",
-      "his_product_sold_cnt": 1129,
-      "vid": 15,
-      "event_id": 600003198,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 3590,
-      "product_id": 1969395,
-      "stock": 488,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 3800,
-      "img": "http://b1.hucdn.com/upload/item/1702/15/48301285777083_800x800.jpg",
-      "iid": 15589366,
-      "sale_num": 1385,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "1385人已团",
-      "discount": 38,
-      "ads_tag": "",
-      "title": "【4条装】贝吉宝 纯棉双面可用带按扣三角巾",
-      "his_product_sold_cnt": 1385,
-      "vid": 15,
-      "event_id": 600003198,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 1440,
-      "product_id": 2154466,
-      "stock": 755,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }, {
-      "price_ori": 7600,
-      "img": "http://b1.hucdn.com/upload/item/1701/05/97632143352550_800x800.jpg",
-      "iid": 17734562,
-      "sale_num": 684,
-      "item_track_data": "eyJtYXRjaFR5cGUiOiJoaXN0b3J5In0=",
-      "sale_tip": "684人已团",
-      "discount": 37,
-      "ads_tag": "",
-      "title": "蓓贝婴 4条婴儿纱布口水巾全棉宝宝纱布方巾",
-      "his_product_sold_cnt": 684,
-      "vid": 462,
-      "event_id": 600016115,
-      "event_type": "mall",
-      "is_ads": false,
-      "price": 2800,
-      "product_id": 2337881,
-      "stock": 75,
-      "country_circle_icon": "",
-      "status": 1,
-      "ico_label": ""
-    }],
-
+    store_hot_list_w: 0
   }
 }
 export default {
@@ -499,13 +281,29 @@ export default {
   created() {
     this.swipe_height = screen.width;
   },
-  mounted(){
+  mounted() {
     bus.$on("onVoucherState", res => {
       console.log(res);
       this.voucherPopupVisible = res
     })
   },
   methods: {
+    _initScroll() {
+      let items = this.$refs.store_hot_scl_item;
+      items.map(a => {
+        this.store_hot_list_w += a.clientWidth
+      })
+      this.$nextTick(() => {
+        if (this.store_hot_scl) {
+          this.store_hot_scl.refresh()
+        } else {
+          this.store_hot_scl = new BScroll(this.$refs.store_hot_scl, {
+            scrollX: true,
+            scrollY:false
+          })
+        }
+      })
+    },
     getData() {
       $loading.show("")
       this.$api.userGet('goods_info?goods_id=' + this.goods_id, res => {
@@ -521,6 +319,9 @@ export default {
         this.$store.commit('ACTIONSHEET_UPDATE', {
           key: 'cur_spec_namex',
           value: this.init_spec_name
+        })
+        this.$nextTick(() => {
+          this._initScroll()
         })
       }, err => {
         //$toast(err)
@@ -566,6 +367,14 @@ export default {
         name: 'store_home',
         params: {
           store_id: id
+        }
+      })
+    },
+    go_goods(id){
+      $router.push({
+        name: 'goods_detail',
+        params: {
+          id: id
         }
       })
     },
@@ -771,7 +580,7 @@ export default {
     -ms-flex-direction: column;
     flex-direction: column;
     background: $color-theme;
-    font-size: .37rem;
+    font-size: 0.37rem;
 }
 
 .submit-order .buy-align.cart {
@@ -799,19 +608,19 @@ export default {
 }
 
 .submit-order .hm-flex-1 .iconfont {
-    font-size: .64rem;
+    font-size: 0.64rem;
 }
 
 .cart-badge {
     background: lighten($color-theme, 10%);
     color: #fff;
     position: absolute;
-    width: .43rem;
-    height: .43rem;
+    width: 0.43rem;
+    height: 0.43rem;
     border-radius: 50%;
-    top: .08rem;
-    right: .16rem;
-    font-size: .32rem;
+    top: 0.08rem;
+    right: 0.16rem;
+    font-size: 0.32rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -823,7 +632,7 @@ export default {
 }
 
 .download-app {
-    padding-top: .11rem;
+    padding-top: 0.11rem;
     height: 1.28rem;
     background-color: transparent;
     position: fixed;
@@ -838,11 +647,11 @@ export default {
         float: left;
         color: #fff;
         background: rgba(0, 0, 0, 0.3);
-        margin: .13rem .27rem;
-        font-size: .48rem;
-        width: .85rem;
-        height: .85rem;
-        line-height: .85rem;
+        margin: 0.13rem 0.27rem;
+        font-size: 0.48rem;
+        width: 0.85rem;
+        height: 0.85rem;
+        line-height: 0.85rem;
         border-radius: 50%;
         text-align: center;
         z-index: 100;
@@ -850,11 +659,11 @@ export default {
 }
 
 .promise-block {
-    font-size: .32rem;
+    font-size: 0.32rem;
     i {
-        font-size: .32rem;
+        font-size: 0.32rem;
         color: $color-theme;
-        margin-right: .13rem;
+        margin-right: 0.13rem;
     }
     .hm-flex-1 {
         text-align: center;
@@ -865,7 +674,7 @@ export default {
 //贝贝样式
 
 .infos {
-    padding: .27rem;
+    padding: 0.27rem;
     background-color: #fff;
 }
 
@@ -876,11 +685,11 @@ export default {
 .infos .area .prices .price {
     /*display: inline-block;*/
     /*line-height: 1;*/
-    font-size: .4rem;
+    font-size: 0.4rem;
 }
 
 .infos .area .prices .price i {
-    font-size: .64rem;
+    font-size: 0.64rem;
     /*line-height: 1.024rem;*/
     margin-left: 0.064rem;
     font-weight: bold;
@@ -890,13 +699,13 @@ export default {
     margin-left: 0.256rem;
     /*display: inline-block;
     line-height: 1;*/
-    font-size: .35rem;
+    font-size: 0.35rem;
     text-decoration: line-through;
     color: #8f8f8f;
 }
 
 .infos .product h3 {
-    font-size: .4rem;
+    font-size: 0.4rem;
     line-height: 1.5;
 }
 
@@ -907,22 +716,22 @@ export default {
 }
 
 .reviews .review-item {
-    padding: .27rem;
+    padding: 0.27rem;
 }
 
 .reviews .content {
-    margin: 0 0 .13rem;
+    margin: 0 0 0.13rem;
     color: #3d3d3d;
-    font-size: .35rem;
+    font-size: 0.35rem;
     line-height: 1.5;
     padding-left: 1.07rem;
 }
 
 .reviews .head-img {
-    width: .8rem;
-    height: .8rem;
+    width: 0.8rem;
+    height: 0.8rem;
     border-radius: 50%;
-    margin-right: .27rem;
+    margin-right: 0.27rem;
     border: 1px solid #e4e4e4;
     display: inline-block;
     vertical-align: top;
@@ -930,7 +739,7 @@ export default {
 
 .reviews .sku-info span {
     /*margin-right: .384rem;*/
-    font-size: .32rem;
+    font-size: 0.32rem;
     line-height: 1.5;
     color: #999;
     padding-left: 1.07rem;
@@ -951,7 +760,7 @@ export default {
 .event-list {
     display: flex;
     background: #fff;
-    padding: .4rem 0;
+    padding: 0.4rem 0;
 }
 
 .event-item {
@@ -970,15 +779,15 @@ export default {
 /*}*/
 
 .event-item-num {
-    font-size: .37rem;
+    font-size: 0.37rem;
 }
 
 .event-item-text {
     color: #8f8f8f;
 }
 .instore.aui-label-outlined:after {
-    -webkit-border-radius: .11rem;
-    border-radius: .11rem;
+    -webkit-border-radius: 0.11rem;
+    border-radius: 0.11rem;
     height: 200%;
     content: '';
     width: 200%;
@@ -1001,7 +810,6 @@ export default {
 .mobile_body {
     background: #ffffff;
     margin-top: 0.4rem;
-    padding-top: 0.4rem;
 }
 .mobile_body p {
     padding-left: 0.32rem;
@@ -1022,24 +830,24 @@ export default {
 .goods-voucher {
     display: flex;
     align-items: center;
-    height: .8rem;
+    height: 0.8rem;
     .goods-voucher-name {
         margin-right: 0.27rem;
-        line-height: .53rem;
-        height: .53rem;
+        line-height: 0.53rem;
+        height: 0.53rem;
     }
     .goods-voucher-list {
         span {
             font-size: 0.27rem;
             color: #ffffff;
             background-color: #F23030;
-            padding: .025rem 0.13rem;
-            margin: 0 .2rem 0 0;
+            padding: 0.025rem 0.13rem;
+            margin: 0 0.2rem 0 0;
             border-radius: 2px;
         }
-        height: .53rem;
-        font-size: .27rem;
-        vertical-align: middle;;
+        height: 0.53rem;
+        font-size: 0.27rem;
+        vertical-align: middle;
     }
 }
 </style>
