@@ -2,7 +2,7 @@
 <div class="page">
    <div class="page-content">
 
-     <section class="aui-chat">
+     <section class="aui-chat" style="margin-bottom: 40px;">
        <div class="aui-chat-header">2017年7月10日</div>
        <div class="aui-chat-item aui-chat-left">
          <div class="aui-chat-media">
@@ -73,6 +73,20 @@
 
      </section>
 
+     <div class="hm-flex msg-input" style="border-top: 1px #ddd solid;">
+       <div class="hm-flex-3">
+         <von-input
+           type="text"
+           v-model="text"
+           placeholder="请输入"
+         >
+         </von-input>
+       </div>
+       <div class="hm-flex-1 send-btn">
+           发送
+       </div>
+     </div>
+
 
 
     </div>
@@ -86,6 +100,7 @@ export default {
   data() {
     return {
       init:false,
+      text:'',
 
     }
   },
@@ -100,6 +115,41 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import "../../../assets/config.scss";
+  .msg-input{
+    position: fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+  }
+  .send-btn{
+    background: #4A90E2;color:#fff;display: flex;justify-content: center;align-items: center;
+    font-size: 15px;
+
+  }
+  .hairline-top:before {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    left: 0;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    height: 0px;
+  }
+  .hairline-bottom:after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    left: 0;
+    top: atuo;
+    bottom: 0;
+    right: auto;
+    height: 0px;
+  }
+
   /*聊天气泡*/
   .aui-chat {
     width: 100%;

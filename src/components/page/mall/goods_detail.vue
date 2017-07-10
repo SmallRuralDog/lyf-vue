@@ -6,6 +6,7 @@
   </div>
   <div class="page-content" v-show="init" style="padding-bottom: 1.87rem;">
     <!-- 页面内容 -->
+    <scroll>
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
           <swiper-slide>
@@ -108,13 +109,6 @@
     </div>
 
 
-
-    <!--<item class="item-icon-right">-->
-    <!--{{data.store_info.store_name}}-->
-    <!--<span style="float:right;font-size: .32rem;color: #888;">进入店铺</span>-->
-    <!--<i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>-->
-    <!--</item>-->
-
     <div class="hm-flex" @click="go_store(data.store_info.store_id)" style="background: #fff;padding: .4rem .4rem 0;">
       <img v-lazy="data.store_info.store_label" style="width:.93rem; height:.93rem; margin-right:.13rem; border-radius:.05rem;" class="aui-border">
       <div class="text-14" style="flex:1">{{data.store_info.store_name}}</div>
@@ -160,7 +154,7 @@
     <div style="background: #fff;" ref="store_hot_scl">
       <div class="hm-flex" :style="'width:'+store_hot_list_w+'px'">
         <template v-for="goods in data.store_hot">
-                <div class="hm-flex-1" ref="store_hot_scl_item" @click="go_goods(goods.goods_id)">
+                <div  ref="store_hot_scl_item" @click="go_goods(goods.goods_id)">
                     <div style="width:130px; margin:5px;">
                         <img v-lazy="goods.goods_image" style="background-color:#ffffff; width:100%;">
                         <p class="aui-ellipsis-2">{{goods.goods_name}}</p>
@@ -178,6 +172,8 @@
         <p v-else-if="item.type=='text'" v-html="item.value"></p>
       </template>
     </div>
+
+    </scroll>
 
   </div>
   <!--固定不动的元素 要放到page-content的外面-->
@@ -260,11 +256,11 @@ function dataInit() {
       loop: true,
       pagination: '.swiper-pagination',
     },
-    swiperOption2: {
-      initialSlide: 0,
-      loop: true,
-      pagination: '.swiper-pagination',
-    },
+//    swiperOption2: {
+//      initialSlide: 0,
+//      loop: true,
+//      pagination: '.swiper-pagination',
+//    },
     collected: false, //已收藏
     store_hot_list_w: 0
   }
@@ -290,6 +286,7 @@ export default {
   methods: {
     _initScroll() {
       let items = this.$refs.store_hot_scl_item;
+      this.store_hot_list_w=0;
       items.map(a => {
         this.store_hot_list_w += a.clientWidth
       })
@@ -299,7 +296,8 @@ export default {
         } else {
           this.store_hot_scl = new BScroll(this.$refs.store_hot_scl, {
             scrollX: true,
-            scrollY:false
+            scrollY:false,
+            click:false
           })
         }
       })
@@ -321,7 +319,9 @@ export default {
           value: this.init_spec_name
         })
         this.$nextTick(() => {
+          this.goTop()
           this._initScroll()
+
         })
       }, err => {
         //$toast(err)
@@ -371,12 +371,17 @@ export default {
       })
     },
     go_goods(id){
-      $router.push({
+      this.goods_id=id
+      $router.replace({
         name: 'goods_detail',
         params: {
           id: id
         }
       })
+    },
+    goTop() {
+      console.log('document.body.scrollTop',document.querySelector(".swiper-container").scrollTop)
+      document.querySelector(".scroll").scrollTop = 0
     },
     go_comment(id) {
       $router.push({

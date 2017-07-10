@@ -3,7 +3,7 @@
     <div class="order-manage list">
         <div class="top-fixed">
             <div class="nav-tab-top">
-                <ul class=" aui-border-b">
+                <ul class="aui-border-b">
                   <template v-for="(item,index) in tabs">
                     <li :class="{'cur':index==active}" @click="go_orderlist(index)">{{item}}</li>
                   </template>
