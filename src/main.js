@@ -45,6 +45,11 @@ const order_pay_success = resolve => require(['./components/page/order/order-pay
 const store_home = resolve => require(['./components/page/mall/store_home.vue'], resolve)
 const favorite = resolve => require(['./components/page/user/favorite.vue'], resolve)
 const my_voucher = resolve => require(['./components/page/user/my-voucher.vue'], resolve)
+const message_list = resolve => require(['./components/page/user/message-list.vue'], resolve)
+const message_detail = resolve => require(['./components/page/user/message-detail.vue'], resolve)
+const setting = resolve => require(['./components/page/user/setting.vue'], resolve)
+const question_list = resolve => require(['./components/page/user/question-list.vue'], resolve)
+const question_detail = resolve => require(['./components/page/user/question-detail.vue'], resolve)
 const order_refund_start = resolve => require(['./components/page/order/order-refund-start.vue'], resolve)
 const order_refund_return = resolve => require(['./components/page/order/order-refund-return.vue'], resolve)
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
@@ -202,10 +207,42 @@ const routes = [{
         meta:{title: '我的优惠券'},
         component: my_voucher
       },
-
+      {
+        path: '/message',
+        name: 'message_list',
+        meta:{title: '我的消息'},
+        component: message_list
+      },
+      {
+        path: '/message/:id',
+        name: 'message_detail',
+        meta:{title: '消息详情'},
+        component: message_detail
+      },
+      {
+        path: '/setting',
+        name: 'setting',
+        meta:{title: '设置'},
+        component: setting
+      },
+      {
+        path: '/question',
+        name: 'question_list',
+        meta:{title: '常见问题'},
+        component: question_list
+      },
+      {
+        path: '/question/:id',
+        name: 'question_detail',
+        meta:{title: '问题详情'},
+        component: question_detail
+      },
     ]
 
   },
+
+
+
 
 ]
 //******************************//

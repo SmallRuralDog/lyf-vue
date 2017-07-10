@@ -61,7 +61,7 @@
             </div>
 
             <div class="personal-wrapper-2 hm-margin-b">
-                <div class="p-wrapper-2-item">
+                <div class="p-wrapper-2-item" @click='this.$router.push({name:"message_list"})'>
                     <div class="p-messages"><i class="iconfont icon-xiaoxi1 color-assertive"></i></div>
                     <p class="p-wrap-2-title">我的消息</p>
                 </div>
@@ -107,7 +107,7 @@
                 <i class="icon ion-ios-arrow-right" style="color: #DDD;"></i>
               </div>
             </li>
-            <li class="aui-list-item aui-list-item-middle">
+            <li class="aui-list-item aui-list-item-middle" @click='this.$router.push({name:"setting"})'>
               <div class="aui-list-item-label-icon">
                 <i class="iconfont icon-shezhi"></i>
               </div>
@@ -117,6 +117,7 @@
               </div>
             </li>
           </ul>
+
 
         </scroll>
       <footnav :active="4"></footnav>

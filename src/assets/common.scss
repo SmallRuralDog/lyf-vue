@@ -704,18 +704,18 @@ button, .aui-btn {
 }
 .aui-list.aui-select-list .aui-list-item-label {
   width: auto;
-  min-width: 2.2rem;
-  padding: 0.5rem 0;
-  padding-right: 0.75rem;
+  min-width: 44px;
+  padding: 10px 0;
+  padding-right: 15px;
 }
 .aui-list.aui-form-list .aui-list-item-btn {
-  padding: 0.75rem 0.75rem 0.75rem 0;
+  padding: 15px 15px 15px 0;
 }
 .aui-list textarea {
   overflow: auto;
-  margin: 0.5rem 0;
-  height: 3rem;
-  line-height: 1rem;
+  margin: 10px 0;
+  height: 60px;
+  line-height: 20px;
   resize: none;
 }
 .aui-list .aui-list-item-right .aui-badge,
@@ -743,7 +743,7 @@ button, .aui-btn {
     border: none;
     background-size: 100% 1px;
     background-repeat: no-repeat;
-    background-position: 0.75rem bottom;
+    background-position: 10px bottom;
     background-image: linear-gradient(0,#eeeeee,#eeeeee 50%,transparent 50%);
     background-image: -webkit-linear-gradient(90deg,#eeeeee,#eeeeee 50%,transparent 50%);
   }
@@ -782,4 +782,8 @@ button, .aui-btn {
   white-space: normal !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+img.aui-img-round {
+  border-radius: 50%;
 }
