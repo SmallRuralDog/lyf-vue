@@ -281,15 +281,15 @@ export default {
 <style lang="scss">
 @import "../../../assets/config.scss";
 .search-btn {
-    line-height: 1.07rem;
-    padding: 0 0.27rem;
-    text-align: center;
-    display: inline-block;
+  line-height: 1.07rem;
+  padding: 0 0.27rem;
+  text-align: center;
+  display: inline-block;
 }
 
 .search-btn i {
-    font-size: 0.59rem;
-    color: #333;
+  font-size: 0.59rem;
+  color: #333;
 }
 
 .index-scroll {
@@ -389,7 +389,7 @@ export default {
 }
 //幻灯片焦点颜色
 .swiper-pagination-bullet-active {
-    background: #e02e24;
+    background:$color-theme;
 }
 .haitao-middle-hint {
     background-color: #fff;

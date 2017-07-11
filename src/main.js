@@ -28,7 +28,7 @@ Vue.use(VueLazyload, {
 // Page Components
 const Index = resolve => require(['./components/Index'], resolve)
 const Home = resolve => require(['./components/page/index/home.vue'], resolve)
-const new_arrivals = resolve => require(['./components/page/index/new_arrivals.vue'], resolve)
+const discovery = resolve => require(['./components/page/index/discovery.vue'], resolve)
 const Cart = resolve => require(['./components/page/index/cart.vue'], resolve)
 const User = resolve => require(['./components/page/index/user.vue'], resolve)
 const ClassAll = resolve => require(['./components/page/index/class_all.vue'], resolve)
@@ -54,8 +54,10 @@ const order_refund_start = resolve => require(['./components/page/order/order-re
 const order_refund_return = resolve => require(['./components/page/order/order-refund-return.vue'], resolve)
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
 const order_refund_list = resolve => require(['./components/page/order/order-refund-list.vue'], resolve)
+const news_detail = resolve => require(['./components/page/news/news-detail.vue'], resolve)
 const login = resolve => require(['./components/page/login.vue'], resolve)
 const auth = resolve => require(['./components/page/auth.vue'], resolve)
+
 
 
 // Routes
@@ -70,10 +72,10 @@ const routes = [{
         component: Home
       },
       {
-        path: 'new_arrivals',
-        name: 'new_arrivals',
-        meta:{title: '新品上市'},
-        component: new_arrivals
+        path: 'discovery',
+        name: 'discovery',
+        meta:{title: '发现'},
+        component: discovery
       },
       {
         path: 'class_all',
@@ -236,6 +238,12 @@ const routes = [{
         name: 'question_detail',
         meta:{title: '问题详情'},
         component: question_detail
+      },
+      {
+        path: '/news/:id',
+        name: 'news_detail',
+        meta:{title: '资讯详情'},
+        component: news_detail
       },
     ]
 

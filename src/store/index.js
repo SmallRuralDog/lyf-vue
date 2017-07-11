@@ -8,6 +8,7 @@ import actionsheet from './modules/actionsheet'
 import common from './modules/common'
 import page_load_state from './modules/page_load_state'
 import orderlist from './modules/orderlist'
+import discovery from './modules/discovery'
 
 
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     common,
     page_load_state,
     orderlist,
+    discovery,
 
   },
   strict: debug

@@ -9,9 +9,16 @@ img {
 .loading-container{
   z-index: 999999;
 }
+
 // 图片懒加载动画
-img[lazy=loading] {opacity:0;}
-img[lazy=loaded] {transition:opacity .2s; opacity:1;}
+img[lazy=loading] {
+  opacity:0;
+}
+img[lazy=loaded] {
+  transition:opacity .2s;
+  opacity:1;
+}
+
 .input-label{
   width: auto;
 }
@@ -275,6 +282,11 @@ button, .aui-btn {
   font-size: 14px;
   height: 36px;
   line-height: 37px;
+}
+.aui-btn-outlined.aui-btn-sm {
+  font-size: 12px;
+  height: 20px;
+  line-height: 21px;
 }
 .aui-btn .aui-iconfont, .aui-btn-block .aui-iconfont {
   margin-right: 6px;
