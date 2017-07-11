@@ -6,7 +6,6 @@
   </div>
   <div class="page-content" v-show="init" style="padding-bottom: 1.87rem;">
     <!-- 页面内容 -->
-    <scroll>
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
           <swiper-slide>

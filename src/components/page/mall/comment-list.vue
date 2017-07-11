@@ -47,7 +47,6 @@
 
 <div class="page">
    <div class="page-content">
-
       <div class="reviews hm-margin-b">
         <ul class="review-list">
           <li class="review-item aui-border-b">
@@ -112,11 +111,10 @@
 <script>
 
 export default {
-  name: "order_refund_list",
+  name: "comment_list",
   data() {
     return {
       init:false,
-
     }
   },
   mounted() {

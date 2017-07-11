@@ -254,11 +254,13 @@ export default {
             }
 
           }
+          $loading.hide()
         } else {
           $toast.show(res.data.message)
-          $router.go(-1)
+          setTimeout(()=>{
+            $router.go(-1)
+          },1500)
         }
-        $loading.hide()
       }, error => {
         $loading.hide()
       })

@@ -11,7 +11,7 @@
             </div>
             <scroll ref="lyf_scroll" class="index-scroll page-content" style="top: 1.07rem;" :on-infinite="onInfinite" :inner="360" :onScrollListener="onScrollListener">
                 <!--:on-refresh="onRefresh"-->
-                <swiper :options="swiperOption"  v-show="active==0">
+                <swiper :options="swiperOption"  v-show="active==0" v-if="false">
                   <template v-for="slide in swiper_data">
                   <swiper-slide>
                     <img v-lazy="slide.adv_content" alt="" style="background-color:#ffffff; width:100%; height:3.73rem;">
