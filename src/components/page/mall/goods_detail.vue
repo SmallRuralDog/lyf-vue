@@ -6,6 +6,7 @@
   </div>
   <div class="page-content" v-show="init" style="padding-bottom: 1.87rem;">
     <!-- 页面内容 -->
+    <scroll>
     <swiper ref="goods_swiper" :options="swiperOption" v-bind:style="{height: swipe_height+'px'}" style="position: relative;z-index: 1;">
       <template v-for="(slide,index) in data.goods_image">
           <swiper-slide>
@@ -173,6 +174,7 @@
     </div>
 
     </scroll>
+
 
   </div>
   <!--固定不动的元素 要放到page-content的外面-->
@@ -379,7 +381,7 @@ export default {
       })
     },
     goTop() {
-      console.log('document.body.scrollTop',document.querySelector(".swiper-container").scrollTop)
+
       document.querySelector(".scroll").scrollTop = 0
     },
     go_comment(id) {
