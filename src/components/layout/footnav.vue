@@ -58,7 +58,7 @@
   $nav-foot-iconsize   : .64rem !default;
   /*$nav-foot-padding    : .11rem !default;*/
   $nav-foot-bg         : #fff !default;
-  $nav-foot-color      : #999 !default;
+  $nav-foot-color      : #666 !default;
   $nav-foot-btn-active : $color-theme !default;
   .hm-nav {
     height:$nav-foot-height; background-color:$nav-foot-bg; color:$nav-foot-color;

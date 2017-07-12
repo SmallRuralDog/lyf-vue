@@ -10,12 +10,29 @@
                 </div>
             </div>
 
+          <div class="personal-numbers hm-margin-b">
+            <div class="personal-numbers-item" @click='this.$router.push({name:"message_list"})'>
+              <div class="number"><span>￥</span>2486.0</div>
+              <div class="number-title">营业额</div>
+            </div>
+            <div class="personal-numbers-item" @click='this.$router.push({name:"wallet"})'>
+              <div class="number"><span>￥</span>253.0</div>
+              <div class="number-title">钱包</div>
+            </div>
+            <div class="personal-numbers-item" @click='go_friendlist(0)'>
+              <div class="number">256</div>
+              <div class="number-title">好友</div>
+            </div>
+
+          </div>
+
+
           <ul class="aui-list aui-list-in">
             <li class="aui-list-item " style="min-height: 44px;">
               <div class="aui-list-item-inner">
                 <div class="aui-list-item-title">我的订单</div>
                 <div class="aui-list-item-right" @click="go_orderlist(0)" style="color: #aaa;display: flex;align-items: center;">查看更多 <i class="ion-ios-arrow-right" style="color: #DDD;margin-left: 5px;"></i></div>
-                <!--<i class="ion-ios-arrow-right" style="color: #DDD;"></i>-->
+
               </div>
             </li>
           </ul>
@@ -26,7 +43,7 @@
                     <!--<span class="p-all-orders-span" @click="go_orderlist(0)">查看更多 <i class="ion-ios-arrow-right"></i></span>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="personal-wrapper-1">
+            <div class="personal-wrapper-1 hm-margin-b">
                 <div class="p-wrapper-1-item" @click="go_orderlist(0)">
                   <div class="p-grouping"><i class="iconfont icon-yichengtuan"></i></div>
                   <p class="p-wrap-1-title">
@@ -60,7 +77,18 @@
                 </div>
             </div>
 
-            <div class="personal-wrapper-2 hm-margin-b">
+            <ul class="aui-list aui-list-in">
+              <li class="aui-list-item " style="min-height: 44px;">
+                <div class="aui-list-item-inner">
+                  <div class="aui-list-item-title">必备工具</div>
+                  <div class="aui-list-item-right" @click="go_orderlist(0)" style="color: #aaa;display: flex;align-items: center;">查看更多 <i class="ion-ios-arrow-right" style="color: #DDD;margin-left: 5px;"></i></div>
+
+                </div>
+              </li>
+            </ul>
+
+
+            <div class="personal-wrapper-2" style="margin-top: 0">
                 <div class="p-wrapper-2-item" @click='this.$router.push({name:"message_list"})'>
                     <div class="p-messages"><i class="iconfont icon-xiaoxi1 color-assertive"></i></div>
                     <p class="p-wrap-2-title">我的消息</p>
@@ -77,6 +105,13 @@
                     <div class="p-after-sales"><i class="iconfont icon-tuikuan1 color-balanced"></i></div>
                     <p class="p-wrap-2-title">退款/售后</p>
                 </div>
+            </div>
+            <div class="personal-wrapper-2 hm-margin-b" style="margin-top: 0">
+              <div class="p-wrapper-2-item" @click='this.$router.push({name:"message_list"})'>
+                <div class="p-messages"><i class="iconfont icon-gerenzhongxin color-assertive"></i></div>
+                <p class="p-wrap-2-title">旧版会员中心</p>
+              </div>
+
             </div>
             <!--<div class="" style="margin-bottom:.8rem;">-->
                 <!--<div class="item item-divider">-->
@@ -166,6 +201,14 @@ export default {
         name: 'order_list',
         params: {
           type: id
+        }
+      })
+    },
+    go_friendlist(id) {
+      $router.push({
+        name: 'friend_list',
+        params: {
+          id: id
         }
       })
     },
@@ -282,9 +325,12 @@ export default {
 .personal-list,
 .personal-logout,
 .personal-wrapper-1,
-.personal-wrapper-2 {
+.personal-wrapper-2,
+.personal-wrapper-3 {
     background-color: #fff;
 }
+
+
 
 .personal-wrapper-1 {
     height: 1.76rem;
@@ -313,15 +359,16 @@ export default {
     width: 0.67rem;
     i {
         font-size: 0.67rem;
-        color: #999;
+        color: #666;
     }
 }
 
 .personal-wrapper-1 .p-wrapper-1-item .p-wrap-1-title {
     color: #151516;
-    font-size: 0.32rem;
-    line-height: 0.32rem;
+    font-size: 12px;
+    line-height: 1;
     position: relative;
+    color:#666;
 }
 
 .personal-wrapper-2 {
@@ -347,7 +394,7 @@ export default {
 .personal-wrapper-2 .p-wrapper-2-item .p-lotteries,
 .personal-wrapper-2 .p-wrapper-2-item .p-messages {
     height: 0.77rem;
-    margin: 0.35rem auto 0.24rem;
+    margin: 0.35rem auto 0.15rem;
     width: 0.77rem;
     i {
         font-size: 0.67rem;
@@ -356,10 +403,13 @@ export default {
 
 .personal-wrapper-2 .p-wrapper-2-item .p-wrap-2-title {
     color: #151516;
-    font-size: 0.32rem;
-    line-height: 0.32rem;
+    font-size: 12px;
+    line-height: 1;
     position: relative;
+    color:#666;
 }
+
+
 .p-unpaid,
 .p-unrated,
 .p-unreceived,
@@ -387,5 +437,30 @@ export default {
             }
         }
     }
+}
+.personal-numbers{
+  display: flex;
+  width:100%;
+
+  .personal-numbers-item{
+    flex:1;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    background: #fff;
+    /*height:70px;*/
+    padding:15px 0 10px;
+    .number{
+      font-size: 18px;
+      margin-bottom: 2px;
+      span{
+        font-size: 12px;
+      }
+    }
+    .number-title{
+      color: #333;
+    }
+  }
 }
 </style>

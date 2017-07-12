@@ -1,7 +1,7 @@
 <template>
 <div class="" v-nav="{hideNavbar:true}">
     <transition>
-        <keep-alive exclude="cart_data,order_buynow,address_list,order_logistics,order_detail,order_rate,comment_list">
+        <keep-alive exclude="cart_data,order_buynow,address_list,order_logistics,order_detail,order_rate,comment_list,goods_detail">
             <router-view></router-view>
         </keep-alive>
     </transition>

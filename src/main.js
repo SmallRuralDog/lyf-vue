@@ -55,8 +55,14 @@ const order_refund_return = resolve => require(['./components/page/order/order-r
 const order_refund = resolve => require(['./components/page/order/order-refund.vue'], resolve)
 const order_refund_list = resolve => require(['./components/page/order/order-refund-list.vue'], resolve)
 const news_detail = resolve => require(['./components/page/news/news-detail.vue'], resolve)
+const friend_list = resolve => require(['./components/page/user/friend-list.vue'], resolve)
 const login = resolve => require(['./components/page/login.vue'], resolve)
 const auth = resolve => require(['./components/page/auth.vue'], resolve)
+const wallet = resolve => require(['./components/page/wallet/wallet.vue'], resolve)
+const transaction_list = resolve => require(['./components/page/wallet/transaction-list.vue'], resolve)
+const my_money = resolve => require(['./components/page/wallet/my-money.vue'], resolve)
+
+
 
 
 
@@ -244,6 +250,30 @@ const routes = [{
         name: 'news_detail',
         meta:{title: '资讯详情'},
         component: news_detail
+      },
+      {
+        path: '/friend-list/:id',
+        name: 'friend_list',
+        meta:{title: '好友列表'},
+        component: friend_list
+      },
+      {
+        path: '/wallet',
+        name: 'wallet',
+        meta:{title: '我的钱包'},
+        component: wallet
+      },
+      {
+        path: '/transaction-list/:id',
+        name: 'transaction_list',
+        meta:{title: '交易明细'},
+        component: transaction_list
+      },
+      {
+        path: '/my-money',
+        name: 'my_money',
+        meta:{title: '我的余额'},
+        component: my_money
       },
     ]
 

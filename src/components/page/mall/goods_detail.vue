@@ -373,7 +373,7 @@ export default {
     },
     go_goods(id){
       this.goods_id=id
-      $router.replace({
+      $router.push({
         name: 'goods_detail',
         params: {
           id: id

@@ -254,7 +254,7 @@ export default {
 }
 </script>
 <style lang="scss">
-  $color-theme:#F23030;
+  @import "../../../assets/config.scss";
   .top-fixed {
     position: fixed;
     top: 0;
