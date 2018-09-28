@@ -114,10 +114,8 @@ npm run dev
  项目是基于 `vonic 2.0.0-beta.15`搭建，不建议直接做为线上项目，本源码只做为参考学习，大神勿喷！！喜欢的点一下 `star`　！蟹蟹--
  另外我还开源了微信小程序，感兴趣的也可以去看看--
 
- **说了那么多，无图无真相，直接上demo吧!**
+### 关注我的头条号
 
- [(☄⊙ω⊙)☄　点我点我点我](http://tvue.applinzi.com/#/home)
+![](http://makefriends.bs2dl.yy.com/Coder.jpeg)
 
-扫一扫⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
-
-![](http://i1.bvimg.com/1949/64fee2e7dee7b944.png)
+头条扫一扫  干货随便找
